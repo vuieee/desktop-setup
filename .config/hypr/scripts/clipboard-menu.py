@@ -12,11 +12,13 @@ def load_pins():
     return json.loads(pfile.read_text()) if pfile.exists() else []
 def save_pins(pins):
     pfile.write_text(json.dumps(pins, indent=2))
-def rofi(prompt, items, w=540, lines=10):
-    cmd = ["rofi","-dmenu","-i","-p",prompt,"-theme",str(rc),"-theme-str",f"window {{ width: {w}px; }} mainbox {{ children: [listview]; }} listview {{ lines: {lines}; fixed-num-lines: true; padding: 0px; spacing: 0px; }}"]
+def rofi(prompt, items, w=540, lines=10, sel=0):
+    cmd = ["rofi","-dmenu","-i","-p",prompt,"-selected-row",str(sel),"-selected-row",str(sel),"-theme",str(rc),"-theme-str",f"window {{ width: {w}px; }} mainbox {{ children: [listview]; }} listview {{ lines: {lines}; fixed-num-lines: true; padding: 0px; spacing: 0px; }}"]
     return subprocess.run(cmd,input=nl.join(items),text=True,capture_output=True).stdout.strip()
 def copy_bytes(data, mime="text/plain"):
-    subprocess.Popen(["wl-copy","-t",mime],stdin=subprocess.PIPE,start_new_session=True).communicate(data)
+    pr = subprocess.Popen(["wl-copy","-t",mime],stdin=subprocess.PIPE,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
+    pr.stdin.write(data)
+    pr.stdin.close()
 while True:
     pins = load_pins()
     hist = [l for l in subprocess.run(["cliphist","list"],text=True,capture_output=True).stdout.splitlines() if l.strip()]
@@ -25,7 +27,7 @@ while True:
 
     if not rows:
         rofi("clipboard", ["(Clipboard empty)"], 620, 12); break
-    pick = rofi("clipboard", rows, 620, 12)
+    pick = rofi("clipboard", rows, 620, 12, (1 if hist else 0)+len(pins) if hist else 0)
     if not pick or pick == "(Clipboard empty)": break
     if "Clear Unpinned History" in pick:
         subprocess.run(["cliphist","wipe"]); continue

@@ -440,3 +440,5 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
 end)
 hl.bind("SUPER + V", hl.dsp.exec_cmd("~/.config/hypr/scripts/clipboard-menu.py"))
+
+hl.window_rule({ name = "mocha-pavu-opaque", match = { class = "org.pulseaudio.pavucontrol" }, opacity = "1.0 override 1.0 override" })

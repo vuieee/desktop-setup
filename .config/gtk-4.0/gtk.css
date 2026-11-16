@@ -56,3 +56,5 @@ selection {
   background-color: #ffffff;
   color: #000000;
 }
+
+window, window.background, .background, scrolledwindow, viewport { background-color: #000000; color: #ffffff; }
