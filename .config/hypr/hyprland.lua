@@ -441,6 +441,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
     hl.exec_cmd("easyeffects --gapplication-service")
+    hl.exec_cmd("hyprshade on /home/mocha/.config/hypr/shaders/vibrance.glsl")
 end)
 hl.bind("SUPER + V", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/clipboard-menu.py"))
 
