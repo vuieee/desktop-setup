@@ -16,7 +16,7 @@ elif "Appearance" in top:
     idx = 0
     while True:
         c, r, s, l, cfg, o = ws.read_text(), rc.read_text(), sc.read_text(), hl.read_text(), wc.read_text(), osd.read_text()
-        dm = "Off" if "rgba(255, 255, 255, 0.72)" in c or "background: #ffffff;" in c.split("}")[0] else "On"
+        dm = "Off" if "rgba(255, 255, 255, 0.72)" in c or "background-color: #ffffff;" in c.split("}")[0] else "On"
         ac = "On" if "0.72" in c else "Off"
         ps = next((x.title() for x in ["top","bottom","left","right"] if f'"position": "{x}"' in cfg), "Top")
         ol = "On" if "border_size = 2" in l else "Off"
@@ -75,7 +75,8 @@ elif "Appearance" in top:
         elif "Vibrance" in ch:
             on = ch.endswith("Off")
             l = l.replace("screen_shader  = \"\"", f"screen_shader  = \"{vb_path}\"") if on else l.replace(f"screen_shader  = \"{vb_path}\"", "screen_shader  = \"\"")
-        ws.write_text(c); rc.write_text(r); sc.write_text(s); hl.write_text(l); osd.write_text(o)
+        if "Dark Mode" not in ch:
+            ws.write_text(c); rc.write_text(r); sc.write_text(s); hl.write_text(l); osd.write_text(o)
         subprocess.run(["hyprctl","reload"],stdout=-3,stderr=-3)
         subprocess.run(["swaync-client","-rs"],stdout=-3,stderr=-3)
         subprocess.run(["killall","waybar"],stdout=-3,stderr=-3)
