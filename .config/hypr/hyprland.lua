@@ -440,6 +440,7 @@ hl.layer_rule({ name = 'mocha-fakelock-blur', match = { namespace = 'mocha-fakel
 hl.on("hyprland.start", function()
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
+    hl.exec_cmd("easyeffects --gapplication-service")
 end)
 hl.bind("SUPER + V", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/clipboard-menu.py"))
 
