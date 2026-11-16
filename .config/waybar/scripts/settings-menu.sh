@@ -22,7 +22,7 @@ elif "Appearance" in top:
         ol = "On" if "border_size = 2" in l else "Off"
         rd = "On" if "rounding       = 10" in l else "Off"
         vb_path = "/home/mocha/.config/hypr/shaders/vibrance.glsl"
-        vb = "On" if f"screen_shader  = "{vb_path}"" in l else "Off"
+        vb = "On" if f'screen_shader  = "{vb_path}"' in l else "Off"
         bg, fg = ("#000000","#ffffff") if dm=="On" else ("#ffffff","#000000")
         bgr, rfr = ("rgba(0, 0, 0, 0.72)","#000000b8") if dm=="On" else ("rgba(255, 255, 255, 0.72)","#ffffffb8")
         items = [((chr(0xf186) if dm=="On" else chr(0xf185))+"  Dark Mode",dm),(chr(0xf06e)+"  Acrylic",ac),(chr(0xf0c9)+"  Waybar",ps),(chr(0xf065)+"  Outlines",ol),((chr(0xf111) if rd=="On" else chr(0xf096))+"  Rounded",rd),(chr(0xf042)+"  Vibrance",vb)]
