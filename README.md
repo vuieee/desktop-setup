@@ -1,7 +1,5 @@
 # desktop-setup
 
-Minimalist monochrome Hyprland rice on CachyOS.
-
 ![Desktop Preview](preview/desktop.png)
 
 ## Components
