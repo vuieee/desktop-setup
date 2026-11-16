@@ -1,4 +1,7 @@
 configuration {
+  kb-cancel: "Escape,Super+Escape,Control+g";
+}
+configuration {
     drun-display-format: "{name}";
 }
 

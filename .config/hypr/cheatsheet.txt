@@ -4,7 +4,7 @@ settings menu                    ALT + SPACE
 close window                     SUPER + C
 exit Hyprland                    SUPER + M
 file manager                     SUPER + E
-toggle floating                  SUPER + V
+toggle floating                  SUPER + SHIFT + V
 default menu                     SUPER + R
 pseudotile                       SUPER + P
 toggle split                     SUPER + J
@@ -23,3 +23,4 @@ screen brightness                Brightness keys
 play / pause / next / previous   Media keys
 screenshot (fullscreen)          Print
 screenshot (region)              SUPER + SHIFT + X
+clipboard history                SUPER + V
