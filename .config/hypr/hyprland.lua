@@ -114,6 +114,7 @@ hl.config({
     },
 
     decoration = {
+        screen_shader  = "/home/mocha/.config/hypr/shaders/vibrance.glsl",
         rounding       = 0,
         rounding_power = 2,
 
