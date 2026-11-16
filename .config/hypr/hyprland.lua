@@ -64,6 +64,8 @@ local menu        = "hyprlauncher"
 
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
+hl.env("XCURSOR_THEME", "Win11-Light-Big")
+hl.env("HYPRCURSOR_THEME", "Win11-Light-Big")
 
 
 -----------------------
@@ -309,7 +311,7 @@ hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Laptop multimedia keys for volume and LCD brightness
-hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("~/.config/hypr/scripts/osd.sh mic-mute"), { locked = true })
+hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/osd.sh mic-mute"), { locked = true })
 
 -- Requires playerctl
 hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
@@ -374,7 +376,7 @@ hl.on("hyprland.start", function()
 end)
 
 hl.bind("SUPER + SPACE", hl.dsp.exec_cmd("rofi -show drun -theme ~/.config/rofi/minimal.rasi"))
-hl.bind("ALT + SPACE", hl.dsp.exec_cmd("~/.config/waybar/scripts/settings-menu.sh"))
+hl.bind("ALT + SPACE", hl.dsp.exec_cmd("/home/mocha/.config/waybar/scripts/settings-menu.sh"))
 
 hl.animation({ leaf = "workspaces", enabled = true, speed = 4, bezier = "easeOutQuint", style = "slide" })
 hl.animation({ leaf = "workspacesIn", enabled = true, speed = 4, bezier = "easeOutQuint", style = "slide" })
@@ -403,16 +405,16 @@ hl.window_rule({
 hl.config({ decoration = { blur = { enabled = true, size = 8, passes = 3 } } })
 
 -- Screenshots
-hl.bind("Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh full"))
-hl.bind("SUPER + SHIFT + X", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh region"))
+hl.bind("Print", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/screenshot.sh full"))
+hl.bind("SUPER + SHIFT + X", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/screenshot.sh region"))
 
 -- Volume & Brightness OSD
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("~/.config/hypr/scripts/osd.sh vol-up"), { ["repeat"] = true, locked = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("~/.config/hypr/scripts/osd.sh vol-down"), { ["repeat"] = true, locked = true })
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd("~/.config/hypr/scripts/osd.sh vol-mute"), { locked = true })
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("~/.config/hypr/scripts/osd.sh bri-up"), { ["repeat"] = true, locked = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("~/.config/hypr/scripts/osd.sh bri-down"), { ["repeat"] = true, locked = true })
-hl.bind("Caps_Lock", hl.dsp.exec_cmd("~/.config/hypr/scripts/osd.sh caps"), { locked = true })
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/osd.sh vol-up"), { ["repeat"] = true, locked = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/osd.sh vol-down"), { ["repeat"] = true, locked = true })
+hl.bind("XF86AudioMute", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/osd.sh vol-mute"), { locked = true })
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/osd.sh bri-up"), { ["repeat"] = true, locked = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/osd.sh bri-down"), { ["repeat"] = true, locked = true })
+hl.bind("Caps_Lock", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/osd.sh caps"), { locked = true })
 
 hl.window_rule({
   name = "mocha-osd",
@@ -439,6 +441,6 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
 end)
-hl.bind("SUPER + V", hl.dsp.exec_cmd("~/.config/hypr/scripts/clipboard-menu.py"))
+hl.bind("SUPER + V", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/clipboard-menu.py"))
 
 hl.window_rule({ name = "mocha-pavu-opaque", match = { class = "org.pulseaudio.pavucontrol" }, opacity = "1.0 override 1.0 override" })
