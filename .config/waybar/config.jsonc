@@ -104,5 +104,6 @@
     "return-type": "json",
     "format": "{}",
     "tooltip": false
-  }
+  },
+  "width": 0
 }

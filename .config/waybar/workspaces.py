@@ -1,3 +1,5 @@
+import json
+import pathlib
 #!/usr/bin/env python3
 import glob, json, os, select, socket, subprocess, sys, time
 
@@ -90,15 +92,19 @@ class Strip:
             h = self.hl.get(i, 0.0)
             if v <= 0.0 and h <= 0.0:
                 continue
-            gray = int(160 * (1.0 - h))
+            st = (pathlib.Path.home()/".config/waybar/style.css").read_text()
+            lt = "rgba(255, 255, 255, 0.72)" in st or "background: #ffffff;" in st.split("}")[0]
+            gray = int(95 + 160 * h) if lt else int(160 * (1.0 - h))
             fg = f"#{gray:02x}{gray:02x}{gray:02x}"
+            pill = "#000000" if lt else "#ffffff"
             alpha = max(1, min(100, int(v * 100)))
             attrs = f'foreground="{fg}" alpha="{alpha}%"'
             if h > 0.01:
                 bg_alpha = max(1, min(100, int(h * v * 100)))
-                attrs += f' background="#ffffff" bgalpha="{bg_alpha}%"'
+                attrs += f' background="{pill}" bgalpha="{bg_alpha}%"'
             parts.append(f"<span {attrs}> {i} </span>")
-        return "".join(parts)
+        vert=json.loads((pathlib.Path.home()/".config/waybar/config.jsonc").read_text()).get("position") in ("left","right")
+        return chr(10).join(parts) if vert else "".join(parts)
 
 def main():
     sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
