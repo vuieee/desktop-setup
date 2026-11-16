@@ -443,4 +443,4 @@ hl.on("hyprland.start", function()
 end)
 hl.bind("SUPER + V", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/clipboard-menu.py"))
 
-hl.window_rule({ name = "mocha-pavu-opaque", match = { class = "org.pulseaudio.pavucontrol" }, opacity = "1.0 override 1.0 override" })
+hl.window_rule({ name = "mocha-wiremix", match = { class = "wiremix" }, float = true, center = true, size = { 780, 460 } })
