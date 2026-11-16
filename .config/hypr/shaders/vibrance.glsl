@@ -9,7 +9,7 @@ void main() {
     float max_c = max(pix.r, max(pix.g, pix.b));
     float min_c = min(pix.r, min(pix.g, pix.b));
     float sat = max_c - min_c;
-    float vibrance = 0.45;
+    float vibrance = 0.65;
     vec3 boosted = mix(vec3(luma), pix.rgb, 1.0 + vibrance * (1.0 - sat));
     fragColor = vec4(clamp(boosted, 0.0, 1.0), pix.a);
 }
