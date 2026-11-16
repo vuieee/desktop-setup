@@ -1,0 +1,67 @@
+/* Black & white, sharp corners: matches the Waybar theme */
+configuration {
+  show-icons: false;
+}
+
+* {
+  font: "JetBrains Mono 13";
+}
+
+window {
+  width: 520px;
+  background-color: #000000;
+  border: 1px;
+  border-color: #ffffff;
+  border-radius: 0;
+}
+
+mainbox {
+  background-color: #000000;
+  children: [ inputbar, listview ];
+}
+
+inputbar {
+  background-color: #000000;
+  padding: 10px 12px;
+  border: 0px 0px 1px 0px;
+  border-color: #ffffff;
+  children: [ prompt, entry ];
+}
+
+prompt {
+  background-color: transparent;
+  text-color: #ffffff;
+  padding: 0px 8px 0px 0px;
+}
+
+entry {
+  background-color: transparent;
+  text-color: #ffffff;
+  placeholder: "";
+}
+
+listview {
+  background-color: #000000;
+  lines: 8;
+  columns: 1;
+  scrollbar: false;
+  fixed-height: false;
+  padding: 4px 0px;
+}
+
+element {
+  background-color: #000000;
+  text-color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 0;
+}
+
+element selected.normal {
+  background-color: #ffffff;
+  text-color: #000000;
+}
+
+element-text {
+  background-color: inherit;
+  text-color: inherit;
+}

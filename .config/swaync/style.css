@@ -1,0 +1,81 @@
+* {
+  font-family: "JetBrains Mono", "MesloLGS Nerd Font", "FontAwesome", monospace;
+  border-radius: 0px;
+  box-shadow: none;
+  background-image: none;
+}
+.floating-notifications,
+.blank-window {
+  background: transparent;
+}
+.notification-row {
+  outline: none;
+  margin: 6px 10px;
+}
+.notification-background {
+  background: rgba(0, 0, 0, 0.72);
+  border: 2px solid #ffffff;
+  padding: 0;
+}
+.notification {
+  background: transparent;
+  color: #ffffff;
+  border: none;
+  padding: 0;
+}
+.notification-content {
+  background: transparent;
+  color: inherit;
+  border: none;
+}
+.notification-default-action {
+  background: transparent;
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+}
+.notification-background:hover,
+.notification:hover,
+.notification-default-action:hover,
+.notification-action:hover {
+  background: #ffffff;
+  color: #000000;
+}
+.notification-background:hover label,
+.notification:hover .summary,
+.notification:hover .body {
+  color: #000000;
+}
+.notification-action {
+  background: rgba(0, 0, 0, 0.72);
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}
+.close-button {
+  background: rgba(0, 0, 0, 0.72);
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  text-shadow: none;
+}
+.close-button:hover {
+  background: #ffffff;
+  color: #000000;
+}
+.summary {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+}
+.body {
+  font-size: 12px;
+  color: #dddddd;
+}
+.body-image {
+  margin-top: 8px;
+  border: 1px solid #ffffff;
+}
+.control-center {
+  background: rgba(0, 0, 0, 0.72);
+  border: 2px solid #ffffff;
+  color: #ffffff;
+}

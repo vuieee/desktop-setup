@@ -1,0 +1,25 @@
+terminal                         SUPER + Q
+app launcher (Rofi)              SUPER + SPACE
+settings menu                    ALT + SPACE
+close window                     SUPER + C
+exit Hyprland                    SUPER + M
+file manager                     SUPER + E
+toggle floating                  SUPER + V
+default menu                     SUPER + R
+pseudotile                       SUPER + P
+toggle split                     SUPER + J
+move focus                       SUPER + arrows
+go to workspace                  SUPER + 1-0
+move window to workspace         SUPER + SHIFT + 1-0
+scratchpad                       SUPER + S
+send window to scratchpad        SUPER + SHIFT + S
+next / previous workspace        SUPER + scroll
+move window                      SUPER + left-drag
+resize window                    SUPER + right-drag
+volume up / down                 Volume keys
+mute / unmute                    FN + F1
+mic on / off                     F4
+screen brightness                Brightness keys
+play / pause / next / previous   Media keys
+screenshot (fullscreen)          Print
+screenshot (region)              SUPER + SHIFT + X

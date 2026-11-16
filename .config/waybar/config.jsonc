@@ -1,0 +1,108 @@
+{
+  "layer": "bottom",
+  "position": "top",
+  "height": 30,
+  "margin-top": 8,
+  "margin-bottom": 0,
+  "margin-left": 8,
+  "margin-right": 8,
+  "spacing": 0,
+  "modules-left": [
+    "custom/menu",
+    "clock",
+    "custom/workspaces"
+  ],
+  "modules-center": [
+    "hyprland/window"
+  ],
+  "modules-right": [
+    "tray",
+    "battery",
+    "wireplumber",
+    "backlight",
+    "bluetooth",
+    "network",
+    "custom/power"
+  ],
+  "custom/menu": {
+    "format": "\uf0c9",
+    "tooltip": false,
+    "on-click": "~/.config/waybar/scripts/settings-menu.sh"
+  },
+  "clock": {
+    "format": "{:%I:%M %p}",
+    "tooltip-format": "<tt>{calendar}</tt>"
+  },
+  "hyprland/window": {
+    "format": "{class}",
+    "separate-outputs": true
+  },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 10
+  },
+  "battery": {
+    "format": "{icon} {capacity}%",
+    "format-charging": "\uf0e7 {capacity}%",
+    "format-plugged": "\uf1e6 {capacity}%",
+    "format-icons": [
+      "\uf244",
+      "\uf243",
+      "\uf242",
+      "\uf241",
+      "\uf240"
+    ],
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "tooltip-format": "{timeTo}"
+  },
+  "wireplumber": {
+    "format": "{icon} {volume}%",
+    "format-muted": "\uf026 MUTE",
+    "format-icons": [
+      "\uf026",
+      "\uf027",
+      "\uf028"
+    ],
+    "scroll-step": 5,
+    "on-click": "pavucontrol",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+  },
+  "backlight": {
+    "format": "{icon} {percent}%",
+    "format-icons": [
+      "\uf185"
+    ],
+    "on-scroll-up": "brightnessctl set 5%+",
+    "on-scroll-down": "brightnessctl set 5%-"
+  },
+  "bluetooth": {
+    "format": "\uf294",
+    "format-disabled": "\uf293",
+    "format-off": "\uf293",
+    "format-connected": "\uf294 {device_alias}",
+    "tooltip-format-connected": "{device_enumerate}",
+    "on-click": "blueman-manager"
+  },
+  "network": {
+    "format-wifi": "\uf1eb",
+    "format-ethernet": "\udb80\ude00",
+    "tooltip-format-ethernet": "{ifname} ({ipaddr})",
+    "format-disconnected": "\uf127",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+    "on-click": "~/.config/waybar/scripts/wifi-menu.sh"
+  },
+  "custom/power": {
+    "format": "\uf011",
+    "tooltip": false,
+    "on-click": "python3 ~/.config/power-menu/power-menu.py"
+  },
+  "custom/workspaces": {
+    "exec": "python3 ~/.config/waybar/workspaces.py",
+    "return-type": "json",
+    "format": "{}",
+    "tooltip": false
+  }
+}
