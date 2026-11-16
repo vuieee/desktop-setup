@@ -21,13 +21,15 @@ elif "Appearance" in top:
         ps = next((x.title() for x in ["top","bottom","left","right"] if f'"position": "{x}"' in cfg), "Top")
         ol = "On" if "border_size = 2" in l else "Off"
         rd = "On" if "rounding       = 10" in l else "Off"
+        vb_path = "/home/mocha/.config/hypr/shaders/vibrance.glsl"
+        vb = "On" if f"screen_shader  = "{vb_path}"" in l else "Off"
         bg, fg = ("#000000","#ffffff") if dm=="On" else ("#ffffff","#000000")
         bgr, rfr = ("rgba(0, 0, 0, 0.72)","#000000b8") if dm=="On" else ("rgba(255, 255, 255, 0.72)","#ffffffb8")
-        items = [((chr(0xf186) if dm=="On" else chr(0xf185))+"  Dark Mode",dm),(chr(0xf06e)+"  Acrylic",ac),(chr(0xf0c9)+"  Waybar",ps),(chr(0xf065)+"  Outlines",ol),((chr(0xf111) if rd=="On" else chr(0xf096))+"  Rounded",rd)]
+        items = [((chr(0xf186) if dm=="On" else chr(0xf185))+"  Dark Mode",dm),(chr(0xf06e)+"  Acrylic",ac),(chr(0xf0c9)+"  Waybar",ps),(chr(0xf065)+"  Outlines",ol),((chr(0xf111) if rd=="On" else chr(0xf096))+"  Rounded",rd),(chr(0xf042)+"  Vibrance",vb)]
         menu = nl.join(f"{k:<15}{v:>5}" for k, v in items)
-        ch = subprocess.run(["rofi","-dmenu","-i","-selected-row",str(idx),"-theme",str(rc),"-theme-str","window { width: 280px; } mainbox { children: [listview]; } listview { lines: 5; padding: 0px; spacing: 0px; }"],input=menu,text=True,capture_output=True).stdout.strip()
+        ch = subprocess.run(["rofi","-dmenu","-i","-selected-row",str(idx),"-theme",str(rc),"-theme-str","window { width: 280px; } mainbox { children: [listview]; } listview { lines: 6; padding: 0px; spacing: 0px; }"],input=menu,text=True,capture_output=True).stdout.strip()
         if not ch: break
-        idx = ["Dark Mode","Acrylic","Waybar","Outlines","Rounded"].index(next(x for x in ["Dark Mode","Acrylic","Waybar","Outlines","Rounded"] if x in ch))
+        idx = ["Dark Mode","Acrylic","Waybar","Outlines","Rounded","Vibrance"].index(next(x for x in ["Dark Mode","Acrylic","Waybar","Outlines","Rounded","Vibrance"] if x in ch))
         if "Dark Mode" in ch:
             subprocess.run(["python3",str(home/".config/waybar/scripts/toggle-dark.py")])
             subprocess.run(["gsettings","set","org.gnome.desktop.interface","color-scheme","prefer-dark" if dm=="Off" else "default"],stderr=-3)
@@ -70,6 +72,10 @@ elif "Appearance" in top:
             c = c.replace("border-radius: 0;","border-radius: 10px;").replace("border-radius: 0px;","border-radius: 10px;") if on else c.replace("border-radius: 10px;","border-radius: 0;")
             s = s.replace("border-radius: 0px;","border-radius: 10px;") if on else s.replace("border-radius: 10px;","border-radius: 0px;")
             r = r.replace("border-radius: 0px;","border-radius: 10px;") if on else r.replace("border-radius: 10px;","border-radius: 0px;")
+        elif "Vibrance" in ch:
+            on = ch.endswith("Off")
+            l = l.replace("screen_shader  = \"\"", f"screen_shader  = \"{vb_path}\"") if on else l.replace(f"screen_shader  = \"{vb_path}\"", "screen_shader  = \"\"")
+        ws.write_text(c); rc.write_text(r); sc.write_text(s); hl.write_text(l); osd.write_text(o)
         subprocess.run(["hyprctl","reload"],stdout=-3,stderr=-3)
         subprocess.run(["swaync-client","-rs"],stdout=-3,stderr=-3)
         subprocess.run(["killall","waybar"],stdout=-3,stderr=-3)
