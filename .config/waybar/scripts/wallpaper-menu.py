@@ -84,7 +84,7 @@ class WallpaperCarousel(Gtk.Window):
         chosen = walls[self.idx]
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(chosen, target)
-        hc.write_text(chr(10).join(["wallpaper {", "    monitor =", "    path = ~/Pictures/wallpaper.png", "    fit_mode = cover", "}", ""]))
+        hc.write_text(chr(10).join(["splash = false", "wallpaper {", "    monitor =", "    path = ~/Pictures/wallpaper.png", "    fit_mode = cover", "}", ""]))
         if subprocess.run(["pgrep", "-x", "hyprpaper"], stdout=subprocess.DEVNULL).returncode == 0:
             subprocess.run(["hyprctl", "hyprpaper", "wallpaper", f",{target}"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         else:
