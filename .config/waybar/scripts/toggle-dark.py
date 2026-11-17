@@ -14,3 +14,9 @@ hl.write_text(sw(hl.read_text(),hp))
 ff=h/".config/fastfetch/config.jsonc"
 if ff.exists():ff.write_text(sw(ff.read_text(),[("white","black"),("black","white")]))
 subprocess.run(["killall","-SIGUSR1","kitty"],stderr=-3)
+
+for g in ["gtk-3.0/settings.ini","gtk-4.0/settings.ini"]:
+ gp=h/".config"/g
+ if gp.exists():
+  gt=gp.read_text()
+  gp.write_text(gt.replace("gtk-application-prefer-dark-theme=1","gtk-application-prefer-dark-theme=0") if "gtk-application-prefer-dark-theme=1" in gt else gt.replace("gtk-application-prefer-dark-theme=0","gtk-application-prefer-dark-theme=1"))

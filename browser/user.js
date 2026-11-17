@@ -12,3 +12,5 @@ user_pref("mousewheel.default.delta_multiplier_y", 300);
 // Enable userChrome.css & Tab Animations
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("browser.tabs.animate", true);
+
+user_pref("layout.css.prefers-color-scheme.content-override", 2);
