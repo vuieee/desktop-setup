@@ -438,3 +438,11 @@ hl.layer_rule({ name = 'mocha-swaync-cc-blur', match = { namespace = 'swaync-con
 hl.layer_rule({ name = 'mocha-swaync-win-blur', match = { namespace = 'swaync-notification-window' }, blur = true, ignore_alpha = 0.2 })
 hl.layer_rule({ name = 'mocha-osd-blur', match = { namespace = 'mocha-osd' }, blur = true, ignore_alpha = 0.2 })
 hl.layer_rule({ name = 'mocha-fakelock-blur', match = { namespace = 'mocha-fakelock' }, blur = true, ignore_alpha = 0.1 })
+
+hl.window_rule({
+  name = "wiremix-float",
+  match = { class = "wiremix" },
+  float = true,
+  size = { 620, 380 },
+  center = true,
+})
