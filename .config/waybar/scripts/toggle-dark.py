@@ -14,17 +14,3 @@ hl.write_text(sw(hl.read_text(),hp))
 ff=h/".config/fastfetch/config.jsonc"
 if ff.exists():ff.write_text(sw(ff.read_text(),[("white","black"),("black","white")]))
 subprocess.run(["killall","-SIGUSR1","kitty"],stderr=-3)
-
-is_dark = "background-color: #000000;" in (h/".config/waybar/style.css").read_text().split("}")
-theme = "Adwaita-dark" if is_dark else "Adwaita"
-scheme = "prefer-dark" if is_dark else "prefer-light"
-subprocess.run(["gsettings","set","org.gnome.desktop.interface","color-scheme",scheme],stderr=-3)
-subprocess.run(["gsettings","set","org.gnome.desktop.interface","gtk-theme",theme],stderr=-3)
-for g in ["gtk-3.0/settings.ini","gtk-4.0/settings.ini"]:
-    gp = h/".config"/g
-    gp.parent.mkdir(parents=True,exist_ok=True)
-    lines = [l for l in (gp.read_text().splitlines() if gp.exists() else ["[Settings]"]) if not l.startswith(("gtk-application-prefer-dark-theme=","gtk-theme-name="))]
-    if not lines or lines != "[Settings]":
-        lines.insert(0,"[Settings]")
-    lines += [f"gtk-application-prefer-dark-theme={1 if is_dark else 0}", f"gtk-theme-name={theme}"]
-    gp.write_text(chr(10).join(lines) + chr(10))
