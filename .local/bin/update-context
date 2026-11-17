@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+import json,pathlib,re
+h=pathlib.Path.home()
+hl=(h/".config/hypr/hyprland.lua").read_text()
+wc=json.loads((h/".config/waybar/config.jsonc").read_text())
+ws=(h/".config/waybar/style.css").read_text()
+sc=re.search(r'scale\s*=\s*"([^"]+)"',hl)
+gi=re.search(r"gaps_in\s*=\s*(\d+)",hl)
+go=re.search(r"gaps_out\s*=\s*(\d+)",hl)
+bs=re.search(r"border_size\s*=\s*(\d+)",hl)
+dk="On" if "background-color: #000000;" in next(iter(ws.split("}"))) else "Off"
+ac="On" if "0.72" in ws else "Off"
+pos=wc.get("position","top").title()
+ml=", ".join(wc.get("modules-left",[]))
+mr=", ".join(wc.get("modules-right",[]))
+out=h/"Documents/mocha-context.txt"
+old=out.read_text() if out.exists() else ""
+head=chr(10).join([f"System: CachyOS, Hyprland Lua (scale {sc.group(1) if sc else 1.33}, gaps_in={gi.group(1) if gi else 4}, gaps_out={go.group(1) if go else 8}, border_size={bs.group(1) if bs else 2}), Fish, user mocha.",f"Live State: Dark Mode={dk}, Acrylic={ac}, Waybar={pos}, left=[{ml}], right=[{mr}].","Context Auto-Sync: /home/mocha/Documents/mocha-context.txt updated by ~/.local/bin/update-context."])+chr(10)
+sep=chr(10)+"---"+chr(10)
+out.write_text(head+(sep+old.split(sep,1)[-1] if sep in old else (sep+old if old else "")))
+print("Updated",out)
