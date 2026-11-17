@@ -22,11 +22,11 @@ done
 
 vis_lines=${#rows[@]}
 [ "$vis_lines" -gt 8 ] && vis_lines=8
-LIST_THEME="window { width: 640px; } mainbox { children: [listview, textbox-hint]; } listview { lines: $vis_lines; } textbox-hint { expand: false; padding: 10px 14px; border: 2px 0px 0px 0px; border-color: #ffffff; text-color: #ffffff; content: \"Enter: Connect   |   F: Forget (Saved)\"; }"
+LIST_THEME="window { width: 640px; } mainbox { children: [listview, textbox-hint]; } listview { lines: $vis_lines; } textbox-hint { expand: false; horizontal-align: 0.5; padding: 10px 14px; border: 2px 0px 0px 0px; border-color: #ffffff; text-color: #ffffff; content: \"Enter: Connect    |    F: Forget (Saved)    |    R: Rescan\"; }"
 
 sel=0
 while true; do
-    out=$(printf "%s\n" "${menu_items[@]}" | rofi -dmenu -format i -selected-row "$sel" -kb-custom-1 "f" -kb-custom-2 "F" -theme "$THEME" -theme-str "$LIST_THEME")
+    out=$(printf "%s\n" "${menu_items[@]}" | rofi -dmenu -format i -selected-row "$sel" -kb-custom-1 "f" -kb-custom-2 "F" -kb-custom-3 "r" -kb-custom-4 "R" -theme "$THEME" -theme-str "$LIST_THEME")
     rc=$?
     [ $rc -eq 1 ] && exit 0
     [ -z "$out" ] && exit 0
@@ -34,6 +34,13 @@ while true; do
 
     IFS=$'\t' read -r ssid status label <<< "${rows[$sel]}"
     [ -z "$ssid" ] && exit 0
+
+    if [ $rc -eq 12 ] || [ $rc -eq 13 ]; then
+        notify-send "Wi-Fi" "Scanning networks..."
+        nmcli device wifi rescan >/dev/null 2>&1
+        rm -f "$CACHE"
+        exec "$0"
+    fi
 
     if [ $rc -eq 10 ] || [ $rc -eq 11 ]; then
         if [ "$status" != "saved" ]; then
