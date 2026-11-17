@@ -114,13 +114,13 @@ hl.config({
     },
 
     decoration = {
-        screen_shader  = "/home/mocha/.config/hypr/shaders/vibrance.glsl",
+        screen_shader  = "",
         rounding       = 0,
         rounding_power = 2,
 
         -- Change transparency of focused and unfocused windows
-        active_opacity   = 0.85,
-        inactive_opacity = 0.78,
+        active_opacity   = 1.0,
+        inactive_opacity = 1.0,
 
         shadow = {
             enabled      = true,
@@ -375,6 +375,7 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("waybar")
   hl.exec_cmd("hyprpolkitagent")
   hl.exec_cmd("swaync")
+  hl.exec_cmd("env QT_QUICK_CONTROLS_STYLE=Basic easyeffects --gapplication-service")
 end)
 
 hl.bind("SUPER + SPACE", hl.dsp.exec_cmd("rofi -show drun -theme ~/.config/rofi/minimal.rasi"))
@@ -388,6 +389,7 @@ hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 
+hl.layer_rule({ name = "mocha-fakelock-blur", match = { namespace = "mocha-fakelock" }, blur = true, ignore_alpha = 0.1 })
 hl.on("hyprland.start", function() hl.exec_cmd("hyprpaper") end)
 
 hl.on("hyprland.start", function() hl.exec_cmd("hyprpaper") end)
@@ -431,14 +433,6 @@ hl.window_rule({
 
 hl.config({ xwayland = { force_zero_scaling = true } })
 
--- mocha-acrylic-layers
-hl.layer_rule({ name = 'mocha-waybar-blur', match = { namespace = 'waybar' }, blur = true, ignore_alpha = 0.2 })
-hl.layer_rule({ name = 'mocha-rofi-blur', match = { namespace = 'rofi' }, blur = true, ignore_alpha = 0.2 })
-hl.layer_rule({ name = 'mocha-swaync-cc-blur', match = { namespace = 'swaync-control-center' }, blur = true, ignore_alpha = 0.2 })
-hl.layer_rule({ name = 'mocha-swaync-win-blur', match = { namespace = 'swaync-notification-window' }, blur = true, ignore_alpha = 0.2 })
-hl.layer_rule({ name = 'mocha-osd-blur', match = { namespace = 'mocha-osd' }, blur = true, ignore_alpha = 0.2 })
-hl.layer_rule({ name = 'mocha-fakelock-blur', match = { namespace = 'mocha-fakelock' }, blur = true, ignore_alpha = 0.1 })
-
 hl.window_rule({
   name = "wiremix-float",
   match = { class = "wiremix" },
@@ -446,3 +440,6 @@ hl.window_rule({
   size = { 620, 380 },
   center = true,
 })
+hl.on("hyprland.start", function() hl.exec_cmd("wl-paste --type text --watch cliphist store"); hl.exec_cmd("wl-paste --type image --watch cliphist store") end)
+
+hl.on("hyprland.start", function() hl.exec_cmd("hypridle") end)

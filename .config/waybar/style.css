@@ -21,6 +21,7 @@ tooltip label {
 #custom-menu,
 #clock,
 #tray,
+#custom-caffeine,
 #battery,
 #wireplumber,
 #bluetooth,
@@ -96,18 +97,8 @@ tooltip label {
 
 
 window#waybar {
-  background-color: rgba(0, 0, 0, 0.72);
+  background-color: #000000;
   color: #ffffff;
   border: 2px solid #ffffff;
   border-radius: 0;
 }
-
-/* mocha-vert */
-window#waybar.left #custom-menu, window#waybar.left #clock, window#waybar.left #custom-workspaces, window#waybar.left #tray, window#waybar.left #battery, window#waybar.left #wireplumber, window#waybar.left #backlight, window#waybar.left #bluetooth, window#waybar.left #network, window#waybar.left #custom-power,
-window#waybar.right #custom-menu, window#waybar.right #clock, window#waybar.right #custom-workspaces, window#waybar.right #tray, window#waybar.right #battery, window#waybar.right #wireplumber, window#waybar.right #backlight, window#waybar.right #bluetooth, window#waybar.right #network, window#waybar.right #custom-power {
-  font-family: "FontAwesome", "MesloLGS Nerd Font", "JetBrains Mono", monospace;
-  padding: 6px 0;
-  margin: 0;
-  min-width: 26px;
-}
-window#waybar.left #custom-menu, window#waybar.left #custom-power, window#waybar.left #network, window#waybar.right #custom-menu, window#waybar.right #custom-power, window#waybar.right #network { padding: 6px 3px 6px 0; }

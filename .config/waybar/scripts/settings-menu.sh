@@ -23,13 +23,14 @@ elif "Appearance" in top:
         rd = "On" if "rounding       = 10" in l else "Off"
         vb_path = "/home/mocha/.config/hypr/shaders/vibrance.glsl"
         vb = "On" if f'screen_shader  = "{vb_path}"' in l else "Off"
+        an = "On" if "animations = {\n        enabled = true," in l else "Off"
         bg, fg = ("#000000","#ffffff") if dm=="On" else ("#ffffff","#000000")
         bgr, rfr = ("rgba(0, 0, 0, 0.72)","#000000b8") if dm=="On" else ("rgba(255, 255, 255, 0.72)","#ffffffb8")
-        items = [((chr(0xf186) if dm=="On" else chr(0xf185))+"  Dark Mode",dm),(chr(0xf06e)+"  Acrylic",ac),(chr(0xf0c9)+"  Waybar",ps),(chr(0xf065)+"  Outlines",ol),((chr(0xf111) if rd=="On" else chr(0xf096))+"  Rounded",rd),(chr(0xf042)+"  Vibrance",vb)]
+        items = [((chr(0xf186) if dm=="On" else chr(0xf185))+"  Dark Mode",dm),(chr(0xf06e)+"  Acrylic",ac),(chr(0xf0c9)+"  Waybar",ps),(chr(0xf065)+"  Outlines",ol),((chr(0xf111) if rd=="On" else chr(0xf096))+"  Rounded",rd),(chr(0xf042)+"  Vibrance",vb),(chr(0xf04b)+"  Animations",an)]
         menu = nl.join(f"{k:<15}{v:>5}" for k, v in items)
-        ch = subprocess.run(["rofi","-dmenu","-i","-selected-row",str(idx),"-theme",str(rc),"-theme-str","window { width: 280px; } mainbox { children: [listview]; } listview { lines: 6; padding: 0px; spacing: 0px; }"],input=menu,text=True,capture_output=True).stdout.strip()
+        ch = subprocess.run(["rofi","-dmenu","-i","-selected-row",str(idx),"-theme",str(rc),"-theme-str","window { width: 280px; } mainbox { children: [listview]; } listview { lines: 7; padding: 0px; spacing: 0px; }"],input=menu,text=True,capture_output=True).stdout.strip()
         if not ch: break
-        idx = ["Dark Mode","Acrylic","Waybar","Outlines","Rounded","Vibrance"].index(next(x for x in ["Dark Mode","Acrylic","Waybar","Outlines","Rounded","Vibrance"] if x in ch))
+        idx = ["Dark Mode","Acrylic","Waybar","Outlines","Rounded","Vibrance","Animations"].index(next(x for x in ["Dark Mode","Acrylic","Waybar","Outlines","Rounded","Vibrance","Animations"] if x in ch))
         if "Dark Mode" in ch:
             subprocess.run(["python3",str(home/".config/waybar/scripts/toggle-dark.py")])
             subprocess.run(["gsettings","set","org.gnome.desktop.interface","color-scheme","prefer-dark" if dm=="Off" else "default"],stderr=-3)
@@ -40,7 +41,7 @@ elif "Appearance" in top:
             s=s.replace(f"background: {bg};",f"background: {bgr};").replace(".notification {"+nl+f"  background: {bgr};",".notification {"+nl+"  background: transparent;") if on else s.replace(f"background: {bgr};",f"background: {bg};").replace(".notification {"+nl+"  background: transparent;",".notification {"+nl+f"  background: {bg};")
             l = l.replace("active_opacity   = 1.0","active_opacity   = 0.85").replace("inactive_opacity = 1.0","inactive_opacity = 0.78") if on else l.replace("active_opacity   = 0.85","active_opacity   = 1.0").replace("inactive_opacity = 0.78","inactive_opacity = 1.0")
             mark = "-- mocha-acrylic-layers"
-            lr = nl.join(["",mark,"hl.layer_rule({ name = 'mocha-waybar-blur', match = { namespace = 'waybar' }, blur = true, ignore_alpha = 0.2 })","hl.layer_rule({ name = 'mocha-rofi-blur', match = { namespace = 'rofi' }, blur = true, ignore_alpha = 0.2 })","hl.layer_rule({ name = 'mocha-swaync-cc-blur', match = { namespace = 'swaync-control-center' }, blur = true, ignore_alpha = 0.2 })","hl.layer_rule({ name = 'mocha-swaync-win-blur', match = { namespace = 'swaync-notification-window' }, blur = true, ignore_alpha = 0.2 })","hl.layer_rule({ name = 'mocha-osd-blur', match = { namespace = 'mocha-osd' }, blur = true, ignore_alpha = 0.2 })","hl.layer_rule({ name = 'mocha-fakelock-blur', match = { namespace = 'mocha-fakelock' }, blur = true, ignore_alpha = 0.1 })",""])
+            lr = nl.join(["",mark,"hl.layer_rule({ name = 'mocha-waybar-blur', match = { namespace = 'waybar' }, blur = true, ignore_alpha = 0.2 })","hl.layer_rule({ name = 'mocha-rofi-blur', match = { namespace = 'rofi' }, blur = true, ignore_alpha = 0.2 })","hl.layer_rule({ name = 'mocha-swaync-cc-blur', match = { namespace = 'swaync-control-center' }, blur = true, ignore_alpha = 0.2 })","hl.layer_rule({ name = 'mocha-swaync-win-blur', match = { namespace = 'swaync-notification-window' }, blur = true, ignore_alpha = 0.2 })","hl.layer_rule({ name = 'mocha-osd-blur', match = { namespace = 'mocha-osd' }, blur = true, ignore_alpha = 0.2 })",""])
             l = next(iter(l.split(nl+mark))) + (lr if on else "")
             o = o.replace(f"background-color: {bg};",f"background-color: {bgr};") if on else o.replace(f"background-color: {bgr};",f"background-color: {bg};")
         elif "Waybar" in ch:
@@ -56,7 +57,7 @@ elif "Appearance" in top:
             d["wireplumber"]["format"] = "{icon}" if vert else "{icon} {volume}%"
             d["backlight"]["format"] = "{icon}" if vert else "{icon} {percent}%"
             wc.write_text(json.dumps(d,indent=2)+nl)
-            vb = nl+"/* mocha-vert */"+nl+"#custom-menu, #clock, #custom-workspaces, #tray, #battery, #wireplumber, #backlight, #bluetooth, #network, #custom-power { padding: 8px 0; min-width: 30px; }"+nl+"/* end-mocha-vert */"
+            vb = nl+"/* mocha-vert */"+nl+"#custom-menu, #clock, #custom-workspaces, #tray, #custom-caffeine, #battery, #wireplumber, #backlight, #bluetooth, #network, #custom-power { padding: 8px 0; min-width: 30px; }"+nl+"/* end-mocha-vert */"
             c = c.split(nl+"/* mocha-vert */")[0] + (vb if vert else "")
             l = l.replace('style = "slide"','style = "slidevert"') if vert else l.replace('style = "slidevert"','style = "slide"')
             hl.write_text(l)
@@ -75,6 +76,9 @@ elif "Appearance" in top:
         elif "Vibrance" in ch:
             on = ch.endswith("Off")
             l = l.replace("screen_shader  = \"\"", f"screen_shader  = \"{vb_path}\"") if on else l.replace(f"screen_shader  = \"{vb_path}\"", "screen_shader  = \"\"")
+        elif "Animations" in ch:
+            on = ch.endswith("Off")
+            l = l.replace("animations = {\n        enabled = false,","animations = {\n        enabled = true,",1) if on else l.replace("animations = {\n        enabled = true,","animations = {\n        enabled = false,",1)
         if "Dark Mode" not in ch:
             ws.write_text(c); rc.write_text(r); sc.write_text(s); hl.write_text(l); osd.write_text(o)
         subprocess.run(["hyprctl","reload"],stdout=-3,stderr=-3)

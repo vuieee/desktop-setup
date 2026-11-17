@@ -17,6 +17,7 @@
   ],
   "modules-right": [
     "tray",
+    "custom/caffeine",
     "battery",
     "wireplumber",
     "backlight",
@@ -37,10 +38,6 @@
     "format": "{class}",
     "separate-outputs": true
   },
-  "tray": {
-    "icon-size": 16,
-    "spacing": 10
-  },
   "battery": {
     "format": "{icon} {capacity}%",
     "format-charging": "\uf0e7 {capacity}%",
@@ -59,7 +56,7 @@
     "tooltip-format": "{timeTo}"
   },
   "wireplumber": {
-    "format": "{icon}  {volume}%",
+    "format": "{icon} {volume}%",
     "format-muted": "\uf026 MUTE",
     "format-icons": [
       "\uf026",
@@ -105,5 +102,16 @@
     "format": "{}",
     "tooltip": false
   },
-  "width": 0
+  "width": 0,
+  "tray": {
+    "icon-size": 16,
+    "spacing": 10
+  },
+  "custom/caffeine": {
+    "exec": "python3 /home/mocha/.config/waybar/scripts/caffeine.py",
+    "return-type": "json",
+    "interval": 5,
+    "signal": 8,
+    "on-click": "python3 /home/mocha/.config/waybar/scripts/caffeine.py toggle"
+  }
 }
