@@ -6,5 +6,6 @@
   "notification-body-image-width": 260,
   "timeout": 3,
   "timeout-low": 2,
-  "timeout-critical": 5
+  "timeout-critical": 5,
+  "transition-time": 0
 }

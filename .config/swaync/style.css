@@ -4,23 +4,43 @@
   box-shadow: none;
   background-image: none;
 }
+window,
+window.background,
+.background,
+scrolledwindow,
+viewport,
+list,
 .floating-notifications,
+.floating-notifications list,
+.floating-notifications row,
 .blank-window {
   background: transparent;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
-.notification-row {
+.notification-row,
+.notification-row:hover,
+.notification-row:focus,
+.notification-row:selected {
   outline: none;
+  background: transparent;
+  border: none;
+  padding: 0;
   margin: 6px 10px;
 }
 .notification-background {
-  background: rgba(0, 0, 0, 0.72);
+  background: #000000;
   border: 2px solid #ffffff;
+  margin: 0;
   padding: 0;
 }
 .notification {
   background: transparent;
   color: #ffffff;
   border: none;
+  margin: 0;
   padding: 0;
 }
 .notification-content {
@@ -41,18 +61,19 @@
   background: #ffffff;
   color: #000000;
 }
-.notification-background:hover label,
-.notification:hover .summary,
-.notification:hover .body {
+.notification-background:hover *,
+.notification:hover *,
+.notification-default-action:hover *,
+.notification-action:hover * {
   color: #000000;
 }
 .notification-action {
-  background: rgba(0, 0, 0, 0.72);
+  background: #000000;
   color: #ffffff;
   border: 1px solid #ffffff;
 }
 .close-button {
-  background: rgba(0, 0, 0, 0.72);
+  background: #000000;
   color: #ffffff;
   border: 1px solid #ffffff;
   text-shadow: none;
@@ -75,7 +96,7 @@
   border: 1px solid #ffffff;
 }
 .control-center {
-  background: rgba(0, 0, 0, 0.72);
+  background: #000000;
   border: 2px solid #ffffff;
   color: #ffffff;
 }
