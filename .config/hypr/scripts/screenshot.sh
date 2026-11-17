@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-DIR="~/Pictures/Screenshots"
+DIR="/home/mocha/Pictures/Screenshots"
 mkdir -p "$DIR"
 FILE="$DIR/shot_$(date +%Y%m%d_%H%M%S).png"
 if [ "$1" = "region" ]; then
@@ -8,5 +8,5 @@ if [ "$1" = "region" ]; then
 else
   grim "$FILE" || exit 1
 fi
-wl-copy < "$FILE"
+wl-copy -t image/png < "$FILE"
 notify-send -i "$FILE" "Screenshot" "Saved: $(basename "$FILE")" 2>/dev/null
