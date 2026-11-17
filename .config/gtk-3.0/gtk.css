@@ -59,3 +59,93 @@ selection {
 
 window, window.background, .background, scrolledwindow, viewport { background-color: #000000; color: #ffffff; }
 
+
+/* Nautilus flat headerbar overrides */
+headerbar,
+.titlebar {
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  box-shadow: none;
+}
+
+headerbar button,
+.titlebar button,
+.path-bar button,
+windowcontrols button,
+menubutton > button {
+  background-color: transparent;
+  color: #ffffff;
+  border: none;
+  box-shadow: none;
+}
+
+headerbar button:hover,
+.titlebar button:hover,
+.path-bar button:hover,
+windowcontrols button:hover,
+menubutton > button:hover {
+  background-color: #1c1c1c;
+  color: #ffffff;
+  border: none;
+}
+
+headerbar button:checked,
+.path-bar button:checked {
+  background-color: #262626;
+  color: #ffffff;
+}
+
+.navigation-sidebar row:selected {
+  background-color: #1f1f1f;
+  color: #ffffff;
+  border-left: 2px solid #ffffff;
+}
+
+listview row:selected,
+columnview row:selected {
+  background-color: #1f1f1f;
+  color: #ffffff;
+}
+
+/* Nautilus compact context menus */
+popover,
+popover.background {
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+
+popover > contents {
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  box-shadow: none;
+  padding: 4px;
+  margin: 0;
+}
+
+popover modelbutton,
+popover button {
+  background-color: transparent;
+  color: #ffffff;
+  border: none;
+  box-shadow: none;
+  min-height: 24px;
+  padding: 2px 8px;
+}
+
+popover modelbutton:hover,
+popover button:hover {
+  background-color: #1f1f1f;
+  color: #ffffff;
+  border: none;
+}
+
+/* Nautilus sidebar Dolphin-style cleanup */
+.navigation-sidebar row {
+  min-height: 30px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
