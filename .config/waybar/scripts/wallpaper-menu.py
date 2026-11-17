@@ -44,7 +44,7 @@ tstr = " ".join([
     f"element-text {{ horizontal-align: 0.5; font: {q}JetBrains Mono 11{q}; background-color: transparent; text-color: inherit; }}"
 ])
 
-cmd = ["rofi", "-dmenu", "-i", "-show-icons", "-format", "i", "-kb-row-left", "Left,h", "-kb-row-right", "Right,l", "-theme", str(rc), "-theme-str", tstr]
+cmd = ["rofi", "-dmenu", "-i", "-show-icons", "-format", "i", "-kb-move-char-back", "", "-kb-move-char-forward", "", "-kb-row-left", "Left,h", "-kb-row-right", "Right,l", "-theme", str(rc), "-theme-str", tstr]
 res = subprocess.run(cmd, input=nl.join(rows), text=True, capture_output=True)
 if res.returncode != 0 or not res.stdout.strip():
     sys.exit(0)
