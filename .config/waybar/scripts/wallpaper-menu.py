@@ -3,7 +3,7 @@ import hashlib, os, pathlib, shutil, subprocess, sys
 os.environ["GDK_BACKEND"] = "wayland"
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, GdkPixbuf
+from gi.repository import Gtk, Gdk, GdkPixbuf, GLib
 import cairo
 from PIL import Image, ImageOps
 
@@ -37,17 +37,19 @@ for w in walls:
             card.save(tf, "PNG")
     pixbufs.append(GdkPixbuf.Pixbuf.new_from_file(str(tf)))
 
+def lerp(a, b, t):
+    return a + (b - a) * t
+
 class WallpaperCarousel(Gtk.Window):
     def __init__(self):
         super().__init__(title="mocha-wallpaper")
-        self.set_wmclass("mocha-wallpaper", "mocha-wallpaper")
         self.set_decorated(False)
         self.set_app_paintable(True)
-        screen = self.get_screen()
-        visual = screen.get_rgba_visual()
+        visual = self.get_screen().get_rgba_visual()
         if visual:
             self.set_visual(visual)
         self.idx = 0
+        self.anim_offset = 0.0
         self.hitboxes = []
         self.da = Gtk.DrawingArea()
         self.da.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
@@ -56,6 +58,20 @@ class WallpaperCarousel(Gtk.Window):
         self.add(self.da)
         self.connect("key-press-event", self.on_key)
         self.connect("destroy", Gtk.main_quit)
+        GLib.timeout_add(16, self.on_tick)
+
+    def on_tick(self):
+        if abs(self.anim_offset) > 0.002:
+            self.anim_offset *= 0.72
+            if abs(self.anim_offset) <= 0.002:
+                self.anim_offset = 0.0
+            self.da.queue_draw()
+        return True
+
+    def step(self, delta):
+        self.idx = (self.idx + delta) % len(walls)
+        self.anim_offset += delta
+        self.da.queue_draw()
 
     def apply_current(self):
         chosen = walls[self.idx]
@@ -72,11 +88,9 @@ class WallpaperCarousel(Gtk.Window):
         if kv in (Gdk.KEY_Escape, Gdk.KEY_q, Gdk.KEY_Q):
             Gtk.main_quit()
         elif kv in (Gdk.KEY_Left, Gdk.KEY_a, Gdk.KEY_A, Gdk.KEY_h, Gdk.KEY_H):
-            self.idx = (self.idx - 1) % len(walls)
-            self.da.queue_draw()
+            self.step(-1)
         elif kv in (Gdk.KEY_Right, Gdk.KEY_d, Gdk.KEY_D, Gdk.KEY_l, Gdk.KEY_L):
-            self.idx = (self.idx + 1) % len(walls)
-            self.da.queue_draw()
+            self.step(1)
         elif kv in (Gdk.KEY_Return, Gdk.KEY_KP_Enter, Gdk.KEY_space):
             self.apply_current()
 
@@ -86,34 +100,54 @@ class WallpaperCarousel(Gtk.Window):
                 if slot == 0:
                     self.apply_current()
                 else:
-                    self.idx = (self.idx + slot) % len(walls)
-                    self.da.queue_draw()
+                    self.step(slot)
                 return
         Gtk.main_quit()
+
+    def slot_geom(self, pos):
+        anchors = [
+            (-3.0, -580.0, 120.0, 240.0, 26.0, 0.75),
+            (-2.0, -455.0, 155.0, 305.0, 34.0, 0.55),
+            (-1.0, -265.0, 200.0, 385.0, 42.0, 0.30),
+            ( 0.0,    0.0, 290.0, 470.0, 52.0, 0.00),
+            ( 1.0,  265.0, 200.0, 385.0, 42.0, 0.30),
+            ( 2.0,  455.0, 155.0, 305.0, 34.0, 0.55),
+            ( 3.0,  580.0, 120.0, 240.0, 26.0, 0.75),
+        ]
+        if pos <= anchors[0][0]:
+            return anchors[0][1:]
+        if pos >= anchors[-1][0]:
+            return anchors[-1][1:]
+        for i in range(len(anchors) - 1):
+            p0 = anchors[i][0]
+            p1 = anchors[i + 1][0]
+            if p0 <= pos <= p1:
+                t = (pos - p0) / (p1 - p0)
+                return tuple(lerp(anchors[i][j], anchors[i + 1][j], t) for j in range(1, 6))
+        return anchors[3][1:]
 
     def on_draw(self, widget, cr):
         w = widget.get_allocated_width()
         h = widget.get_allocated_height()
-        cr.set_source_rgba(0.0, 0.0, 0.0, 0.72)
+        cr.set_source_rgba(0.0, 0.0, 0.0, 0.55)
         cr.rectangle(0, 0, w, h)
         cr.fill()
 
-        specs = [
-            (-2, -370, 150, 300, 34),
-            (-1, -205, 190, 375, 42),
-            (0,     0, 290, 470, 52),
-            (1,   205, 190, 375, 42),
-            (2,   370, 150, 300, 34),
-        ]
-        cx, cy = w / 2.0, h / 2.0 - 10
+        cx, cy = w / 2.0, h / 2.0 - 12
         self.hitboxes = []
+        render_slots = sorted([-3, -2, -1, 0, 1, 2, 3], key=lambda s: -abs(s + self.anim_offset))
 
-        for slot, dx, cw, ch, slant in specs:
+        for slot in render_slots:
+            pos = slot + self.anim_offset
+            if abs(pos) > 2.6:
+                continue
+            dx, cw, ch, slant, dim = self.slot_geom(pos)
             wi = (self.idx + slot) % len(walls)
             pb = pixbufs[wi]
             x = cx + dx - cw / 2.0
             y = cy - ch / 2.0
-            self.hitboxes.append((slot, x - slant / 2.0, x + cw + slant / 2.0, y, y + ch))
+            if abs(slot) <= 2:
+                self.hitboxes.append((slot, x, x + cw + slant, y, y + ch))
 
             cr.save()
             cr.move_to(x + slant, y)
@@ -133,8 +167,8 @@ class WallpaperCarousel(Gtk.Window):
             cr.scale(scale, scale)
             Gdk.cairo_set_source_pixbuf(cr, pb, 0, 0)
             cr.paint()
-            if slot != 0:
-                cr.set_source_rgba(0.0, 0.0, 0.0, 0.35 if abs(slot) == 1 else 0.55)
+            if dim > 0.01:
+                cr.set_source_rgba(0.0, 0.0, 0.0, dim)
                 cr.paint()
             cr.restore()
 
@@ -144,15 +178,10 @@ class WallpaperCarousel(Gtk.Window):
             cr.line_to(x + cw, y + ch)
             cr.line_to(x, y + ch)
             cr.close_path()
-            if slot == 0:
-                cr.set_source_rgba(1.0, 1.0, 1.0, 1.0)
-                cr.set_line_width(2.5)
-            elif abs(slot) == 1:
-                cr.set_source_rgba(0.65, 0.65, 0.65, 0.9)
-                cr.set_line_width(1.5)
-            else:
-                cr.set_source_rgba(0.35, 0.35, 0.35, 0.8)
-                cr.set_line_width(1.5)
+            focus = max(0.0, 1.0 - abs(pos))
+            shade = lerp(0.35, 1.0, focus)
+            cr.set_source_rgba(shade, shade, shade, 1.0)
+            cr.set_line_width(lerp(1.5, 2.5, focus))
             cr.stroke()
             cr.restore()
 

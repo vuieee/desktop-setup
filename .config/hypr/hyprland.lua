@@ -443,3 +443,15 @@ hl.window_rule({
 hl.on("hyprland.start", function() hl.exec_cmd("wl-paste --type text --watch cliphist store"); hl.exec_cmd("wl-paste --type image --watch cliphist store") end)
 
 hl.on("hyprland.start", function() hl.exec_cmd("hypridle") end)
+
+hl.window_rule({
+  name = "mocha-wallpaper",
+  match = { title = "mocha-wallpaper" },
+  float = true,
+  fullscreen = true,
+  border_size = 0,
+  rounding = 0,
+  no_shadow = true,
+  no_blur = true,
+  no_anim = true,
+})
