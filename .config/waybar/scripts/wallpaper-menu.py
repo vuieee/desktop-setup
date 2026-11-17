@@ -50,6 +50,7 @@ class WallpaperCarousel(Gtk.Window):
             self.set_visual(visual)
         self.idx = 0
         self.anim_offset = 0.0
+        self.open_t = 0.0
         self.hitboxes = []
         self.da = Gtk.DrawingArea()
         self.da.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
@@ -61,10 +62,16 @@ class WallpaperCarousel(Gtk.Window):
         GLib.timeout_add(16, self.on_tick)
 
     def on_tick(self):
+        dirty = False
+        if self.open_t < 1.0:
+            self.open_t = min(1.0, self.open_t + 0.14)
+            dirty = True
         if abs(self.anim_offset) > 0.002:
             self.anim_offset *= 0.72
             if abs(self.anim_offset) <= 0.002:
                 self.anim_offset = 0.0
+            dirty = True
+        if dirty:
             self.da.queue_draw()
         return True
 
@@ -78,9 +85,11 @@ class WallpaperCarousel(Gtk.Window):
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(chosen, target)
         hc.write_text(chr(10).join(["wallpaper {", "    monitor =", "    path = ~/Pictures/wallpaper.png", "    fit_mode = cover", "}", ""]))
-        subprocess.run(["pkill", "-x", "hyprpaper"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        subprocess.Popen(["hyprpaper"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
-        subprocess.run(["notify-send", "-a", "Wallpapers", "Wallpaper Applied", chosen.name])
+        if subprocess.run(["pgrep", "-x", "hyprpaper"], stdout=subprocess.DEVNULL).returncode == 0:
+            subprocess.run(["hyprctl", "hyprpaper", "reload", f",{target}"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        else:
+            subprocess.Popen(["hyprpaper"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
+        subprocess.run(["notify-send", "-a", "Wallpapers", "Wallpaper Applied", chosen.stem])
         Gtk.main_quit()
 
     def on_key(self, widget, event):
@@ -129,11 +138,16 @@ class WallpaperCarousel(Gtk.Window):
     def on_draw(self, widget, cr):
         w = widget.get_allocated_width()
         h = widget.get_allocated_height()
-        cr.set_source_rgba(0.0, 0.0, 0.0, 0.55)
+        ease = 1.0 - (1.0 - self.open_t) ** 3
+        cr.set_source_rgba(0.0, 0.0, 0.0, 0.55 * ease)
         cr.rectangle(0, 0, w, h)
         cr.fill()
 
         cx, cy = w / 2.0, h / 2.0 - 12
+        cr.translate(cx, cy)
+        sc = 0.88 + 0.12 * ease
+        cr.scale(sc, sc)
+        cr.translate(-cx, -cy)
         self.hitboxes = []
         render_slots = sorted([-3, -2, -1, 0, 1, 2, 3], key=lambda s: -abs(s + self.anim_offset))
 
