@@ -30,7 +30,7 @@ def rofi(prompt, items, w=620, lines=None, sel=0, icons=False):
         f"listview {{ lines: {n}; fixed-num-lines: true; padding: 0px; spacing: 0px; }} "
         f"element {{ children: [element-text, element-icon]; spacing: 10px; }} "
         f"element-icon {{ size: {36 if icons else 0}px; background-color: transparent; }} "
-        f"element-text {{ expand: true; vertical-align: 0.5; }}"
+        f"element-text {{ expand: true; vertical-align: 0.5; }}" + (" element selected {{ background-color: #000000; text-color: #808080; }}" if items == ["(Clipboard empty)"] else "")
     )
     cmd = ["rofi", "-dmenu", "-i", "-p", prompt, "-selected-row", str(sel), "-theme", str(rc), "-theme-str", tstr]
     if icons:
