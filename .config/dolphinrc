@@ -14,7 +14,7 @@ Places Icons Static Size=22
 MenuBar=Disabled
 
 [PreviewSettings]
-Plugins=imagethumbnail,svgthumbnail,jpegthumbnail
+Plugins=imagethumbnail,jpegthumbnail,svgthumbnail
 
 [UiSettings]
 ColorScheme=Mono

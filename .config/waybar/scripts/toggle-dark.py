@@ -6,7 +6,7 @@ def sw(t,m):
  for i,(a,_) in enumerate(m):t=t.replace(a,f"_T{i}_")
  for i,(_,b) in enumerate(m):t=t.replace(f"_T{i}_",b)
  return t
-for f in ["waybar/style.css","rofi/minimal.rasi","swaync/style.css","hypr/scripts/osd-popup.py","kitty/kitty.conf","power-menu/power-menu.py","power-menu/fake-lock.py"]:
+for f in ["waybar/style.css","rofi/minimal.rasi","swaync/style.css","hypr/scripts/osd-popup.py","kitty/kitty.conf","power-menu/power-menu.py","power-menu/fake-lock.py","yazi/theme.toml"]:
  fp=h/".config"/f
  if fp.exists():fp.write_text(sw(fp.read_text(),css))
 hl=h/".config/hypr/hyprland.lua"
@@ -14,3 +14,5 @@ hl.write_text(sw(hl.read_text(),hp))
 ff=h/".config/fastfetch/config.jsonc"
 if ff.exists():ff.write_text(sw(ff.read_text(),[("white","black"),("black","white")]))
 subprocess.run(["killall","-SIGUSR1","kitty"],stderr=-3)
+dark = "background-color: #000000;" in (h / ".config/waybar/style.css").read_text().split("}")[0]
+subprocess.run(["gsettings", "set", "org.gnome.desktop.interface", "color-scheme", "prefer-dark" if dark else "prefer-light"], stderr=-3)

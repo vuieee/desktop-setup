@@ -1,0 +1,65 @@
+[mgr]
+cwd = { fg = "#ffffff", bold = true }
+hovered = { fg = "#000000", bg = "#ffffff", bold = true }
+preview_hovered = { underline = true }
+find_keyword = { fg = "#000000", bg = "#ffffff", bold = true }
+find_position = { fg = "#ffffff", bg = "#000000", bold = true }
+marker_copied = { fg = "#ffffff", bg = "#000000" }
+marker_cut = { fg = "#ffffff", bg = "#000000" }
+marker_marked = { fg = "#ffffff", bg = "#000000" }
+marker_selected = { fg = "#ffffff", bg = "#000000" }
+count_copied = { fg = "#000000", bg = "#ffffff" }
+count_cut = { fg = "#000000", bg = "#ffffff" }
+count_selected = { fg = "#000000", bg = "#ffffff" }
+border_symbol = "│"
+border_style = { fg = "#ffffff" }
+
+[indicator]
+current = { fg = "#000000", bg = "#ffffff", bold = true }
+padding = { open = " ", close = " " }
+
+[tabs]
+active = { fg = "#000000", bg = "#ffffff", bold = true }
+inactive = { fg = "#ffffff", bg = "#000000" }
+
+[status]
+sep_left = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+overall = { fg = "#ffffff", bg = "#000000" }
+progress_label = { fg = "#ffffff", bold = true }
+progress_normal = { fg = "#ffffff", bg = "#000000" }
+progress_error = { fg = "#ffffff", bg = "#000000" }
+perm_type = { fg = "#ffffff" }
+perm_read = { fg = "#ffffff" }
+perm_write = { fg = "#ffffff" }
+perm_exec = { fg = "#ffffff" }
+perm_sep = { fg = "#aaaaaa" }
+
+[input]
+border = { fg = "#ffffff" }
+title = { fg = "#ffffff" }
+value = { fg = "#ffffff" }
+selected = { reversed = true }
+
+[filetype]
+rules = [
+  { url = "*/", fg = "#ffffff", bold = true },
+  { url = "*", fg = "#dddddd" }
+]
+
+[icon]
+prepend_dirs = [
+  { name = "Desktop", text = " ", fg = "#ffffff" },
+  { name = "Documents", text = " ", fg = "#ffffff" },
+  { name = "Downloads", text = " ", fg = "#ffffff" },
+  { name = "Music", text = " ", fg = "#ffffff" },
+  { name = "Pictures", text = " ", fg = "#ffffff" },
+  { name = "Public", text = " ", fg = "#ffffff" },
+  { name = "Templates", text = " ", fg = "#ffffff" },
+  { name = "Videos", text = " ", fg = "#ffffff" },
+  { name = ".config", text = " ", fg = "#ffffff" }
+]
+prepend_conds = [
+  { if = "dir", text = " ", fg = "#ffffff" },
+  { if = "!dir", text = " ", fg = "#dddddd" }
+]
