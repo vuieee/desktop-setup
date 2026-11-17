@@ -1,0 +1,20 @@
+[General]
+ShowFullPath=true
+Version=202
+ViewPropsTimestamp=2026,11,15,23,19,58.129
+
+[IconsMode]
+IconSize=64
+
+[KFileDialog Settings]
+Places Icons Auto-resize=false
+Places Icons Static Size=22
+
+[MainWindow]
+MenuBar=Disabled
+
+[PreviewSettings]
+Plugins=imagethumbnail,svgthumbnail,jpegthumbnail
+
+[UiSettings]
+ColorScheme=Mono

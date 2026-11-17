@@ -12,18 +12,18 @@ if subprocess.run(["pgrep", "-f", "wallpaper-menu.py"], capture_output=True).std
     sys.exit(0)
 
 home = pathlib.Path.home()
-wdir = home / "wallpapers"
+wdir = home / "Pictures/Wallpapers"
 cdir = home / ".cache/mocha-wallpapers-diag"
 target = home / "Pictures/wallpaper.png"
 hc = home / ".config/hypr/hyprpaper.conf"
-wdir.mkdir(exist_ok=True)
+wdir.mkdir(parents=True, exist_ok=True)
 cdir.mkdir(parents=True, exist_ok=True)
 
 exts = {".png", ".jpg", ".jpeg", ".webp", ".bmp"}
 walls = sorted([w for w in wdir.iterdir() if w.is_file() and w.suffix.lower() in exts], key=lambda w: w.name.lower())
 
 if not walls:
-    subprocess.run(["notify-send", "-a", "Wallpapers", "No Wallpapers Found", "Add images to ~/wallpapers"])
+    subprocess.run(["notify-send", "-a", "Wallpapers", "No Wallpapers Found", "Add images to ~/Pictures/Wallpapers"])
     sys.exit(0)
 
 pixbufs = []
