@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Cava
+Comment=Console-based Audio Visualizer for ALSA/PipeWire
+Exec=kitty --class cava-float -e cava
+Icon=utilities-terminal
+Terminal=false
+Categories=AudioVideo;Audio;

@@ -6,7 +6,7 @@ def sw(t,m):
  for i,(a,_) in enumerate(m):t=t.replace(a,f"_T{i}_")
  for i,(_,b) in enumerate(m):t=t.replace(f"_T{i}_",b)
  return t
-for f in ["waybar/style.css","rofi/minimal.rasi","swaync/style.css","hypr/scripts/osd-popup.py","kitty/kitty.conf","power-menu/power-menu.py","power-menu/fake-lock.py","gtk-3.0/gtk.css","gtk-3.0/settings.ini","gtk-4.0/settings.ini","yazi/theme.toml"]:
+for f in ["waybar/style.css","rofi/minimal.rasi","swaync/style.css","hypr/scripts/osd-popup.py","kitty/kitty.conf","power-menu/power-menu.py","power-menu/fake-lock.py","gtk-3.0/gtk.css","gtk-3.0/settings.ini","gtk-4.0/settings.ini","yazi/theme.toml","cava/config"]:
  fp=h/".config"/f
  if fp.exists():fp.write_text(sw(fp.read_text(),css))
 hl=h/".config/hypr/hyprland.lua"
@@ -15,7 +15,7 @@ ff=h/".config/fastfetch/config.jsonc"
 if ff.exists():ff.write_text(sw(ff.read_text(),[("white","black"),("black","white")]))
 subprocess.run(["killall","-SIGUSR1","kitty"],stderr=-3)
 dark = "background: #000000;" in (h / ".config/waybar/style.css").read_text().split("}")[1]
-for s in ["gtk-3.0/settings.ini","gtk-4.0/settings.ini","yazi/theme.toml"]:
+for s in ["gtk-3.0/settings.ini","gtk-4.0/settings.ini","yazi/theme.toml","cava/config"]:
  sp=h/".config"/s
  if sp.exists():sp.write_text(sp.read_text().replace("prefer-dark-theme=0" if dark else "prefer-dark-theme=1","prefer-dark-theme=1" if dark else "prefer-dark-theme=0"))
 subprocess.run(["gsettings", "set", "org.gnome.desktop.interface", "gtk-theme", "Adwaita-dark" if dark else "Adwaita"], stderr=-3)
