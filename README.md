@@ -15,6 +15,6 @@
 ```bash
 cp -r .config/* ~/.config/
 cp -r .local/share/applications/* ~/.local/share/applications/
-cp Pictures/wallpaper.png ~/Pictures/wallpaper.png
+mkdir -p ~/Pictures/Wallpapers && cp -r Pictures/Wallpapers/* ~/Pictures/Wallpapers/
 hyprctl reload
 ```
