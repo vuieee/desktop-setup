@@ -1,1 +1,3 @@
-{}
+{
+  "F5": "Save,command:run kitty --class c-runner -e /home/mocha/.local/bin/c-run-file"
+}

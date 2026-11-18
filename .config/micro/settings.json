@@ -1,5 +1,10 @@
 {
   "colorscheme": "simple",
   "softwrap": true,
-  "wordwrap": true
+  "wordwrap": true,
+  "lsp.server": "c=clangd",
+  "autoclose": true,
+  "autoindent": true,
+  "tabstospaces": true,
+  "tabsize": 4
 }

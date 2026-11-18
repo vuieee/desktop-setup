@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=C Studio
+Comment=Monochrome Kitty + Micro C Compiler Workspace
+Exec=kitty --directory /home/mocha/Projects/c -e micro main.c
+Icon=utilities-terminal
+Terminal=false
+Categories=Development;

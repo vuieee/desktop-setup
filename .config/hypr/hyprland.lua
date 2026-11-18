@@ -448,6 +448,14 @@ hl.window_rule({
   size = { 760, 480 },
   center = true,
 })
+
+hl.window_rule({
+  name = "c-runner-float",
+  match = { class = "c-runner" },
+  float = true,
+  size = { 640, 400 },
+  center = true,
+})
 hl.on("hyprland.start", function() hl.exec_cmd("wl-paste --type text --watch cliphist store"); hl.exec_cmd("wl-paste --type image --watch cliphist store") end)
 
 hl.on("hyprland.start", function() hl.exec_cmd("hypridle") end)

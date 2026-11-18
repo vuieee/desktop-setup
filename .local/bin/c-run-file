@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+cd "$HOME/Projects/c" || exit 1
+f=$(ls -t *.c 2>/dev/null | head -n 1)
+[ -z "$f" ] && { echo "No .c file found"; read -r _; exit 1; }
+mkdir -p "$HOME/Projects/c/bin"
+out="$HOME/Projects/c/bin/${f%.*}"
+echo "[Compiling $f]"
+if gcc -Wall -Wextra -std=c17 "$f" -o "$out" -lm; then
+    echo "----------------------------------------"
+    "$out"
+fi
+echo ""
+echo "--- Press Enter to close ---"
+read -r _ </dev/tty
