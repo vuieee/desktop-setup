@@ -6,14 +6,13 @@ configuration {
 }
 
 * {
-    background-color: transparent;
+    background-color: #000000;
     text-color: #ffffff;
     border-color: #ffffff;
     font: "MesloLGS Nerd Font 12";
 }
 
 window {
-    background-color: #000000b8;
     width: 480px;
     border: 2px;
     border-radius: 0px;
@@ -47,7 +46,7 @@ listview {
 element {
     padding: 8px 14px;
     border-radius: 0px;
-    background-color: transparent;
+    background-color: #000000;
     text-color: #ffffff;
 }
 

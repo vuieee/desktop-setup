@@ -1,37 +1,37 @@
 /* Mono dark: black + white, sharp corners. Works for GTK3 and GTK4/libadwaita. */
 
 /* libadwaita (GTK4) named colors */
-@define-color window_bg_color #000000;
-@define-color window_fg_color #ffffff;
-@define-color view_bg_color #000000;
-@define-color view_fg_color #ffffff;
-@define-color headerbar_bg_color #000000;
-@define-color headerbar_fg_color #ffffff;
-@define-color headerbar_border_color #ffffff;
-@define-color headerbar_backdrop_color #000000;
-@define-color sidebar_bg_color #000000;
-@define-color sidebar_fg_color #ffffff;
-@define-color sidebar_border_color #ffffff;
-@define-color card_bg_color #000000;
-@define-color card_fg_color #ffffff;
-@define-color popover_bg_color #000000;
-@define-color popover_fg_color #ffffff;
-@define-color dialog_bg_color #000000;
-@define-color dialog_fg_color #ffffff;
-@define-color accent_bg_color #ffffff;
-@define-color accent_fg_color #000000;
-@define-color accent_color #ffffff;
+@define-color window_bg_color #ffffff;
+@define-color window_fg_color #000000;
+@define-color view_bg_color #ffffff;
+@define-color view_fg_color #000000;
+@define-color headerbar_bg_color #ffffff;
+@define-color headerbar_fg_color #000000;
+@define-color headerbar_border_color #000000;
+@define-color headerbar_backdrop_color #ffffff;
+@define-color sidebar_bg_color #ffffff;
+@define-color sidebar_fg_color #000000;
+@define-color sidebar_border_color #000000;
+@define-color card_bg_color #ffffff;
+@define-color card_fg_color #000000;
+@define-color popover_bg_color #ffffff;
+@define-color popover_fg_color #000000;
+@define-color dialog_bg_color #ffffff;
+@define-color dialog_fg_color #000000;
+@define-color accent_bg_color #000000;
+@define-color accent_fg_color #ffffff;
+@define-color accent_color #000000;
 
 /* GTK3 named colors */
-@define-color theme_bg_color #000000;
-@define-color theme_fg_color #ffffff;
-@define-color theme_base_color #000000;
-@define-color theme_text_color #ffffff;
-@define-color theme_selected_bg_color #ffffff;
-@define-color theme_selected_fg_color #000000;
-@define-color borders #ffffff;
-@define-color theme_unfocused_bg_color #000000;
-@define-color theme_unfocused_fg_color #ffffff;
+@define-color theme_bg_color #ffffff;
+@define-color theme_fg_color #000000;
+@define-color theme_base_color #ffffff;
+@define-color theme_text_color #000000;
+@define-color theme_selected_bg_color #000000;
+@define-color theme_selected_fg_color #ffffff;
+@define-color borders #000000;
+@define-color theme_unfocused_bg_color #ffffff;
+@define-color theme_unfocused_fg_color #000000;
 
 * {
   border-radius: 0;
@@ -41,29 +41,29 @@ button,
 entry,
 spinbutton {
   background-image: none;
-  background-color: #000000;
-  color: #ffffff;
-  border: 1px solid #ffffff;
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
   box-shadow: none;
 }
 
 button:hover {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 selection {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #000000;
+  color: #ffffff;
 }
 
-window, window.background, .background, scrolledwindow, viewport { background-color: #000000; color: #ffffff; }
+window, window.background, .background, scrolledwindow, viewport { background-color: #ffffff; color: #000000; }
 
 /* Nautilus flat headerbar overrides */
 headerbar,
 .titlebar {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #000000;
   border: none;
   box-shadow: none;
 }
@@ -74,7 +74,7 @@ headerbar button,
 windowcontrols button,
 menubutton > button {
   background-color: transparent;
-  color: #ffffff;
+  color: #000000;
   border: none;
   box-shadow: none;
 }
@@ -85,26 +85,26 @@ headerbar button:hover,
 windowcontrols button:hover,
 menubutton > button:hover {
   background-color: #1c1c1c;
-  color: #ffffff;
+  color: #000000;
   border: none;
 }
 
 headerbar button:checked,
 .path-bar button:checked {
   background-color: #262626;
-  color: #ffffff;
+  color: #000000;
 }
 
 .navigation-sidebar row:selected {
   background-color: #1f1f1f;
-  color: #ffffff;
-  border-left: 2px solid #ffffff;
+  color: #000000;
+  border-left: 2px solid #000000;
 }
 
 listview row:selected,
 columnview row:selected {
   background-color: #1f1f1f;
-  color: #ffffff;
+  color: #000000;
 }
 
 /* Nautilus compact context menus */
@@ -117,9 +117,9 @@ popover.background {
 }
 
 popover > contents {
-  background-color: #000000;
-  color: #ffffff;
-  border: 1px solid #ffffff;
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
   box-shadow: none;
   padding: 4px;
   margin: 0;
@@ -128,7 +128,7 @@ popover > contents {
 popover modelbutton,
 popover button {
   background-color: transparent;
-  color: #ffffff;
+  color: #000000;
   border: none;
   box-shadow: none;
   min-height: 24px;
@@ -138,7 +138,7 @@ popover button {
 popover modelbutton:hover,
 popover button:hover {
   background-color: #1f1f1f;
-  color: #ffffff;
+  color: #000000;
   border: none;
 }
 
@@ -152,9 +152,9 @@ headerbar:backdrop button:backdrop,
 windowcontrols:backdrop button,
 menubutton:backdrop > button,
 .linked:backdrop > button {
-  background-color: #000000;
+  background-color: #ffffff;
   background-image: none;
-  color: #ffffff;
+  color: #000000;
   border: none;
   box-shadow: none;
 }
@@ -187,5 +187,5 @@ windowcontrols button:backdrop {
 /* Nautilus inner margin */
 window.background, window.csd {
   padding: 2px;
-  background-color: #000000;
+  background-color: #ffffff;
 }

@@ -81,7 +81,13 @@
     "format-off": "\uf293",
     "format-connected": "\uf294 {device_alias}",
     "tooltip-format-connected": "{device_enumerate}",
-    "on-click": "blueman-manager"
+    "on-click": "kitty --class bluetui -e bluetui",
+    "on-click-right": "sh -c \"bluetoothctl show | grep -q 'Powered: yes' && bluetoothctl power off || bluetoothctl power on\"",
+    "tooltip-format": "Bluetooth: On (No devices connected)",
+    "tooltip-format-off": "Bluetooth: Off",
+    "tooltip-format-disabled": "Bluetooth: Disabled",
+    "tooltip-format-enumerate-connected": "{device_alias}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias} ({device_battery_percentage}%)"
   },
   "network": {
     "format-wifi": "\uf1eb",

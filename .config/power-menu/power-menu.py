@@ -34,7 +34,7 @@ with open(PIDFILE, "w") as f:
     f.write(str(os.getpid()))
 
 ITEMS = [
-    ("", "Lock", ["python3", "~/.config/power-menu/fake-lock.py"], "l"),
+    ("", "Lock", ["python3", "/home/mocha/.config/power-menu/fake-lock.py"], "l"),
     ("", "Reboot", ["systemctl", "reboot"], "r"),
     ("", "Fast reboot", ["systemctl", "soft-reboot"], "f"),
     ("", "Shutdown", ["systemctl", "poweroff"], "s"),

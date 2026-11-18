@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-import pathlib, subprocess
+import os, pathlib, subprocess
+try: os.setsid()
+except Exception: pass
 nl = chr(10)
 home = pathlib.Path.home()
 wc, ws = home/".config/waybar/config.jsonc", home/".config/waybar/style.css"
@@ -17,21 +19,22 @@ elif "Appearance" in top:
     idx = 0
     while True:
         c, r, s, l, cfg, o = ws.read_text(), rc.read_text(), sc.read_text(), hl.read_text(), wc.read_text(), osd.read_text()
+        th = "Native" if (home/".local/share/mocha-theme-bak/native").exists() else "Mono"
         dm = "Off" if "rgba(255, 255, 255, 0.72)" in c or "background-color: #ffffff;" in c.split("}")[0] else "On"
-        ac = "On" if "0.72" in c else "Off"
+        ac = "On" if ("0.72" in c or "0.75" in c) else "Off"
         ps = next((x.title() for x in ["top","bottom","left","right"] if f'"position": "{x}"' in cfg), "Top")
         ol = "On" if "border_size = 2" in l else "Off"
         rd = "On" if "rounding       = 10" in l else "Off"
         vb_path = "/home/mocha/.config/hypr/shaders/vibrance.glsl"
         vb = "On" if f'screen_shader  = "{vb_path}"' in l else "Off"
         an = "On" if "animations = {\n        enabled = true," in l else "Off"
-        bg, fg = ("#000000","#ffffff") if dm=="On" else ("#ffffff","#000000")
-        bgr, rfr = ("rgba(0, 0, 0, 0.72)","#000000b8") if dm=="On" else ("rgba(255, 255, 255, 0.72)","#ffffffb8")
-        items = [((chr(0xf186) if dm=="On" else chr(0xf185))+"  Dark Mode",dm),(chr(0xf06e)+"  Acrylic",ac),(chr(0xf0c9)+"  Waybar",ps),(chr(0xf065)+"  Outlines",ol),((chr(0xf111) if rd=="On" else chr(0xf096))+"  Rounded",rd),(chr(0xf042)+"  Vibrance",vb),(chr(0xf04b)+"  Animations",an)]
+        bg, fg = (("#1e1f24","#dcdfe6") if th=="Native" else ("#000000","#ffffff")) if dm=="On" else (("#f2f3f7","#23252c") if th=="Native" else ("#ffffff","#000000"))
+        bgr, rfr = (("rgba(30, 31, 36, 0.75)","#1e1f24bf") if th=="Native" else ("rgba(0, 0, 0, 0.72)","#000000b8")) if dm=="On" else (("rgba(242, 243, 247, 0.75)","#f2f3f7bf") if th=="Native" else ("rgba(255, 255, 255, 0.72)","#ffffffb8"))
+        items = [((chr(0xf186) if dm=="On" else chr(0xf185))+"  Dark Mode",dm),(chr(0xf06e)+"  Acrylic",ac),(chr(0xf0c9)+"  Waybar",ps),(chr(0xf065)+"  Outlines",ol),((chr(0xf111) if rd=="On" else chr(0xf096))+"  Rounded",rd),(chr(0xf042)+"  Vibrance",vb),(chr(0xf04b)+"  Animations",an),(chr(0xf1fc)+"  Theme",th)]
         menu = nl.join(f"{k:<15}{v:>5}" for k, v in items)
-        ch = subprocess.run(["rofi","-dmenu","-i","-selected-row",str(idx),"-theme",str(rc),"-theme-str","window { width: 280px; } mainbox { children: [listview]; } listview { lines: 7; padding: 0px; spacing: 0px; }"],input=menu,text=True,capture_output=True).stdout.strip()
+        ch = subprocess.run(["rofi","-dmenu","-i","-selected-row",str(idx),"-theme",str(rc),"-theme-str","window { width: 280px; } mainbox { children: [listview]; } listview { lines: 8; padding: 0px; spacing: 0px; }"],input=menu,text=True,capture_output=True).stdout.strip()
         if not ch: break
-        idx = ["Dark Mode","Acrylic","Waybar","Outlines","Rounded","Vibrance","Animations"].index(next(x for x in ["Dark Mode","Acrylic","Waybar","Outlines","Rounded","Vibrance","Animations"] if x in ch))
+        idx = ["Dark Mode","Acrylic","Waybar","Outlines","Rounded","Vibrance","Animations","Theme"].index(next(x for x in ["Dark Mode","Acrylic","Waybar","Outlines","Rounded","Vibrance","Animations","Theme"] if x in ch))
         if "Dark Mode" in ch:
             subprocess.run(["python3",str(home/".config/waybar/scripts/toggle-dark.py")])
             subprocess.run(["gsettings","set","org.gnome.desktop.interface","color-scheme","prefer-dark" if dm=="Off" else "default"],stderr=-3)
@@ -57,6 +60,9 @@ elif "Appearance" in top:
             d["battery"]["format"] = "{icon}" if vert else "{icon} {capacity}%"
             d["wireplumber"]["format"] = "{icon}" if vert else "{icon} {volume}%"
             d["backlight"]["format"] = "{icon}" if vert else "{icon} {percent}%"
+            d["battery"]["format"] = "{icon}" if vert else "{icon} {capacity}%"
+            d["wireplumber"]["format"] = "{icon}" if vert else "{icon} {volume}%"
+            d["backlight"]["format"] = "{icon}" if vert else "{icon} {percent}%"
             wc.write_text(json.dumps(d,indent=2)+nl)
             vb = nl+"/* mocha-vert */"+nl+"#custom-menu, #clock, #custom-workspaces, #tray, #custom-caffeine, #battery, #wireplumber, #backlight, #bluetooth, #network, #custom-power { padding: 8px 0; min-width: 30px; }"+nl+"/* end-mocha-vert */"
             c = c.split(nl+"/* mocha-vert */")[0] + (vb if vert else "")
@@ -77,10 +83,12 @@ elif "Appearance" in top:
         elif "Vibrance" in ch:
             on = ch.endswith("Off")
             l = l.replace("screen_shader  = \"\"", f"screen_shader  = \"{vb_path}\"") if on else l.replace(f"screen_shader  = \"{vb_path}\"", "screen_shader  = \"\"")
+        elif "Theme" in ch:
+            subprocess.run(["python3",str(home/".config/waybar/scripts/toggle-theme.py")])
         elif "Animations" in ch:
             on = ch.endswith("Off")
             l = l.replace("animations = {\n        enabled = false,","animations = {\n        enabled = true,",1) if on else l.replace("animations = {\n        enabled = true,","animations = {\n        enabled = false,",1)
-        if "Dark Mode" not in ch:
+        if "Dark Mode" not in ch and "Theme" not in ch:
             ws.write_text(c); rc.write_text(r); sc.write_text(s); hl.write_text(l); osd.write_text(o)
         subprocess.run(["hyprctl","reload"],stdout=-3,stderr=-3)
         subprocess.run(["swaync-client","-rs"],stdout=-3,stderr=-3)

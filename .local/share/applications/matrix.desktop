@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Matrix
+Comment=Terminal Katakana Matrix Rain
+Exec=kitty --class matrix-float -e sh -c "grep -q 'background #000000' ~/.config/kitty/kitty.conf && exec unimatrix -c white -s 96 -l k || exec unimatrix -c black -s 96 -l k"
+Icon=utilities-terminal
+Terminal=false
+Categories=Utility;

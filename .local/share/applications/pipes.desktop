@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Pipes
+Comment=Animated Terminal Pipes
+Exec=kitty --class pipes-float -e sh -c "grep -q 'background #000000' ~/.config/kitty/kitty.conf && exec pipes.sh -c 7 -t 0 -r 2000 || exec pipes.sh -c 0 -t 0 -r 2000"
+Icon=utilities-terminal
+Terminal=false
+Categories=Utility;

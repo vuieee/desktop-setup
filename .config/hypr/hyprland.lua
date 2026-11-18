@@ -376,7 +376,6 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("waybar")
   hl.exec_cmd("hyprpolkitagent")
   hl.exec_cmd("swaync")
-  hl.exec_cmd("env QT_QUICK_CONTROLS_STYLE=Basic easyeffects --gapplication-service")
 end)
 
 hl.bind("SUPER + SPACE", hl.dsp.exec_cmd("rofi -show drun -theme ~/.config/rofi/minimal.rasi"))
@@ -439,6 +438,14 @@ hl.window_rule({
   match = { class = "wiremix" },
   float = true,
   size = { 620, 380 },
+  center = true,
+})
+
+hl.window_rule({
+  name = "bluetui-float",
+  match = { class = "bluetui" },
+  float = true,
+  size = { 760, 480 },
   center = true,
 })
 hl.on("hyprland.start", function() hl.exec_cmd("wl-paste --type text --watch cliphist store"); hl.exec_cmd("wl-paste --type image --watch cliphist store") end)

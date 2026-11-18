@@ -1,0 +1,18 @@
+{
+  "logo": { "type": "none" },
+  "display": {
+    "color": { "keys": "white", "output": "white", "separator": "white" }
+  },
+  "modules": [
+    { "type": "custom", "format": "┌──────────────────────────────────────┐" },
+    { "type": "custom", "format": "│ OS      CachyOS Linux                │" },
+    { "type": "custom", "format": "│ Shell   fish                         │" },
+    { "type": "custom", "format": "│ CPU     Intel Core i5-13420H         │" },
+    { "type": "custom", "format": "│ dGPU    RTX 4050 Laptop 6GB          │" },
+    { "type": "custom", "format": "│ iGPU    Intel UHD Graphics           │" },
+    { "type": "custom", "format": "│ RAM     16GB DDR5-5600               │" },
+    { "type": "custom", "format": "│ Disk 1  512GB NVMe                   │" },
+    { "type": "custom", "format": "│ Disk 2  2TB NVMe                     │" },
+    { "type": "custom", "format": "└──────────────────────────────────────┘" }
+  ]
+}
