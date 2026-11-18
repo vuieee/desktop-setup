@@ -29,11 +29,11 @@ sock = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
 sock.bind(SOCK)
 sock.setblocking(False)
 
-CSS = b'''window { background-color: rgba(0, 0, 0, 0.72); border: 2px solid #ffffff; border-radius: 0; }
+CSS = b'''window { background-color: #000000; border: 2px solid #ffffff; border-radius: 0; }
 label { color: #ffffff; font-family: "JetBrains Mono", "MesloLGS Nerd Font", "MesloLGS Nerd Font Propo", "Font Awesome 6 Free", "FontAwesome", monospace; font-size: 18px; }
 label.big-icon { font-family: "MesloLGS Nerd Font Mono", "FontAwesome", monospace; font-size: 36px; }
 label.sub-text { font-size: 15px; }
-progressbar, progressbar trough { min-height: 10px; min-width: 200px; background-color: rgba(0, 0, 0, 0.72); background-image: none; border: 1px solid #ffffff; border-radius: 0; padding: 0; margin: 0; }
+progressbar, progressbar trough { min-height: 10px; min-width: 200px; background-color: #000000; background-image: none; border: 1px solid #ffffff; border-radius: 0; padding: 0; margin: 0; }
 progressbar progress { min-height: 10px; background-color: #ffffff; background-image: none; border: none; border-radius: 0; padding: 0; margin: 0; }'''
 
 prov = Gtk.CssProvider()

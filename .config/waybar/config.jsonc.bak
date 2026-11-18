@@ -1,0 +1,91 @@
+{
+  "layer": "bottom",
+  "position": "top",
+  "height": 30,
+  "spacing": 0,
+  "modules-left": [
+    "clock"
+  ],
+  "modules-center": [
+    "custom/workspaces"
+  ],
+  "modules-right": [
+    "tray",
+    "battery",
+    "custom/keys",
+    "wireplumber",
+    "bluetooth",
+    "backlight",
+    "network",
+    "custom/power"
+  ],
+  "clock": {
+    "format": "{:%I:%M %p  |  %a, %b %d}",
+    "tooltip-format": "<tt>{calendar}</tt>"
+  },
+  "hyprland/workspaces": {
+    "format": "{id}",
+    "all-outputs": true,
+    "on-click": "activate",
+    "persistent-workspaces": {
+      "*": 5
+    }
+  },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 10
+  },
+  "battery": {
+    "format": "BAT {capacity}%",
+    "format-charging": "BAT {capacity}% +",
+    "format-plugged": "BAT {capacity}% +",
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "tooltip-format": "{timeTo}"
+  },
+  "wireplumber": {
+    "format": "VOL {volume}%",
+    "format-muted": "VOL MUTE",
+    "scroll-step": 5,
+    "on-click": "pavucontrol",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+  },
+  "bluetooth": {
+    "format": "BT",
+    "format-disabled": "BT OFF",
+    "format-off": "BT OFF",
+    "format-connected": "BT {device_alias}",
+    "tooltip-format-connected": "{device_enumerate}",
+    "on-click": "blueman-manager"
+  },
+  "backlight": {
+    "format": "BRI {percent}%",
+    "on-scroll-up": "brightnessctl set 5%+",
+    "on-scroll-down": "brightnessctl set 5%-"
+  },
+  "network": {
+    "format-wifi": "WIFI {essid}",
+    "format-ethernet": "ETH",
+    "format-disconnected": "NO NET",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+    "on-click": "~/.config/waybar/scripts/wifi-menu.sh"
+  },
+  "custom/keys": {
+    "format": "[?]",
+    "tooltip": false,
+    "on-click": "rofi -dmenu -i -p keys -theme ~/.config/rofi/minimal.rasi -theme-str \"window { width: 720px; }\" < ~/.config/hypr/cheatsheet.txt"
+  },
+  "custom/power": {
+    "format": "PWR",
+    "tooltip": false,
+    "on-click": "python3 /home/mocha/.config/power-menu/power-menu.py"
+  },
+  "custom/workspaces": {
+    "exec": "python3 /home/mocha/.config/waybar/workspaces.py",
+    "return-type": "json",
+    "format": "{}",
+    "tooltip": false
+  }
+}

@@ -3,37 +3,71 @@ cwd = { fg = "#ffffff", bold = true }
 hovered = { fg = "#000000", bg = "#ffffff", bold = true }
 preview_hovered = { underline = true }
 find_keyword = { fg = "#000000", bg = "#ffffff", bold = true }
-find_position = { fg = "#ffffff", bg = "#000000", bold = true }
-marker_copied = { fg = "#ffffff", bg = "#000000" }
-marker_cut = { fg = "#ffffff", bg = "#000000" }
-marker_marked = { fg = "#ffffff", bg = "#000000" }
-marker_selected = { fg = "#ffffff", bg = "#000000" }
+find_position = { fg = "#aaaaaa" }
+marker_copied = { fg = "#ffffff", bg = "#ffffff" }
+marker_cut = { fg = "#aaaaaa", bg = "#aaaaaa" }
+marker_marked = { fg = "#ffffff", bg = "#ffffff" }
+marker_selected = { fg = "#ffffff", bg = "#ffffff" }
 count_copied = { fg = "#000000", bg = "#ffffff" }
-count_cut = { fg = "#000000", bg = "#ffffff" }
+count_cut = { fg = "#000000", bg = "#aaaaaa" }
 count_selected = { fg = "#000000", bg = "#ffffff" }
 border_symbol = "│"
 border_style = { fg = "#ffffff" }
 
-[indicator]
-current = { fg = "#000000", bg = "#ffffff", bold = true }
-padding = { open = " ", close = " " }
-
 [tabs]
 active = { fg = "#000000", bg = "#ffffff", bold = true }
-inactive = { fg = "#ffffff", bg = "#000000" }
+inactive = { fg = "#aaaaaa", bg = "#000000" }
+
+[mode]
+normal_main = { fg = "#000000", bg = "#ffffff", bold = true }
+normal_alt = { fg = "#ffffff", bg = "#555555" }
+select_main = { fg = "#000000", bg = "#ffffff", bold = true }
+select_alt = { fg = "#ffffff", bg = "#555555" }
+unset_main = { fg = "#000000", bg = "#aaaaaa", bold = true }
+unset_alt = { fg = "#ffffff", bg = "#555555" }
 
 [status]
+overall = { fg = "#ffffff", bg = "#000000" }
 sep_left = { open = "", close = "" }
 sep_right = { open = "", close = "" }
-overall = { fg = "#ffffff", bg = "#000000" }
-progress_label = { fg = "#ffffff", bold = true }
-progress_normal = { fg = "#ffffff", bg = "#000000" }
-progress_error = { fg = "#ffffff", bg = "#000000" }
 perm_type = { fg = "#ffffff" }
 perm_read = { fg = "#ffffff" }
-perm_write = { fg = "#ffffff" }
+perm_write = { fg = "#aaaaaa" }
 perm_exec = { fg = "#ffffff" }
-perm_sep = { fg = "#aaaaaa" }
+perm_sep = { fg = "#555555" }
+progress_label = { fg = "#ffffff", bold = true }
+progress_normal = { fg = "#ffffff", bg = "#555555" }
+progress_error = { fg = "#ffffff", bg = "#555555" }
+
+[which]
+mask = { bg = "#000000" }
+cand = { fg = "#ffffff", bold = true }
+rest = { fg = "#aaaaaa" }
+desc = { fg = "#ffffff" }
+separator = "  "
+separator_style = { fg = "#555555" }
+
+[confirm]
+border = { fg = "#ffffff" }
+title = { fg = "#ffffff", bold = true }
+content = { fg = "#ffffff" }
+list = { fg = "#ffffff" }
+btn_yes = { fg = "#000000", bg = "#ffffff", bold = true }
+btn_no = { fg = "#ffffff" }
+
+[spot]
+border = { fg = "#ffffff" }
+title = { fg = "#ffffff", bold = true }
+
+[notify]
+title_info = { fg = "#ffffff" }
+title_warn = { fg = "#ffffff" }
+title_error = { fg = "#ffffff" }
+
+[pick]
+border = { fg = "#ffffff" }
+active = { fg = "#000000", bg = "#ffffff", bold = true }
+inactive = { fg = "#ffffff" }
 
 [input]
 border = { fg = "#ffffff" }
@@ -41,25 +75,39 @@ title = { fg = "#ffffff" }
 value = { fg = "#ffffff" }
 selected = { reversed = true }
 
+[cmp]
+border = { fg = "#ffffff" }
+active = { fg = "#000000", bg = "#ffffff", bold = true }
+inactive = { fg = "#ffffff" }
+
+[tasks]
+border = { fg = "#ffffff" }
+title = { fg = "#ffffff" }
+hovered = { fg = "#000000", bg = "#ffffff", bold = true }
+
+[help]
+on = { fg = "#ffffff", bold = true }
+run = { fg = "#aaaaaa" }
+desc = { fg = "#ffffff" }
+hovered = { fg = "#000000", bg = "#ffffff", bold = true }
+footer = { fg = "#aaaaaa" }
+
 [filetype]
 rules = [
   { url = "*/", fg = "#ffffff", bold = true },
-  { url = "*", fg = "#dddddd" }
+  { url = "*", fg = "#ffffff" },
 ]
 
+[indicator]
+primary = { fg = "#000000", bg = "#ffffff", bold = true }
+secondary = { fg = "#ffffff", bg = "#000000" }
+padding = { open = "█", close = "█" }
+
 [icon]
-prepend_dirs = [
-  { name = "Desktop", text = " ", fg = "#ffffff" },
-  { name = "Documents", text = " ", fg = "#ffffff" },
-  { name = "Downloads", text = " ", fg = "#ffffff" },
-  { name = "Music", text = " ", fg = "#ffffff" },
-  { name = "Pictures", text = " ", fg = "#ffffff" },
-  { name = "Public", text = " ", fg = "#ffffff" },
-  { name = "Templates", text = " ", fg = "#ffffff" },
-  { name = "Videos", text = " ", fg = "#ffffff" },
-  { name = ".config", text = " ", fg = "#ffffff" }
-]
-prepend_conds = [
-  { if = "dir", text = " ", fg = "#ffffff" },
-  { if = "!dir", text = " ", fg = "#dddddd" }
+dirs = []
+files = []
+exts = []
+conds = [
+  { if = "dir", text = "", fg = "#ffffff" },
+  { if = "!dir", text = "", fg = "#ffffff" },
 ]

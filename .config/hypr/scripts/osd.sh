@@ -46,4 +46,4 @@ cur=$(brightnessctl g); max=$(brightnessctl m)
 val=$(( cur * 100 / max ))
 icon=""
 fi
-python3 ~/.config/hypr/scripts/osd-popup.py "$icon" "$val" >/dev/null 2>&1 &
+python3 /home/mocha/.config/hypr/scripts/osd-popup.py "$icon" "$val" >/dev/null 2>&1 &

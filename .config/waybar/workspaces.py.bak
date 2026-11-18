@@ -1,0 +1,219 @@
+#!/usr/bin/env python3
+"""Waybar custom module: animated workspace strip.
+
+- A workspace number only shows once it has a window (or is focused).
+  New numbers fade in, closed ones fade out.
+- The focused workspace is a white pill: "<number>  <window title>"
+  (browser tab name, file name, etc.). When you switch workspace or window,
+  the old title collapses and the new one expands.
+Needs a monospace font (JetBrains Mono) so the width animation looks smooth.
+"""
+import glob
+import json
+import os
+import select
+import socket
+import subprocess
+import sys
+from html import escape
+
+MAX_TITLE = 30
+FRAME = 0.016  # seconds per animation frame (~60 fps)
+
+
+def event_socket_path():
+    base = os.path.join(
+        os.environ.get("XDG_RUNTIME_DIR", f"/run/user/{os.getuid()}"), "hypr"
+    )
+    sig = os.environ.get("HYPRLAND_INSTANCE_SIGNATURE")
+    if sig:
+        return os.path.join(base, sig, ".socket2.sock")
+    dirs = sorted(glob.glob(os.path.join(base, "*")), key=os.path.getmtime)
+    if not dirs:
+        sys.exit(1)
+    return os.path.join(dirs[-1], ".socket2.sock")
+
+
+def hctl(*args):
+    try:
+        out = subprocess.run(
+            ["hyprctl", "-j", *args], capture_output=True, text=True, timeout=2
+        ).stdout
+        return json.loads(out) if out.strip() else None
+    except Exception:
+        return None
+
+
+def clean_title(title):
+    title = " ".join((title or "").split())
+    if len(title) > MAX_TITLE:
+        title = title[: MAX_TITLE - 1] + "\u2026"
+    return title
+
+
+def read_state():
+    workspaces = hctl("workspaces") or []
+    active_ws = hctl("activeworkspace") or {}
+    window = hctl("activewindow") or {}
+
+    active = active_ws.get("id")
+    if not isinstance(active, int) or active <= 0:
+        active = None
+
+    ids = {w["id"] for w in workspaces if w.get("id", 0) > 0 and w.get("windows", 0) > 0}
+    if active:
+        ids.add(active)
+
+    title, addr = "", ""
+    if window and window.get("workspace", {}).get("id") == active:
+        title = clean_title(window.get("title", ""))
+        addr = window.get("address", "")
+    return sorted(ids), active, addr, title
+
+
+class Strip:
+    def __init__(self):
+        self.started = False
+        self.ids = set()
+        self.alpha = {}  # workspace id -> 0..1 opacity of its number
+        self.key = None  # (active workspace, window address)
+        self.want_active = None
+        self.want_title = ""
+        self.disp_active = None
+        self.disp_title = ""
+        self.cur = 0.0  # visible characters of the title
+        self.phase = "idle"  # idle | collapse | expand
+
+    def update(self, ids, active, addr, title):
+        self.ids = set(ids)
+        for i in ids:
+            if i not in self.alpha:
+                self.alpha[i] = 0.1 if self.started else 1.0
+
+        key = (active, addr)
+        self.want_active = active
+        self.want_title = title
+
+        if not self.started:
+            self.started = True
+            self.key = key
+            self.disp_active = active
+            self.disp_title = title
+            self.cur = float(len(title))
+            return
+
+        if key != self.key:
+            self.key = key
+            if self.phase == "idle" and self.cur <= 0:
+                self.disp_active = active
+                self.disp_title = title
+                self.phase = "expand"
+            else:
+                self.phase = "collapse"
+        elif self.phase == "idle":
+            # same window, title changed (tab load etc.): no animation
+            self.disp_title = title
+            self.cur = float(len(title))
+        elif self.phase == "expand":
+            self.disp_title = title
+
+    def animating(self):
+        if self.phase != "idle":
+            return True
+        for i, a in self.alpha.items():
+            if a != (1.0 if i in self.ids else 0.0):
+                return True
+        return False
+
+    def tick(self):
+        if self.phase == "collapse":
+            self.cur = max(0.0, self.cur - max(1.0, self.cur * 0.3))
+            if self.cur <= 0:
+                self.disp_active = self.want_active
+                self.disp_title = self.want_title
+                self.phase = "expand"
+        elif self.phase == "expand":
+            total = float(len(self.disp_title))
+            self.cur = min(total, self.cur + max(1.0, (total - self.cur) * 0.25))
+            if self.cur >= total:
+                self.phase = "idle"
+
+        for i in list(self.alpha):
+            target = 1.0 if i in self.ids else 0.0
+            a = self.alpha[i]
+            if a < target:
+                a = min(target, a + 0.12)
+            elif a > target:
+                a = max(target, a - 0.12)
+            if a <= 0.0 and target == 0.0:
+                del self.alpha[i]
+                continue
+            self.alpha[i] = a
+
+    def render(self):
+        shown = set(self.alpha)
+        if self.disp_active:
+            shown.add(self.disp_active)
+        parts = []
+        for i in sorted(shown):
+            if i == self.disp_active:
+                text = self.disp_title[: int(self.cur)]
+                body = f" {i}"
+                if text:
+                    body += "  " + escape(text, quote=False)
+                body += " "
+                parts.append(
+                    f'<span foreground="#000000" background="#ffffff">{body}</span>'
+                )
+            else:
+                pct = max(1, int(self.alpha.get(i, 1.0) * 100))
+                parts.append(f'<span foreground="#a0a0a0" alpha="{pct}%"> {i} </span>')
+        return "".join(parts)
+
+
+def main():
+    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    try:
+        sock.connect(event_socket_path())
+    except OSError:
+        sys.exit(1)
+
+    strip = Strip()
+    strip.update(*read_state())
+    last = None
+    buf = b""
+    dirty = False
+
+    while True:
+        if strip.animating():
+            timeout = FRAME
+        elif dirty:
+            timeout = 0.03  # wait for bursts of events to settle
+        else:
+            timeout = None
+
+        ready, _, _ = select.select([sock], [], [], timeout)
+        if ready:
+            data = sock.recv(65536)
+            if not data:
+                break
+            buf += data
+            lines = buf.split(b"\n")
+            buf = lines.pop()
+            if lines:
+                dirty = True
+            continue
+
+        if dirty:
+            strip.update(*read_state())
+            dirty = False
+        strip.tick()
+
+        out = strip.render()
+        if out != last:
+            print(json.dumps({"text": out, "tooltip": False}), flush=True)
+            last = out
+
+
+if __name__ == "__main__":
+    main()

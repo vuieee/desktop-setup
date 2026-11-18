@@ -59,7 +59,6 @@ selection {
 
 window, window.background, .background, scrolledwindow, viewport { background-color: #000000; color: #ffffff; }
 
-
 /* Nautilus flat headerbar overrides */
 headerbar,
 .titlebar {
@@ -143,9 +142,50 @@ popover button:hover {
   border: none;
 }
 
-/* Nautilus sidebar Dolphin-style cleanup */
-.navigation-sidebar row {
-  min-height: 30px;
-  padding-top: 1px;
-  padding-bottom: 1px;
+/* Nautilus backdrop gray removal */
+headerbar:backdrop,
+.titlebar:backdrop,
+headerbar:backdrop button,
+headerbar:backdrop button:backdrop,
+.titlebar:backdrop button,
+.path-bar:backdrop button,
+windowcontrols:backdrop button,
+menubutton:backdrop > button,
+.linked:backdrop > button {
+  background-color: #000000;
+  background-image: none;
+  color: #ffffff;
+  border: none;
+  box-shadow: none;
+}
+
+/* Nautilus headerbar spacing & zero-gray */
+headerbar,
+.titlebar {
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+headerbar button,
+headerbar button:backdrop,
+headerbar togglebutton,
+headerbar togglebutton:backdrop,
+headerbar menubutton > button,
+headerbar menubutton > button:backdrop,
+headerbar .flat,
+headerbar .flat:backdrop,
+headerbar .image-button,
+headerbar .image-button:backdrop,
+windowcontrols button,
+windowcontrols button:backdrop {
+  background-color: transparent;
+  background-image: none;
+  border: none;
+  box-shadow: none;
+}
+
+/* Nautilus inner margin */
+window.background, window.csd {
+  padding: 2px;
+  background-color: #000000;
 }

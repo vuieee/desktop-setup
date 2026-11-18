@@ -8,7 +8,7 @@ sc=re.search(r'scale\s*=\s*"([^"]+)"',hl)
 gi=re.search(r"gaps_in\s*=\s*(\d+)",hl)
 go=re.search(r"gaps_out\s*=\s*(\d+)",hl)
 bs=re.search(r"border_size\s*=\s*(\d+)",hl)
-dk="On" if "background-color: #000000;" in next(iter(ws.split("}"))) else "Off"
+dk="On" if "background: #000000;" in ws else "Off"
 ac="On" if "0.72" in ws else "Off"
 pos=wc.get("position","top").title()
 ml=", ".join(wc.get("modules-left",[]))

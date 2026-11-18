@@ -36,7 +36,7 @@ hl.monitor({
 
 -- Set programs that you use
 local terminal    = "kitty"
-local fileManager = "nautilus"
+local fileManager = "kitty --class yazi -e yazi"
 local menu        = "hyprlauncher"
 
 
@@ -456,3 +456,5 @@ hl.window_rule({
   no_blur = true,
   no_anim = true,
 })
+
+hl.window_rule({ match = { class = "^yazi-picker$" }, float = true, center = true, size = "1200 720" })

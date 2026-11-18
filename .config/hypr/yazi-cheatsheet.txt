@@ -1,0 +1,24 @@
+move up / down                    k / j  or  Up / Down
+enter folder / open file          l / Right / Enter
+go to parent folder               h / Left
+jump to top / bottom              gg / G
+go home (~)                       ~
+toggle hidden files               .
+select / deselect item            Space
+select all / invert selection     Ctrl + a / Ctrl + r
+copy (yank) selected              y
+cut selected                      x
+paste here                        p  (P to overwrite)
+delete (trash) / permanent        d / D
+rename file or folder             r
+create new file or folder         a  (end with / for folder)
+search files by name (fd)         s
+search file contents (rg)         S
+filter current list               f
+jump with zoxide                  z
+new tab / close tab               t / Ctrl + c
+switch tabs                       1 - 9  or  [ / ]
+open shell here                   ;  (: for blocking)
+copy file path / filename         c c / c n
+quit yazi / confirm picker        q / Enter
+built-in help menu                ~  or  F1
