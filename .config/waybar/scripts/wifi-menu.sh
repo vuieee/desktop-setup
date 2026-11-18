@@ -37,8 +37,18 @@ while true; do
 
     if [ $rc -eq 12 ] || [ $rc -eq 13 ]; then
         notify-send "Wi-Fi" "Scanning networks..."
+        rm -f "$CACHE" "$CACHE.tmp"
         nmcli device wifi rescan >/dev/null 2>&1
-        rm -f "$CACHE"
+        for _ in 1 2 3 4 5 6 7 8; do
+            sleep 0.4
+            scan=$(nmcli -t -f IN-USE,SSID,SIGNAL,SECURITY device wifi list --rescan no)
+            if [ $(printf "%s
+" "$scan" | grep -c .) -gt 1 ]; then
+                printf "%s
+" "$scan" > "$CACHE"
+                break
+            fi
+        done
         exec "$0"
     fi
 
