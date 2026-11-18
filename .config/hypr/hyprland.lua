@@ -457,4 +457,4 @@ hl.window_rule({
   no_anim = true,
 })
 
-hl.window_rule({ match = { class = "^yazi-picker$" }, float = true, center = true, size = "1200 720" })
+hl.window_rule({ name = "yazi-picker", match = { class = "yazi-picker" }, float = true, size = { 1200, 720 }, center = true })
