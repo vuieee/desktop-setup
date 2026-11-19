@@ -24,7 +24,7 @@
 -- See https://wiki.hypr.land/configuring/core/monitors/
 hl.monitor({
     output   = "",
-    mode     = "preferred",
+    mode     = "1920x1080@60.00Hz",
     position = "auto",
     scale    = "1.33",
 })
