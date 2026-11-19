@@ -7,6 +7,11 @@ acad = pathlib.Path("/sys/class/power_supply/ACAD/online")
 menu = pathlib.Path.home() / ".config/waybar/scripts/power-profile-menu.py"
 active = False
 last_ac = acad.read_text().strip() if acad.exists() else None
+if last_ac in ("0", "1"):
+    want = "balanced" if last_ac == "1" else "power-saver"
+    cur_m = state.read_text().strip() if state.exists() else ""
+    if cur_m != want:
+        subprocess.run(["python3", str(menu), "--set", want])
 while True:
     try:
         if acad.exists():
