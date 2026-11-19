@@ -8,7 +8,7 @@ check_portal() {
         state=$(nmcli networking connectivity check 2>/dev/null)
         if [ "$state" = "portal" ]; then
             notify-send "Wi-Fi" "Login required — opening portal..."
-            nohup xdg-open "http://gnome.org" >/dev/null 2>&1 &
+            nohup xdg-open "http://nmcheck.gnome.org/check_network_status.txt" >/dev/null 2>&1 &
             break
         fi
         [ "$state" = "full" ] && break
