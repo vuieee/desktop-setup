@@ -3,9 +3,9 @@ import hashlib, os, pathlib, shutil, subprocess, sys
 os.environ["GDK_BACKEND"] = "wayland"
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, GdkPixbuf, GLib
+gi.require_version("GtkLayerShell", "0.1")
+from gi.repository import Gtk, Gdk, GLib, GtkLayerShell
 import cairo
-from PIL import Image, ImageOps
 
 if subprocess.run(["pgrep", "-f", "wallpaper-menu.py"], capture_output=True).stdout.count(bytes([10])) > 1:
     subprocess.run(["pkill", "-f", "wallpaper-menu.py"])
@@ -25,16 +25,21 @@ if not walls:
     subprocess.run(["notify-send", "-a", "Wallpapers", "No Wallpapers Found", "Add images to ~/Pictures/Wallpapers"])
     sys.exit(0)
 
-pixbufs = []
-for w in walls:
+surfs = [None] * len(walls)
+def get_surfs(i):
+    if surfs[i] is not None:
+        return surfs[i]
+    w = walls[i]
     st = w.stat()
-    key = hashlib.md5(f"{w}:{st.st_mtime_ns}:{st.st_size}:diag".encode()).hexdigest()
-    tf = cdir / f"{key}.png"
+    key = hashlib.md5(f"{w}:{st.st_mtime_ns}:{st.st_size}:v2".encode()).hexdigest()
+    tf = cdir / f"{key}_C.png"
     if not tf.exists():
+        from PIL import Image, ImageOps
         with Image.open(w) as im:
             card = ImageOps.fit(im.convert("RGB"), (360, 480), Image.Resampling.LANCZOS)
             card.save(tf, "PNG")
-    pixbufs.append(GdkPixbuf.Pixbuf.new_from_file(str(tf)))
+    surfs[i] = cairo.ImageSurface.create_from_png(str(tf))
+    return surfs[i]
 
 def lerp(a, b, t):
     return a + (b - a) * t
@@ -42,6 +47,13 @@ def lerp(a, b, t):
 class WallpaperCarousel(Gtk.Window):
     def __init__(self):
         super().__init__(title="mocha-wallpaper")
+        GtkLayerShell.init_for_window(self)
+        GtkLayerShell.set_namespace(self, "mocha-wallpaper")
+        GtkLayerShell.set_layer(self, GtkLayerShell.Layer.OVERLAY)
+        GtkLayerShell.set_keyboard_mode(self, GtkLayerShell.KeyboardMode.EXCLUSIVE)
+        GtkLayerShell.set_exclusive_zone(self, -1)
+        for edge in (GtkLayerShell.Edge.TOP, GtkLayerShell.Edge.BOTTOM, GtkLayerShell.Edge.LEFT, GtkLayerShell.Edge.RIGHT):
+            GtkLayerShell.set_anchor(self, edge, True)
         self.set_decorated(False)
         self.set_app_paintable(True)
         visual = self.get_screen().get_rgba_visual()
@@ -53,6 +65,7 @@ class WallpaperCarousel(Gtk.Window):
             self.idx = next((i for i,w in enumerate(walls) if w.name == cur_n), 0)
         self.anim_offset = 0.0
         self.open_t = 0.0
+        self.closing = False
         self.hitboxes = []
         self.da = Gtk.DrawingArea()
         self.da.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
@@ -61,15 +74,18 @@ class WallpaperCarousel(Gtk.Window):
         self.add(self.da)
         self.connect("key-press-event", self.on_key)
         self.connect("destroy", Gtk.main_quit)
-        GLib.timeout_add(16, self.on_tick)
+        GLib.timeout_add(8, self.on_tick)
+
+    def start_close(self):
+        Gtk.main_quit()
 
     def on_tick(self):
         dirty = False
         if self.open_t < 1.0:
-            self.open_t = min(1.0, self.open_t + 0.14)
+            self.open_t = min(1.0, self.open_t + 0.065)
             dirty = True
         if abs(self.anim_offset) > 0.002:
-            self.anim_offset *= 0.72
+            self.anim_offset *= 0.84
             if abs(self.anim_offset) <= 0.002:
                 self.anim_offset = 0.0
             dirty = True
@@ -95,7 +111,7 @@ class WallpaperCarousel(Gtk.Window):
     def on_key(self, widget, event):
         kv = event.keyval
         if kv in (Gdk.KEY_Escape, Gdk.KEY_q, Gdk.KEY_Q):
-            Gtk.main_quit()
+            self.start_close()
         elif kv in (Gdk.KEY_Left, Gdk.KEY_a, Gdk.KEY_A, Gdk.KEY_h, Gdk.KEY_H):
             self.step(-1)
         elif kv in (Gdk.KEY_Right, Gdk.KEY_d, Gdk.KEY_D, Gdk.KEY_l, Gdk.KEY_L):
@@ -111,17 +127,17 @@ class WallpaperCarousel(Gtk.Window):
                 else:
                     self.step(slot)
                 return
-        Gtk.main_quit()
+        self.start_close()
 
     def slot_geom(self, pos):
         anchors = [
-            (-3.0, -580.0, 120.0, 240.0, 26.0, 0.75),
+            (-3.0, -475.0, 95.0,  190.0, 20.0, 0.96),
             (-2.0, -455.0, 155.0, 305.0, 34.0, 0.55),
             (-1.0, -265.0, 200.0, 385.0, 42.0, 0.30),
             ( 0.0,    0.0, 290.0, 470.0, 52.0, 0.00),
             ( 1.0,  265.0, 200.0, 385.0, 42.0, 0.30),
             ( 2.0,  455.0, 155.0, 305.0, 34.0, 0.55),
-            ( 3.0,  580.0, 120.0, 240.0, 26.0, 0.75),
+            ( 3.0,  475.0, 95.0,  190.0, 20.0, 0.96),
         ]
         if pos <= anchors[0][0]:
             return anchors[0][1:]
@@ -138,14 +154,14 @@ class WallpaperCarousel(Gtk.Window):
     def on_draw(self, widget, cr):
         w = widget.get_allocated_width()
         h = widget.get_allocated_height()
-        ease = 1.0 - (1.0 - self.open_t) ** 3
+        ease = 1.0 - (1.0 - self.open_t) ** 5
         cr.set_source_rgba(0.0, 0.0, 0.0, 0.55 * ease)
         cr.rectangle(0, 0, w, h)
         cr.fill()
 
         cx, cy = w / 2.0, h / 2.0 - 12
-        cr.translate(cx, cy)
-        sc = 0.88 + 0.12 * ease
+        cr.translate(cx, cy + (1.0 - ease) * 28.0)
+        sc = 0.80 + 0.20 * ease
         cr.scale(sc, sc)
         cr.translate(-cx, -cy)
         self.hitboxes = []
@@ -153,11 +169,11 @@ class WallpaperCarousel(Gtk.Window):
 
         for slot in render_slots:
             pos = slot + self.anim_offset
-            if abs(pos) > 2.6:
+            if abs(pos) > 2.85:
                 continue
             dx, cw, ch, slant, dim = self.slot_geom(pos)
             wi = (self.idx + slot) % len(walls)
-            pb = pixbufs[wi]
+            surf = get_surfs(wi)
             x = cx + dx - cw / 2.0
             y = cy - ch / 2.0
             if abs(slot) <= 2:
@@ -171,7 +187,7 @@ class WallpaperCarousel(Gtk.Window):
             cr.close_path()
             cr.clip()
 
-            iw, ih = pb.get_width(), pb.get_height()
+            iw, ih = 360.0, 480.0
             tw = cw + slant
             scale = max(tw / iw, ch / ih)
             sw, sh = iw * scale, ih * scale
@@ -179,10 +195,11 @@ class WallpaperCarousel(Gtk.Window):
             oy = y + (ch - sh) / 2.0
             cr.translate(ox, oy)
             cr.scale(scale, scale)
-            Gdk.cairo_set_source_pixbuf(cr, pb, 0, 0)
-            cr.paint()
+            cr.set_source_surface(surf, 0, 0)
+            cr.get_source().set_filter(cairo.FILTER_FAST)
+            cr.paint_with_alpha(ease)
             if dim > 0.01:
-                cr.set_source_rgba(0.0, 0.0, 0.0, dim)
+                cr.set_source_rgba(0.0, 0.0, 0.0, dim * ease)
                 cr.paint()
             cr.restore()
 
@@ -193,8 +210,8 @@ class WallpaperCarousel(Gtk.Window):
             cr.line_to(x, y + ch)
             cr.close_path()
             focus = max(0.0, 1.0 - abs(pos))
-            shade = lerp(0.35, 1.0, focus)
-            cr.set_source_rgba(shade, shade, shade, 1.0)
+            shade = lerp(0.08, 1.0, focus)
+            cr.set_source_rgba(shade, shade, shade, ease)
             cr.set_line_width(lerp(1.5, 2.5, focus))
             cr.stroke()
             cr.restore()
@@ -218,5 +235,17 @@ class WallpaperCarousel(Gtk.Window):
         cr.show_text(label)
 
 win = WallpaperCarousel()
+for off in (0, -1, 1):
+    get_surfs((win.idx + off) % len(walls))
+pending = [i for i in range(len(walls)) if surfs[i] is None]
+def warm_next():
+    if win.open_t < 1.0:
+        return True
+    if pending:
+        get_surfs(pending.pop(0))
+        win.da.queue_draw()
+        return True
+    return False
+GLib.timeout_add(20, warm_next)
 win.show_all()
 Gtk.main()

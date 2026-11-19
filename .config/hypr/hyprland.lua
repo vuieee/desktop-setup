@@ -469,6 +469,7 @@ hl.window_rule({
   border_size = 0,
   rounding = 0,
   no_shadow = true,
+  animation = "fade",
   no_blur = true,
   no_anim = true,
 })
