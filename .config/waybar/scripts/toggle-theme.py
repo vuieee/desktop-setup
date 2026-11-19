@@ -50,3 +50,4 @@ else:
  (bak/"native").touch()
 subprocess.run(["killall","-SIGUSR1","kitty"],stderr=-3)
 subprocess.run(["swaync-client","-rs"],stdout=-3,stderr=-3)
+

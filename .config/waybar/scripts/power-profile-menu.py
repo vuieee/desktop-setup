@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import pathlib, subprocess
+import pathlib, subprocess, sys
 
 nl = chr(10)
 HOME = pathlib.Path.home()
@@ -14,11 +14,14 @@ MODES = [
     ("performance", chr(0xf0e7) + "  High Performance", "performance", "1920x1080@165.00Hz", "High Performance (165Hz + Max Fan)"),
 ]
 
-last = STATE.read_text().strip() if STATE.exists() else "balanced"
-idx = next((i for i, (k, _, _, _, _) in enumerate(MODES) if k == last), 1)
-opts = [lbl for _, lbl, _, _, _ in MODES]
+if len(sys.argv) == 3 and sys.argv[1] == "--set":
+    ch = next((lbl for k, lbl, _, _, _ in MODES if k == sys.argv[2]), "")
+else:
+    last = STATE.read_text().strip() if STATE.exists() else "balanced"
+    idx = next((i for i, (k, _, _, _, _) in enumerate(MODES) if k == last), 1)
+    opts = [lbl for _, lbl, _, _, _ in MODES]
 
-ch = subprocess.run(["rofi", "-dmenu", "-i", "-selected-row", str(idx), "-theme", str(RC), "-theme-str", "window { width: 250px; } mainbox { children: [listview]; } listview { lines: 3; padding: 0px; spacing: 0px; }"], input=nl.join(opts), text=True, capture_output=True).stdout.strip()
+    ch = subprocess.run(["rofi", "-dmenu", "-i", "-selected-row", str(idx), "-theme", str(RC), "-theme-str", "window { width: 250px; } mainbox { children: [listview]; } listview { lines: 3; padding: 0px; spacing: 0px; }"], input=nl.join(opts), text=True, capture_output=True).stdout.strip()
 if not ch: raise SystemExit(0)
 
 for key, lbl, prof_val, mon_mode, msg in MODES:

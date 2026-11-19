@@ -67,10 +67,44 @@ list,
 .notification-action:hover * {
   color: #000000;
 }
-.notification-action {
+.notification-action,
+.notification-background:hover .notification-action,
+.notification:hover .notification-action {
   background: #000000;
   color: #ffffff;
   border: 1px solid #ffffff;
+  padding: 6px 12px;
+  margin: 0 10px 10px 10px;
+}
+.notification-action label,
+.notification-action *,
+.notification-background:hover .notification-action label,
+.notification-background:hover .notification-action *,
+.notification:hover .notification-action label,
+.notification:hover .notification-action * {
+  color: #ffffff;
+}
+.notification-action:hover,
+.notification-background:hover .notification-action:hover,
+.notification:hover .notification-action:hover {
+  background: #ffffff;
+  color: #000000;
+  border-color: #000000;
+}
+.notification-action:hover label,
+.notification-action:hover *,
+.notification-background:hover .notification-action:hover label,
+.notification-background:hover .notification-action:hover *,
+.notification:hover .notification-action:hover label,
+.notification:hover .notification-action:hover * {
+  color: #000000;
+}
+.notification-action button,
+.notification-action > box {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 .close-button,
 .close-button:hover {

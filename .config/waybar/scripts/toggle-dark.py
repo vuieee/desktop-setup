@@ -24,3 +24,4 @@ for s in ["gtk-3.0/settings.ini","gtk-4.0/settings.ini","yazi/theme.toml","cava/
  if sp.exists(): sp.write_text(sp.read_text().replace("prefer-dark-theme=0" if dark else "prefer-dark-theme=1","prefer-dark-theme=1" if dark else "prefer-dark-theme=0"))
 subprocess.run(["gsettings","set","org.gnome.desktop.interface","gtk-theme","Adwaita-dark" if dark else "Adwaita"])
 subprocess.run(["gsettings","set","org.gnome.desktop.interface","color-scheme","prefer-dark" if dark else "default"])
+

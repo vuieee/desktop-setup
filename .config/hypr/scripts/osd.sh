@@ -32,18 +32,15 @@ elif [ "$1" = "caps" ]; then
 elif [[ "$1" == vol-* ]]; then
   info=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
   val=$(awk '{printf "%d", $2*100}' <<< "$info")
-if [[ "$info" == *"[MUTED]"* ]] || [ "$val" -eq 0 ]; then
-icon=""
-elif [ "$val" -lt 35 ]; then
-icon=""
-elif [ "$val" -lt 70 ]; then
-icon=""
+  sink_info=$(wpctl inspect @DEFAULT_AUDIO_SINK@ 2>/dev/null; pactl list sinks 2>/dev/null | grep -A 25 "Name: $(pactl get-default-sink 2>/dev/null)")
+  if grep -qiE "headphone|headset|earbud|earphone|airpods|buds|bluez|a2dp" <<< "$sink_info"; then
+    icon="Headphones"
+  else
+    icon="Volume"
+  fi
 else
-icon=""
-fi
-else
-cur=$(brightnessctl g); max=$(brightnessctl m)
-val=$(( cur * 100 / max ))
-icon=""
+  cur=$(brightnessctl g); max=$(brightnessctl m)
+  val=$(( cur * 100 / max ))
+  icon="Brightness"
 fi
 python3 /home/mocha/.config/hypr/scripts/osd-popup.py "$icon" "$val" >/dev/null 2>&1 &

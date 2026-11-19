@@ -57,14 +57,14 @@ elif "Appearance" in top:
             vert = nxt in ("left","right")
             d.update({"position":nxt,"height":0 if vert else 30,"width":30 if vert else 0,"margin-top":8 if nxt!="bottom" else 0,"margin-bottom":8 if nxt!="top" else 0,"margin-left":8 if nxt!="right" else 0,"margin-right":8 if nxt!="left" else 0,"modules-center":[] if vert else ["hyprland/window"]})
             d["clock"]["format"] = "{:%I"+nl+"%M}" if vert else "{:%I:%M %p}"
-            d["battery"]["format"] = "{icon}" if vert else "{icon} {capacity}%"
-            d["wireplumber"]["format"] = "{icon}" if vert else "{icon} {volume}%"
-            d["backlight"]["format"] = "{icon}" if vert else "{icon} {percent}%"
-            d["battery"]["format"] = "{icon}" if vert else "{icon} {capacity}%"
-            d["wireplumber"]["format"] = "{icon}" if vert else "{icon} {volume}%"
-            d["backlight"]["format"] = "{icon}" if vert else "{icon} {percent}%"
+            d["battery"]["format"] = "{icon}" if vert else "{icon}"
+            d["wireplumber"]["format"] = "{icon}" if vert else "{icon}"
+            d["backlight"]["format"] = "{icon}" if vert else "{icon}"
+            d["battery"]["format"] = "{icon}" if vert else "{icon}"
+            d["wireplumber"]["format"] = "{icon}" if vert else "{icon}"
+            d["backlight"]["format"] = "{icon}" if vert else "{icon}"
             wc.write_text(json.dumps(d,indent=2)+nl)
-            vb = nl+"/* mocha-vert */"+nl+"#custom-menu, #clock, #custom-workspaces, #tray, #custom-caffeine, #battery, #wireplumber, #backlight, #bluetooth, #network, #custom-power { padding: 8px 0; min-width: 30px; }"+nl+"/* end-mocha-vert */"
+            vb = nl+"/* mocha-vert */"+nl+"#custom-menu, #clock, #custom-workspaces, #tray, #custom-peripherals, #custom-caffeine, #battery, #wireplumber, #backlight, #bluetooth, #network, #custom-power { padding: 8px 0; min-width: 30px; }"+nl+"/* end-mocha-vert */"
             c = c.split(nl+"/* mocha-vert */")[0] + (vb if vert else "")
             l = l.replace('style = "slide"','style = "slidevert"') if vert else l.replace('style = "slidevert"','style = "slide"')
             hl.write_text(l)

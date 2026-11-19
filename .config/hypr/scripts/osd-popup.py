@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import ctypes, json, os, socket, sys, time
+import ctypes, glob, json, os, socket, sys, time
 ctypes.CDLL("libgtk-layer-shell.so")
 import gi
 gi.require_version("Gtk", "3.0")
@@ -30,11 +30,12 @@ sock.bind(SOCK)
 sock.setblocking(False)
 
 CSS = b'''window { background-color: #000000; border: 2px solid #ffffff; border-radius: 0; }
-label { color: #ffffff; font-family: "JetBrains Mono", "MesloLGS Nerd Font", "MesloLGS Nerd Font Propo", "Font Awesome 6 Free", "FontAwesome", monospace; font-size: 18px; }
-label.big-icon { font-family: "MesloLGS Nerd Font Mono", "FontAwesome", monospace; font-size: 36px; }
-label.sub-text { font-size: 15px; }
-progressbar, progressbar trough { min-height: 10px; min-width: 200px; background-color: #000000; background-image: none; border: 1px solid #ffffff; border-radius: 0; padding: 0; margin: 0; }
-progressbar progress { min-height: 10px; background-color: #ffffff; background-image: none; border: none; border-radius: 0; padding: 0; margin: 0; }'''
+label { color: #ffffff; font-family: "JetBrains Mono", "MesloLGS Nerd Font", "MesloLGS Nerd Font Propo", "Font Awesome 6 Free", "FontAwesome", monospace; font-size: 16px; font-weight: 600; }
+label.osd-val { font-size: 18px; font-weight: 700; }
+label.big-icon { font-family: "MesloLGS Nerd Font Mono", "FontAwesome", monospace; font-size: 36px; font-weight: 400; }
+label.sub-text { font-size: 15px; font-weight: 400; }
+progressbar, progressbar trough { min-height: 12px; min-width: 240px; background-color: #000000; background-image: none; border: 1px solid #ffffff; border-radius: 0; padding: 0; margin: 0; }
+progressbar progress { min-height: 12px; background-color: #ffffff; background-image: none; border: none; border-radius: 0; padding: 0; margin: 0; }'''
 
 prov = Gtk.CssProvider()
 prov.load_from_data(CSS)
@@ -50,22 +51,26 @@ GtkLayerShell.set_anchor(win, GtkLayerShell.Edge.BOTTOM, True)
 GtkLayerShell.set_margin(win, GtkLayerShell.Edge.BOTTOM, 48)
 GtkLayerShell.set_keyboard_mode(win, GtkLayerShell.KeyboardMode.NONE)
 
-box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=14)
+box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+top_row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
 lbl = Gtk.Label()
+val_lbl = Gtk.Label()
 sub = Gtk.Label()
 bar = Gtk.ProgressBar()
 bar.set_valign(Gtk.Align.CENTER)
-lbl.set_halign(Gtk.Align.CENTER)
-lbl.set_xalign(0.5)
-lbl.set_justify(Gtk.Justification.CENTER)
+lbl.set_halign(Gtk.Align.START)
+lbl.set_xalign(0.0)
+val_lbl.set_halign(Gtk.Align.END)
+val_lbl.set_xalign(1.0)
+val_lbl.get_style_context().add_class("osd-val")
 sub.set_halign(Gtk.Align.CENTER)
 sub.set_xalign(0.5)
 sub.set_justify(Gtk.Justification.CENTER)
-box.set_valign(Gtk.Align.CENTER)
-box.set_halign(Gtk.Align.CENTER)
-box.pack_start(lbl, False, False, 0)
+top_row.pack_start(lbl, True, True, 0)
+top_row.pack_end(val_lbl, False, False, 0)
+box.pack_start(top_row, False, False, 0)
 box.pack_start(sub, False, False, 0)
-box.pack_start(bar, True, True, 0)
+box.pack_start(bar, False, False, 0)
 win.add(box)
 
 state = {"cur": 0.0, "target": 0.0, "hide_at": 0.0, "bar_mode": True}
@@ -77,14 +82,19 @@ def apply_data(icon, val):
         pct = int(val)
         state["bar_mode"] = True
         win.set_size_request(-1, -1)
-        box.set_orientation(Gtk.Orientation.HORIZONTAL)
-        box.set_spacing(14)
-        box.set_margin_top(14); box.set_margin_bottom(14)
-        box.set_margin_left(18); box.set_margin_right(18)
+        box.set_orientation(Gtk.Orientation.VERTICAL)
+        box.set_spacing(10)
+        box.set_margin_top(12); box.set_margin_bottom(14)
+        box.set_margin_left(16); box.set_margin_right(16)
+        lbl.set_halign(Gtk.Align.START)
+        lbl.set_xalign(0.0)
         lbl.get_style_context().remove_class("big-icon")
         sub.get_style_context().remove_class("sub-text")
+        val_lbl.set_text(str(pct))
         box.show()
+        top_row.show()
         lbl.show()
+        val_lbl.show()
         sub.hide()
         bar.show()
         state["target"] = max(0.0, min(1.0, pct / 100.0))
@@ -100,11 +110,15 @@ def apply_data(icon, val):
         box.set_spacing(10)
         box.set_margin_top(24); box.set_margin_bottom(20)
         box.set_margin_left(0); box.set_margin_right(0)
+        lbl.set_halign(Gtk.Align.CENTER)
+        lbl.set_xalign(0.5)
         lbl.get_style_context().add_class("big-icon")
         sub.get_style_context().add_class("sub-text")
         sub.set_text(str(val))
         box.show()
+        top_row.show()
         lbl.show()
+        val_lbl.hide()
         bar.hide()
         sub.show()
         win.show()
@@ -133,7 +147,6 @@ GLib.timeout_add(16, tick)
 if len(sys.argv) >= 3:
     apply_data(sys.argv[1], sys.argv[2])
 
-import glob
 def get_caps():
     paths = glob.glob("/sys/class/leds/*capslock*/brightness")
     if not paths: return None
