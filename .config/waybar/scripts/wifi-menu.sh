@@ -3,6 +3,19 @@ THEME="$HOME/.config/rofi/minimal.rasi"
 PASS_THEME='window { width: 420px; } mainbox { children: [inputbar]; } inputbar { orientation: vertical; children: [prompt, entry]; spacing: 6px; } entry { placeholder: "Input password here"; placeholder-color: #777777; } listview { enabled: false; }'
 CONFIRM_THEME='window { width: 360px; } mainbox { children: [inputbar, listview]; } inputbar { children: [prompt]; } entry { enabled: false; } listview { lines: 2; }'
 CACHE="/tmp/wifi-scan.cache"
+check_portal() {
+    for _ in 1 2 3 4 5; do
+        state=$(nmcli networking connectivity check 2>/dev/null)
+        if [ "$state" = "portal" ]; then
+            notify-send "Wi-Fi" "Login required — opening portal..."
+            nohup xdg-open "http://gnome.org" >/dev/null 2>&1 &
+            break
+        fi
+        [ "$state" = "full" ] && break
+        sleep 0.6
+    done
+}
+
 raw=$(nmcli -t -f IN-USE,SSID,SIGNAL,SECURITY device wifi list --rescan no)
 if [ $(printf "%s\n" "$raw" | grep -c .) -gt 1 ]; then
     printf "%s\n" "$raw" > "$CACHE"
@@ -66,17 +79,17 @@ while true; do
     fi
 
     if [ "$status" = "saved" ]; then
-        nmcli connection up id "$ssid" && notify-send "Wi-Fi" "Connected to $ssid" || notify-send "Wi-Fi" "Failed to connect to $ssid"
+        nmcli connection up id "$ssid" && notify-send "Wi-Fi" "Connected to $ssid" && check_portal || notify-send "Wi-Fi" "Failed to connect to $ssid"
         exit 0
     else
         sec=$(printf "%s\n" "$raw" | awk -F: -v s="$ssid" '$2==s{print $4; exit}')
         if [ -z "$sec" ] || [ "$sec" = "--" ]; then
-            nmcli device wifi connect "$ssid" && notify-send "Wi-Fi" "Connected to $ssid"
+            nmcli device wifi connect "$ssid" && notify-send "Wi-Fi" "Connected to $ssid" && check_portal
             exit 0
         else
             pass=$(rofi -dmenu -password -p "$ssid" -theme "$THEME" -theme-str "$PASS_THEME")
             [ -z "$pass" ] && continue
-            nmcli device wifi connect "$ssid" password "$pass" && notify-send "Wi-Fi" "Connected to $ssid" || notify-send "Wi-Fi" "Failed to connect to $ssid"
+            nmcli device wifi connect "$ssid" password "$pass" && notify-send "Wi-Fi" "Connected to $ssid" && check_portal || notify-send "Wi-Fi" "Failed to connect to $ssid"
             exit 0
         fi
     fi
