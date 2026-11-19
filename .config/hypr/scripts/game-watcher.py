@@ -6,6 +6,7 @@ state = pathlib.Path.home() / ".local/share/mocha-power-mode"
 acad = pathlib.Path("/sys/class/power_supply/ACAD/online")
 menu = pathlib.Path.home() / ".config/waybar/scripts/power-profile-menu.py"
 active = False
+time.sleep(2)
 last_ac = acad.read_text().strip() if acad.exists() else None
 if last_ac in ("0", "1"):
     want = "balanced" if last_ac == "1" else "power-saver"
