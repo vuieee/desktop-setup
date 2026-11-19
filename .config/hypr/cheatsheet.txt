@@ -23,4 +23,5 @@ screen brightness                Brightness keys
 play / pause / next / previous   Media keys
 screenshot (fullscreen)          Print
 screenshot (region)              SUPER + SHIFT + X
+screenshot (OCR text)            SUPER + SHIFT + T
 clipboard history                SUPER + V

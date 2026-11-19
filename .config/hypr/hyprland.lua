@@ -411,6 +411,7 @@ hl.config({ decoration = { blur = { enabled = true, size = 8, passes = 3 } } })
 -- Screenshots
 hl.bind("Print", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/screenshot.sh full"))
 hl.bind("SUPER + SHIFT + X", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/screenshot.sh region"))
+hl.bind("SUPER + SHIFT + T", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/screenshot.sh ocr"))
 
 -- Volume & Brightness OSD
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/osd.sh vol-up"), { ["repeat"] = true, locked = true })
@@ -458,7 +459,7 @@ hl.window_rule({
 })
 hl.on("hyprland.start", function() hl.exec_cmd("wl-paste --type text --watch cliphist store"); hl.exec_cmd("wl-paste --type image --watch cliphist store") end)
 
-hl.on("hyprland.start", function() hl.exec_cmd("hypridle") end)
+hl.on("hyprland.start", function() hl.exec_cmd("hypridle"); hl.exec_cmd("udiskie -t") end)
 
 hl.window_rule({
   name = "mocha-wallpaper",
