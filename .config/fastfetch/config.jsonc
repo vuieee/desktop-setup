@@ -4,7 +4,10 @@
         "type": "file",
         "source": "~/.config/fastfetch/logo/frieren.txt",
         "color": {
-            "1": "white", "2": "white", "3": "white", "4": "white"
+            "1": "white",
+            "2": "white",
+            "3": "white",
+            "4": "white"
         },
         "padding": {
             "top": 2,
@@ -40,12 +43,6 @@
             "format": "{result>22}  \u2502"
         },
         {
-            "type": "command",
-            "key": "\u2502  Uptime       ",
-            "text": "uptime -p | sed -E 's/up //; s/ days?/d/g; s/ hours?/h/g; s/ minutes?/m/g'",
-            "format": "{result>22}  \u2502"
-        },
-        {
             "type": "shell",
             "key": "\u2502  Shell        ",
             "format": "{pretty-name>22}  \u2502"
@@ -55,12 +52,6 @@
             "key": "\u2502  WM           ",
             "text": "echo $XDG_CURRENT_DESKTOP",
             "format": "{result>22}  \u2502"
-        },
-        {
-            "type": "disk",
-            "key": "\u2502  OS Age       ",
-            "folders": "/",
-            "format": "{days>17} days  \u2502"
         },
         {
             "type": "command",
@@ -96,12 +87,6 @@
             "type": "packages",
             "key": "\u2502  Packages     ",
             "format": "{all>22}  \u2502"
-        },
-        {
-            "type": "command",
-            "key": "\u2502  Owner        ",
-            "text": "echo $USER | tr '[:lower:]' '[:upper:]'",
-            "format": "{result>22}  \u2502"
         },
         {
             "type": "custom",
