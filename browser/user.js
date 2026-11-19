@@ -13,3 +13,6 @@ user_pref("mousewheel.default.delta_multiplier_y", 300);
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("browser.tabs.animate", true);
 
+
+user_pref("svg.context-properties.content.enabled", true);
+user_pref("userChrome.ui-chrome-refresh", true);
