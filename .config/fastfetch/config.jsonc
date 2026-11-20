@@ -2,7 +2,7 @@
     "$schema": "https://github.com",
     "logo": {
         "type": "kitty-direct",
-        "source": "~/.config/fastfetch/logo/cachyos-light.png",
+        "source": "~/.config/fastfetch/logo/cachyos.png",
         "width": 28,
         "padding": {
             "top": 1,
@@ -28,59 +28,59 @@
         },
         {
             "type": "os",
-            "key": "\u2502  OS           ",
+            "key": "\u2502  \u001b[36mOS\u001b[39m           ",
             "format": "{pretty-name>22}  \u2502"
         },
         {
             "type": "command",
-            "key": "\u2502  Kernel       ",
+            "key": "\u2502  \u001b[36mKernel\u001b[39m       ",
             "text": "uname -r | cut -d '-' -f1",
             "format": "{result>22}  \u2502"
         },
         {
             "type": "shell",
-            "key": "\u2502  Shell        ",
+            "key": "\u2502  \u001b[36mShell\u001b[39m        ",
             "format": "{pretty-name>22}  \u2502"
         },
         {
             "type": "command",
-            "key": "\u2502  WM           ",
+            "key": "\u2502  \u001b[36mWM\u001b[39m           ",
             "text": "echo $XDG_CURRENT_DESKTOP",
             "format": "{result>22}  \u2502"
         },
         {
             "type": "command",
-            "key": "\u2502  Ram          ",
+            "key": "\u2502  \u001b[36mRam\u001b[39m          ",
             "text": "free -m | awk 'NR==2{printf \"%.2f / %.2f GiB\",$3/1024,$2/1024}'",
             "format": "{result>22}  \u2502"
         },
         {
             "type": "command",
-            "key": "\u2502  CPU          ",
+            "key": "\u2502  \u001b[36mCPU\u001b[39m          ",
             "text": "awk -F: '/model name/{match($2,/i[0-9]-[0-9A-Za-z]+/); print substr($2,RSTART,RLENGTH); exit}' /proc/cpuinfo",
             "format": "{result>22}  \u2502"
         },
         {
             "type": "command",
-            "key": "\u2502  GPU          ",
+            "key": "\u2502  \u001b[36mGPU\u001b[39m          ",
             "text": "fastfetch -s gpu --format json | python3 -c \"import sys,json; gs=[g['name'] for g in json.load(sys.stdin)[0]['result']]; g=next((x for x in gs if 'NVIDIA' in x or 'AMD' in x or 'Radeon' in x), gs[0] if gs else 'Unknown'); print(g.replace('NVIDIA GeForce ','').replace('Intel ','')[:22])\"",
             "format": "{result>22}  \u2502"
         },
         {
             "type": "disk",
-            "key": "\u2502  Disk1        ",
+            "key": "\u2502  \u001b[36mDisk1\u001b[39m        ",
             "folders": "/",
             "format": "{size-used>9} / {size-total>10}  \u2502"
         },
         {
             "type": "disk",
-            "key": "\u2502  Disk2        ",
+            "key": "\u2502  \u001b[36mDisk2\u001b[39m        ",
             "folders": "/mnt/2tb",
             "format": "{size-used>9} / {size-total>10}  \u2502"
         },
         {
             "type": "packages",
-            "key": "\u2502  Packages     ",
+            "key": "\u2502  \u001b[36mPackages\u001b[39m     ",
             "format": "{all>22}  \u2502"
         },
         {
@@ -91,7 +91,7 @@
         {
             "type": "custom",
             "key": " ",
-            "format": "\u2570\u2500\u2500\u2500 \u001b[1mBLAZINGLY FAST ! \u2500\u2500 \u5727\u5012\u7684\u7206\u901f\uff01\u001b[22m \u2500\u2500\u2500\u2500\u256f"
+            "format": "\u2570\u2500\u2500\u2500 \u001b[1;33mBLAZINGLY FAST !\u001b[22;39m \u2500\u2500 \u001b[1;31m\u5727\u5012\u7684\u7206\u901f\uff01\u001b[22;39m \u2500\u2500\u2500\u2500\u256f"
         },
         "break"
     ]
