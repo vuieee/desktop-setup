@@ -105,6 +105,11 @@ tooltip label {
 
 
 window#waybar {
+  background-color: transparent;
+  border: none;
+}
+
+window#waybar > box {
   background-color: #111318;
   color: #f1f5f9;
   border: 1px solid #f1f5f9;
