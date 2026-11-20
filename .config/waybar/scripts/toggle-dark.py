@@ -15,7 +15,7 @@ for f in fl:
 hl=h/".config/hypr/hyprland.lua"
 hl.write_text(sw(hl.read_text(),hp))
 ff=h/".config/fastfetch/config.jsonc"
-if ff.exists(): ff.write_text(sw(ff.read_text(),[("white","black"),("black","white")]))
+if ff.exists(): ff.write_text(sw(ff.read_text(),[("white","black"),("black","white"),("cachyos-dark.png","cachyos-light.png"),("cachyos-light.png","cachyos-dark.png")]))
 subprocess.run(["killall","-SIGUSR1","kitty"],stderr=-3)
 w_full=(h/".config/waybar/style.css").read_text()
 dark=not any(x in w_full for x in ("background-color: #ffffff;","rgba(255, 255, 255, 0.72)","background-color: #f2f3f7;","rgba(242, 243, 247, 0.75)"))

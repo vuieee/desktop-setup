@@ -1,0 +1,103 @@
+{
+    "$schema": "https://github.com",
+    "logo": {
+        "type": "file",
+        "source": "~/.config/fastfetch/logo/frieren.txt",
+        "color": {
+            "1": "white",
+            "2": "white",
+            "3": "white",
+            "4": "white"
+        },
+        "padding": {
+            "top": 2,
+            "right": 5,
+            "left": 3
+        }
+    },
+    "display": {
+        "separator": "  ",
+        "color": "white"
+    },
+    "modules": [
+        "break",
+        {
+            "type": "custom",
+            "key": " ",
+            "format": "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 \u001b[1msystem\u001b[22m \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e"
+        },
+        {
+            "type": "custom",
+            "key": " ",
+            "format": "\u2502                                         \u2502"
+        },
+        {
+            "type": "os",
+            "key": "\u2502  OS           ",
+            "format": "{pretty-name>22}  \u2502"
+        },
+        {
+            "type": "command",
+            "key": "\u2502  Kernel       ",
+            "text": "uname -r | cut -d '-' -f1",
+            "format": "{result>22}  \u2502"
+        },
+        {
+            "type": "shell",
+            "key": "\u2502  Shell        ",
+            "format": "{pretty-name>22}  \u2502"
+        },
+        {
+            "type": "command",
+            "key": "\u2502  WM           ",
+            "text": "echo $XDG_CURRENT_DESKTOP",
+            "format": "{result>22}  \u2502"
+        },
+        {
+            "type": "command",
+            "key": "\u2502  Ram          ",
+            "text": "free -m | awk 'NR==2{printf \"%.2f / %.2f GiB\",$3/1024,$2/1024}'",
+            "format": "{result>22}  \u2502"
+        },
+        {
+            "type": "command",
+            "key": "\u2502  CPU          ",
+            "text": "awk -F: '/model name/{match($2,/i[0-9]-[0-9A-Za-z]+/); print substr($2,RSTART,RLENGTH); exit}' /proc/cpuinfo",
+            "format": "{result>22}  \u2502"
+        },
+        {
+            "type": "command",
+            "key": "\u2502  GPU          ",
+            "text": "fastfetch -s gpu --format json | python3 -c \"import sys,json; gs=[g['name'] for g in json.load(sys.stdin)[0]['result']]; g=next((x for x in gs if 'NVIDIA' in x or 'AMD' in x or 'Radeon' in x), gs[0] if gs else 'Unknown'); print(g.replace('NVIDIA GeForce ','').replace('Intel ','')[:22])\"",
+            "format": "{result>22}  \u2502"
+        },
+        {
+            "type": "disk",
+            "key": "\u2502  Disk1        ",
+            "folders": "/",
+            "format": "{size-used>10}/{size-total>11}  \u2502"
+        },
+        {
+            "type": "disk",
+            "key": "\u2502  Disk2        ",
+            "folders": "/mnt/2tb",
+            "format": "{size-used>10}/{size-total>11}  \u2502"
+        },
+        {
+            "type": "packages",
+            "key": "\u2502  Packages     ",
+            "format": "{all>22}  \u2502"
+        },
+        {
+            "type": "custom",
+            "key": " ",
+            "format": "\u2502                                         \u2502"
+        },
+        {
+            "type": "custom",
+            "key": " ",
+            "format": "\u2570\u2500\u2500\u2500 \u001b[1mBLAZINGLY FAST ! \u2500\u2500 \u5727\u5012\u7684\u7206\u901f\uff01\u001b[22m \u2500\u2500\u2500\u2500\u256f"
+        },
+        "break"
+    ]
+}
