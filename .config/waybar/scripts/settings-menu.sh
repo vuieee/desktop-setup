@@ -57,7 +57,7 @@ while True:
                 nxt = "bottom" if cur == "top" else "top"
                 d = json.loads(re.sub(r"//.*", "", cfg))
                 d.pop("width", None)
-                d.update({"position": nxt, "height": 30, "margin-top": 8 if nxt == "top" else 1, "margin-bottom": 1 if nxt == "top" else 8, "margin-left": 8, "margin-right": 8, "modules-center": ["hyprland/window"]})
+                d.update({"position": nxt, "height": 30, "margin-top": 4 if nxt == "top" else 1, "margin-bottom": 1 if nxt == "top" else 4, "margin-left": 4, "margin-right": 4, "modules-center": ["hyprland/window"]})
                 d["clock"]["format"] = "{:%I:%M %p}"
                 d["bluetooth"]["format-connected"] = " {device_alias}"
                 wc.write_text(json.dumps(d, indent=2) + nl)

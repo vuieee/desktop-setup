@@ -94,14 +94,14 @@ hl.env("HYPRCURSOR_THEME", "Win11-Light-Big")
 -- Refer to https://wiki.hypr.land/configuring/core/config-options/
 hl.config({
     general = {
-        gaps_in  = 4,
-        gaps_out = 8,
+        gaps_in  = 3,
+        gaps_out = 4,
 
-        border_size = 1,
+        border_size = 2,
 
         col = {
-            active_border   = { colors = {"rgba(94a3b8ff)", "rgba(94a3b8ff)"}, angle = 45 },
-            inactive_border = "rgba(475569aa)",
+            active_border   = { colors = {"rgba(ffffffff)", "rgba(ffffffff)"}, angle = 45 },
+            inactive_border = "rgba(595959aa)",
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -115,7 +115,7 @@ hl.config({
 
     decoration = {
         screen_shader  = "/home/mocha/.config/hypr/shaders/vibrance.glsl",
-        rounding       = 6,
+        rounding       = 0,
         rounding_power = 2,
         border_part_of_window = false,
 
@@ -477,6 +477,16 @@ hl.window_rule({
 })
 
 hl.window_rule({ name = "yazi-picker", match = { class = "yazi-picker" }, float = true, size = { 1200, 720 }, center = true })
+
+hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
+
+hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
+
+hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
+
+hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
+
+hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
 
 hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
 
