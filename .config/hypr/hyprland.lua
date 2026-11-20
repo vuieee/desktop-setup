@@ -460,7 +460,7 @@ hl.window_rule({
 })
 hl.on("hyprland.start", function() hl.exec_cmd("wl-paste --type text --watch cliphist store"); hl.exec_cmd("wl-paste --type image --watch cliphist store") end)
 
-hl.on("hyprland.start", function() hl.exec_cmd("hypridle"); hl.exec_cmd("udiskie --no-tray"); hl.exec_cmd("python3 ~/.config/hypr/scripts/game-watcher.py") end)
+hl.on("hyprland.start", function() hl.exec_cmd("hypridle"); hl.exec_cmd("udiskie --no-tray"); hl.exec_cmd("python3 ~/.config/hypr/scripts/game-watcher.py"); hl.exec_cmd("easyeffects --gapplication-service") end)
 
 hl.window_rule({
   name = "mocha-wallpaper",
