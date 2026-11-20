@@ -26,7 +26,7 @@ hl.monitor({
     output   = "",
     mode     = "1920x1080@165.00Hz",
     position = "auto",
-    scale    = "1.25",
+    scale    = "1.2",
 })
 
 
@@ -98,6 +98,7 @@ hl.config({
         gaps_out = 8,
 
         border_size = 1,
+        border_part_of_window = false,
 
         col = {
             active_border   = { colors = {"rgba(94a3b8ff)", "rgba(94a3b8ff)"}, angle = 45 },
@@ -114,16 +115,16 @@ hl.config({
     },
 
     decoration = {
-        screen_shader  = "",
+        screen_shader  = "/home/mocha/.config/hypr/shaders/vibrance.glsl",
         rounding       = 6,
         rounding_power = 2,
 
         -- Change transparency of focused and unfocused windows
-        active_opacity   = 0.85,
-        inactive_opacity = 0.78,
+        active_opacity   = 1.0,
+        inactive_opacity = 1.0,
 
         shadow = {
-            enabled      = true,
+            enabled      = false,
             range        = 4,
             render_power = 3,
             color        = 0xee1a1a1a,
@@ -495,9 +496,4 @@ hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, 
 
 hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
 
--- mocha-acrylic-layers
-hl.layer_rule({ name = 'mocha-waybar-blur', match = { namespace = 'waybar' }, blur = true, ignore_alpha = 0.2 })
-hl.layer_rule({ name = 'mocha-rofi-blur', match = { namespace = 'rofi' }, blur = true, ignore_alpha = 0.2 })
-hl.layer_rule({ name = 'mocha-swaync-cc-blur', match = { namespace = 'swaync-control-center' }, blur = true, ignore_alpha = 0.2 })
-hl.layer_rule({ name = 'mocha-swaync-win-blur', match = { namespace = 'swaync-notification-window' }, blur = true, ignore_alpha = 0.2 })
-hl.layer_rule({ name = 'mocha-osd-blur', match = { namespace = 'mocha-osd' }, blur = true, ignore_alpha = 0.2 })
+hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
