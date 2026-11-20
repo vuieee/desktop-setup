@@ -452,14 +452,6 @@ hl.window_rule({
 })
 
 hl.window_rule({
-  name = "ear-web-float",
-  match = { class = "ear-web" },
-  float = true,
-  size = { 460, 740 },
-  center = true,
-})
-
-hl.window_rule({
   name = "c-runner-float",
   match = { class = "c-runner" },
   float = true,
