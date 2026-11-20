@@ -47,7 +47,7 @@ else:
  if ms.exists(): d=json.loads(ms.read_text()); d["colorscheme"]="default"; ms.write_text(json.dumps(d,indent=2)+chr(10))
  cc=h/".config/cava/config"
  if cc.exists(): cc.write_text(chr(10).join(l for l in cc.read_text().splitlines() if not l.startswith("foreground ="))+chr(10))
- to_nat=[("#000000","#1e222d"),("#ffffff","#384152"),("#ffffff","#f1f5f9"),("rgba(0, 0, 0, 0.72)","rgba(30, 34, 45, 0.78)"),("#000000b8","#1e222dbf")] if dark else [("#ffffff","#f8fafc"),("#000000","#cbd5e1"),("#000000","#0f172a"),("rgba(255, 255, 255, 0.72)","rgba(248, 250, 252, 0.78)"),("#ffffffb8","#f8fafcbf")]
+ to_nat=[("#000000","#1e222d"),("#ffffff","#f1f5f9"),("rgba(0, 0, 0, 0.72)","rgba(30, 34, 45, 0.78)"),("#000000b8","#1e222dbf")] if dark else [("#ffffff","#f8fafc"),("#000000","#0f172a"),("rgba(255, 255, 255, 0.72)","rgba(248, 250, 252, 0.78)"),("#ffffffb8","#f8fafcbf")]
  for f in ui_files:
   fp=h/".config"/f
   if fp.exists(): fp.write_text(sw(fp.read_text(),to_nat))

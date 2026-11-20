@@ -31,13 +31,13 @@ list,
   margin: 6px 10px;
 }
 .notification-background {
-  background: rgba(30, 34, 45, 0.78);
+  background: #1e222d;
   border: 1px solid #f1f5f9;
   margin: 0;
   padding: 0;
 }
 .notification {
-  background: transparent;
+  background: #1e222d;
   color: #f1f5f9;
   border: none;
   margin: 0;
@@ -70,7 +70,7 @@ list,
 .notification-action,
 .notification-background:hover .notification-action,
 .notification:hover .notification-action {
-  background: rgba(30, 34, 45, 0.78);
+  background: #1e222d;
   color: #f1f5f9;
   border: 1px solid #f1f5f9;
   padding: 6px 12px;
@@ -130,7 +130,7 @@ list,
   border: 1px solid #f1f5f9;
 }
 .control-center {
-  background: rgba(30, 34, 45, 0.78);
+  background: #1e222d;
   border: 1px solid #f1f5f9;
   color: #f1f5f9;
 }

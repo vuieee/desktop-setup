@@ -49,9 +49,9 @@ button {
   background-color: #1e222d;
   background-image: none;
   border: none;
-  border-top: 1px solid #94a3b8;
-  border-bottom: 1px solid #94a3b8;
-  border-right: 1px solid #94a3b8;
+  border-top: 1px solid #f1f5f9;
+  border-bottom: 1px solid #f1f5f9;
+  border-right: 1px solid #f1f5f9;
   border-radius: 0;
   box-shadow: none;
   outline-style: none;
@@ -59,13 +59,13 @@ button {
   transition: all 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 button:first-child {
-  border-left: 1px solid #94a3b8;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
+  border-left: 1px solid #f1f5f9;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 button:last-child {
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 button.pre {
   margin: 150px 0px;
@@ -82,8 +82,8 @@ button label.icon {
 button:hover {
   color: #f1f5f9;
   background-color: #384152;
-  border-left: 1px solid #94a3b8;
-  border-radius: 6px;
+  border-left: 1px solid #f1f5f9;
+  border-radius: 0px;
   margin: 0px;
 }
 button:active {
