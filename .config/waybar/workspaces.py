@@ -94,9 +94,10 @@ class Strip:
                 continue
             st = (pathlib.Path.home()/".config/waybar/style.css").read_text()
             lt = "rgba(255, 255, 255, 0.72)" in st or "background: #ffffff;" in st.split("}")[0]
+            nat = (pathlib.Path.home() / ".local/share/mocha-theme-bak/native").exists()
             gray = int(95 + 160 * h) if lt else int(160 * (1.0 - h))
-            fg = f"#{gray:02x}{gray:02x}{gray:02x}"
-            pill = "#000000" if lt else "#ffffff"
+            fg = "#ffffff" if (nat and h > 0.5) else f"#{gray:02x}{gray:02x}{gray:02x}"
+            pill = "#3b82f6" if nat else ("#000000" if lt else "#ffffff")
             alpha = max(1, min(100, int(v * 100)))
             attrs = f'foreground="{fg}" alpha="{alpha}%"'
             if h > 0.01:

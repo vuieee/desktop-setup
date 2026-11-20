@@ -12,7 +12,8 @@ if subprocess.run(["pgrep", "-f", "wallpaper-menu.py"], capture_output=True).std
     sys.exit(0)
 
 home = pathlib.Path.home()
-wdir = home / "Pictures/Wallpapers"
+sub = "Default" if (home / ".local/share/mocha-theme-bak/native").exists() else "Mono"
+wdir = home / "Pictures/Wallpapers" / sub
 cdir = home / ".cache/mocha-wallpapers-diag"
 hc = home / ".config/hypr/hyprpaper.conf"
 wdir.mkdir(parents=True, exist_ok=True)
@@ -22,7 +23,7 @@ exts = {".png", ".jpg", ".jpeg", ".webp", ".bmp"}
 walls = sorted([w for w in wdir.iterdir() if w.is_file() and w.suffix.lower() in exts], key=lambda w: w.name.lower())
 
 if not walls:
-    subprocess.run(["notify-send", "-a", "Wallpapers", "No Wallpapers Found", "Add images to ~/Pictures/Wallpapers"])
+    subprocess.run(["notify-send", "-a", "Wallpapers", "No Wallpapers Found", f"Add images to ~/Pictures/Wallpapers/{sub}"])
     sys.exit(0)
 
 surfs = [None] * len(walls)
@@ -100,7 +101,7 @@ class WallpaperCarousel(Gtk.Window):
 
     def apply_current(self):
         chosen = walls[self.idx]
-        hc.write_text(chr(10).join(["splash = false", "wallpaper {", "    monitor =", f"    path = ~/Pictures/Wallpapers/{chosen.name}", "    fit_mode = cover", "}", ""]))
+        hc.write_text(chr(10).join(["splash = false", "wallpaper {", "    monitor =", f"    path = ~/Pictures/Wallpapers/{sub}/{chosen.name}", "    fit_mode = cover", "}", ""]))
         if subprocess.run(["pgrep", "-x", "hyprpaper"], stdout=subprocess.DEVNULL).returncode == 0:
             subprocess.run(["hyprctl", "hyprpaper", "wallpaper", f",{chosen}"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         else:

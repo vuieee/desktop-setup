@@ -51,7 +51,7 @@
       "\uf240"
     ],
     "states": {
-      "warning": 30,
+      "warning": 20,
       "critical": 15
     },
     "tooltip-format": "{capacity}% | {timeTo}",
