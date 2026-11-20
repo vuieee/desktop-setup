@@ -2,7 +2,8 @@
 DIR="/home/mocha/Pictures/Screenshots"
 mkdir -p "$DIR"
 if [ "$1" = "ocr" ]; then
-  GEOM=$(slurp -b 00000080 -c ffffffff) || exit 0
+  GEOM=$(slurp -w 1 -b 00000080 -c ffffffff) || exit 0
+  sleep 0.08
   TXT=$(grim -g "$GEOM" - | tesseract stdin stdout --oem 1 -l eng 2>/dev/null | sed "s/[[:space:]]*$//")
   if [ -n "$TXT" ]; then
     printf "%s" "$TXT" | wl-copy
@@ -16,7 +17,8 @@ if [ "$1" = "ocr" ]; then
 fi
 FILE="$DIR/shot_$(date +%Y%m%d_%H%M%S).png"
 if [ "$1" = "region" ]; then
-  GEOM=$(slurp -b 00000080 -c ffffffff) || exit 0
+  GEOM=$(slurp -w 1 -b 00000080 -c ffffffff) || exit 0
+  sleep 0.08
   grim -g "$GEOM" "$FILE" || exit 1
 else
   grim "$FILE" || exit 1
