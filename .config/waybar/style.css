@@ -9,7 +9,7 @@ window.background {
   font-family: "JetBrains Mono", monospace, "MesloLGS Nerd Font", "MesloLGS Nerd Font", "FontAwesome";
   font-size: 13px;
   border: none;
-  border-radius: 10px;
+  border-radius: 6px;
   min-height: 0;
   margin: 0;
   padding: 0;
@@ -17,8 +17,8 @@ window.background {
 
 tooltip {
   background: #111318;
-  border: 1px solid #f1f5f9;
-  border-radius: 10px;
+  border: 1px solid #334155;
+  border-radius: 6px;
 }
 
 tooltip label {
@@ -112,8 +112,8 @@ window#waybar {
 window#waybar > box {
   background-color: #111318;
   color: #f1f5f9;
-  border: 1px solid #f1f5f9;
-  border-radius: 10px;
+  border: 1px solid #334155;
+  border-radius: 6px;
 }
 
 /* mocha-default-accents */

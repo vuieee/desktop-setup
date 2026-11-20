@@ -3,7 +3,7 @@ import pathlib,subprocess
 h=pathlib.Path.home()
 nat=(h/".local/share/mocha-theme-bak/native").exists()
 css=[("#111318","#f8fafc"),("#f8fafc","#111318"),("#f1f5f9","#0f172a"),("#0f172a","#f1f5f9"),("rgba(17, 19, 24, 0.78)","rgba(248, 250, 252, 0.78)"),("rgba(248, 250, 252, 0.78)","rgba(17, 19, 24, 0.78)"),("#111318bf","#f8fafcbf"),("#f8fafcbf","#111318bf"),("#4ade80","#16a34a"),("#16a34a","#4ade80"),("#facc15","#ca8a04"),("#ca8a04","#facc15"),("#f87171","#dc2626"),("#dc2626","#f87171"),("#38bdf8","#0284c7"),("#0284c7","#38bdf8"),("#60a5fa","#2563eb"),("#2563eb","#60a5fa"),("#818cf8","#4f46e5"),("#4f46e5","#818cf8"),("#fbbf24","#d97706"),("#d97706","#fbbf24"),("Adwaita-dark","Adwaita"),("Adwaita","Adwaita-dark"),("prefer-dark","prefer-light"),("prefer-light","prefer-dark")] if nat else [("#000000","#ffffff"),("#ffffff","#000000"),("rgba(0, 0, 0, 0.72)","rgba(255, 255, 255, 0.72)"),("rgba(255, 255, 255, 0.72)","rgba(0, 0, 0, 0.72)"),("#000000b8","#ffffffb8"),("#ffffffb8","#000000b8"),("#dddddd","#222222"),("#222222","#dddddd"),("#b0b0b0","#505050"),("#505050","#b0b0b0"),("rgba(0, 0, 0, 0.35)","rgba(255, 255, 255, 0.35)"),("rgba(255, 255, 255, 0.35)","rgba(0, 0, 0, 0.35)"),("#010101","#fefefe"),("#fefefe","#010101"),("#555555","#aaaaaa"),("#aaaaaa","#555555"),("Adwaita-dark","Adwaita"),("Adwaita","Adwaita-dark"),("prefer-dark","prefer-light"),("prefer-light","prefer-dark")]
-hp=[("rgba(ffffffff)","rgba(000000ff)"),("rgba(000000ff)","rgba(ffffffff)"),("rgba(595959aa)","rgba(a6a6a6aa)"),("rgba(a6a6a6aa)","rgba(595959aa)")]
+hp=[("rgba(ffffffff)","rgba(000000ff)"),("rgba(000000ff)","rgba(ffffffff)"),("rgba(595959aa)","rgba(a6a6a6aa)"),("rgba(a6a6a6aa)","rgba(595959aa)"),("rgba(334155ff)","rgba(cbd5e1ff)"),("rgba(cbd5e1ff)","rgba(334155ff)"),("rgba(1e293baa)","rgba(94a3b8aa)"),("rgba(94a3b8aa)","rgba(1e293baa)")]
 def sw(t,m):
  for i,(a,_) in enumerate(m): t=t.replace(a,f"_T{i}_")
  for i,(_,b) in enumerate(m): t=t.replace(f"_T{i}_",b)
@@ -15,7 +15,7 @@ for f in fl:
 hl=h/".config/hypr/hyprland.lua"
 hl.write_text(sw(hl.read_text(),hp))
 ff=h/".config/fastfetch/config.jsonc"
-if ff.exists(): ff.write_text(sw(ff.read_text(),[("cachyos-dark.png","cachyos-light.png"),("cachyos-light.png","cachyos-dark.png")]))
+if ff.exists() and not nat: ff.write_text(sw(ff.read_text(),[("cachyos-dark.png","cachyos-light.png"),("cachyos-light.png","cachyos-dark.png")]))
 subprocess.run(["killall","-SIGUSR1","kitty"],stderr=-3)
 w_full=(h/".config/waybar/style.css").read_text()
 dark=not any(x in w_full for x in ("background-color: #ffffff;","rgba(255, 255, 255, 0.72)","background-color: #f8fafc;","rgba(248, 250, 252, 0.78)"))

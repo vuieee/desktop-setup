@@ -1,6 +1,6 @@
 * {
   font-family: "JetBrains Mono", "MesloLGS Nerd Font", "FontAwesome", monospace;
-  border-radius: 0px;
+  border-radius: 6px;
   box-shadow: none;
   background-image: none;
 }
@@ -31,14 +31,14 @@ list,
   margin: 6px 10px;
 }
 .notification-background {
-  background: #000000;
-  border: 2px solid #ffffff;
+  background: #111318;
+  border: 1px solid #334155;
   margin: 0;
   padding: 0;
 }
 .notification {
-  background: #000000;
-  color: #ffffff;
+  background: #111318;
+  color: #f1f5f9;
   border: none;
   margin: 0;
   padding: 0;
@@ -50,7 +50,7 @@ list,
 }
 .notification-default-action {
   background: transparent;
-  color: #ffffff;
+  color: #f1f5f9;
   border: none;
   padding: 10px;
 }
@@ -58,21 +58,21 @@ list,
 .notification:hover,
 .notification-default-action:hover,
 .notification-action:hover {
-  background: #ffffff;
-  color: #000000;
+  background: #f1f5f9;
+  color: #111318;
 }
 .notification-background:hover *,
 .notification:hover *,
 .notification-default-action:hover *,
 .notification-action:hover * {
-  color: #000000;
+  color: #111318;
 }
 .notification-action,
 .notification-background:hover .notification-action,
 .notification:hover .notification-action {
-  background: #000000;
-  color: #ffffff;
-  border: 1px solid #ffffff;
+  background: #111318;
+  color: #f1f5f9;
+  border: 1px solid #334155;
   padding: 6px 12px;
   margin: 0 10px 10px 10px;
 }
@@ -82,14 +82,14 @@ list,
 .notification-background:hover .notification-action *,
 .notification:hover .notification-action label,
 .notification:hover .notification-action * {
-  color: #ffffff;
+  color: #f1f5f9;
 }
 .notification-action:hover,
 .notification-background:hover .notification-action:hover,
 .notification:hover .notification-action:hover {
-  background: #ffffff;
-  color: #000000;
-  border-color: #000000;
+  background: #f1f5f9;
+  color: #111318;
+  border-color: #111318;
 }
 .notification-action:hover label,
 .notification-action:hover *,
@@ -97,7 +97,7 @@ list,
 .notification-background:hover .notification-action:hover *,
 .notification:hover .notification-action:hover label,
 .notification:hover .notification-action:hover * {
-  color: #000000;
+  color: #111318;
 }
 .notification-action button,
 .notification-action > box {
@@ -119,7 +119,7 @@ list,
 .summary {
   font-size: 14px;
   font-weight: bold;
-  color: #ffffff;
+  color: #f1f5f9;
 }
 .body {
   font-size: 12px;
@@ -127,10 +127,10 @@ list,
 }
 .body-image {
   margin-top: 8px;
-  border: 1px solid #ffffff;
+  border: 1px solid #334155;
 }
 .control-center {
-  background: #000000;
-  border: 2px solid #ffffff;
-  color: #ffffff;
+  background: #111318;
+  border: 1px solid #334155;
+  color: #f1f5f9;
 }

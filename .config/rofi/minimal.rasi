@@ -8,14 +8,14 @@ configuration {
 * {
     background-color: #111318;
     text-color: #f1f5f9;
-    border-color: #f1f5f9;
+    border-color: #334155;
     font: "MesloLGS Nerd Font 12";
 }
 
 window {
     width: 480px;
     border: 1px;
-    border-radius: 10px;
+    border-radius: 6px;
     padding: 0px;
 }
 

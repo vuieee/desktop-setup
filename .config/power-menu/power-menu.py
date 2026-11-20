@@ -49,9 +49,9 @@ button {
   background-color: #111318;
   background-image: none;
   border: none;
-  border-top: 1px solid #f1f5f9;
-  border-bottom: 1px solid #f1f5f9;
-  border-right: 1px solid #f1f5f9;
+  border-top: 1px solid #334155;
+  border-bottom: 1px solid #334155;
+  border-right: 1px solid #334155;
   border-radius: 0;
   box-shadow: none;
   outline-style: none;
@@ -59,7 +59,7 @@ button {
   transition: all 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 button:first-child {
-  border-left: 1px solid #f1f5f9;
+  border-left: 1px solid #334155;
 }
 button.pre {
   margin: 150px 0px;

@@ -29,13 +29,13 @@ sock = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
 sock.bind(SOCK)
 sock.setblocking(False)
 
-CSS = b'''window { background-color: #000000; border: 2px solid #ffffff; border-radius: 0; }
-label { color: #ffffff; font-family: "JetBrains Mono", "MesloLGS Nerd Font", "MesloLGS Nerd Font Propo", "Font Awesome 6 Free", "FontAwesome", monospace; font-size: 16px; font-weight: 600; }
+CSS = b'''window { background-color: #111318; border: 1px solid #334155; border-radius: 0; }
+label { color: #f1f5f9; font-family: "JetBrains Mono", "MesloLGS Nerd Font", "MesloLGS Nerd Font Propo", "Font Awesome 6 Free", "FontAwesome", monospace; font-size: 16px; font-weight: 600; }
 label.osd-val { font-size: 18px; font-weight: 700; }
 label.big-icon { font-family: "MesloLGS Nerd Font Mono", "FontAwesome", monospace; font-size: 36px; font-weight: 400; }
 label.sub-text { font-size: 15px; font-weight: 400; }
-progressbar, progressbar trough { min-height: 12px; min-width: 240px; background-color: #000000; background-image: none; border: 1px solid #ffffff; border-radius: 0; padding: 0; margin: 0; }
-progressbar progress { min-height: 12px; background-color: #ffffff; background-image: none; border: none; border-radius: 0; padding: 0; margin: 0; }'''
+progressbar, progressbar trough { min-height: 12px; min-width: 240px; background-color: #111318; background-image: none; border: 1px solid #334155; border-radius: 0; padding: 0; margin: 0; }
+progressbar progress { min-height: 12px; background-color: #f1f5f9; background-image: none; border: none; border-radius: 0; padding: 0; margin: 0; }'''
 
 prov = Gtk.CssProvider()
 prov.load_from_data(CSS)

@@ -2,12 +2,12 @@
 import os, pathlib, subprocess, time
 try: os.setsid()
 except Exception: pass
-nl = chr(10)
+nl = chr(6)
 home = pathlib.Path.home()
 wc, ws = home/".config/waybar/config.jsonc", home/".config/waybar/style.css"
 rc, sc = home/".config/rofi/minimal.rasi", home/".config/swaync/style.css"
 hl, osd = home/".config/hypr/hyprland.lua", home/".config/hypr/scripts/osd-popup.py"
-top = subprocess.run(["rofi","-dmenu","-i","-theme",str(rc),"-theme-str","window { width: 245px; } mainbox { children: [listview]; } listview { lines: 6; padding: 0px; spacing: 0px; }"],input=nl.join([chr(0xf085)+"  System",chr(0xf1fc)+"  Appearance",chr(0xf108)+"  Display",chr(0xf03e)+"  Wallpapers",chr(0xf11c)+"  Keybinds",chr(0xf0db)+"  Yazi Cheatsheet"]),text=True,capture_output=True).stdout.strip()
+top = subprocess.run(["rofi","-dmenu","-i","-theme",str(rc),"-theme-str","window { width: 245px; } mainbox { children: [listview]; } listview { lines: 6; padding: 0px; spacing: 0px; }"],input=nl.join([chr(0xf085)+"  System",chr(0xf1fc)+"  Appearance",chr(0xf68)+"  Display",chr(0xf03e)+"  Wallpapers",chr(0xf11c)+"  Keybinds",chr(0xf0db)+"  Yazi Cheatsheet"]),text=True,capture_output=True).stdout.strip()
 if "Display" in top: subprocess.Popen(["python3",str(home/".config/waybar/scripts/display-menu.py")],start_new_session=True)
 elif "Wallpapers" in top: subprocess.Popen(["python3",str(home/".config/waybar/scripts/wallpaper-menu.py")],start_new_session=True)
 elif "Keybinds" in top: subprocess.Popen("rofi -dmenu -i -p keys -theme ~/.config/rofi/minimal.rasi -theme-str 'window { width: 720px; }' < ~/.config/hypr/cheatsheet.txt",shell=True,start_new_session=True)
@@ -25,11 +25,12 @@ elif "Appearance" in top:
         ac = "On" if ("0.72" in c or "0.75" in c) else "Off"
         ps = next((x.title() for x in ["top","bottom"] if f'"position": "{x}"' in cfg), "Top")
         ol = "On" if ("border_size = 2" in l or "border_size = 1" in l) else "Off"
-        rd = "On" if "rounding       = 10" in l else "Off"
+        rd = "On" if "rounding       = 6" in l else "Off"
         vb_path = "/home/mocha/.config/hypr/shaders/vibrance.glsl"
         vb = "On" if f'screen_shader  = "{vb_path}"' in l else "Off"
         an = "On" if "animations = {\n        enabled = true," in l else "Off"
         bg, fg = (("#111318","#f1f5f9") if th=="Default" else ("#000000","#ffffff")) if dm=="On" else (("#f8fafc","#0f172a") if th=="Default" else ("#ffffff","#000000"))
+        bd = ("#334155" if dm=="On" else "#cbd5e1") if th=="Default" else fg
         bgr, rfr = (("rgba(17, 19, 24, 0.78)","#111318bf") if th=="Default" else ("rgba(0, 0, 0, 0.72)","#000000b8")) if dm=="On" else (("rgba(248, 250, 252, 0.78)","#f8fafcbf") if th=="Default" else ("rgba(255, 255, 255, 0.72)","#ffffffb8"))
         items = [((chr(0xf186) if dm=="On" else chr(0xf185))+"  Dark Mode",dm),(chr(0xf06e)+"  Acrylic",ac),(chr(0xf0c9)+"  Waybar",ps),(chr(0xf065)+"  Outlines",ol),((chr(0xf111) if rd=="On" else chr(0xf096))+"  Rounded",rd),(chr(0xf042)+"  Vibrance",vb),(chr(0xf04b)+"  Animations",an),(chr(0xf1fc)+"  Theme",th)]
         menu = nl.join(f"{k:<15}{v:>5}" for k, v in items)
@@ -61,15 +62,15 @@ elif "Appearance" in top:
         elif "Outlines" in ch:
             on = ch.endswith("Off")
             bw = "1" if th=="Default" else "2"; l = l.replace("border_size = 0,",f"border_size = {bw},",1) if on else l.replace(f"border_size = {bw},","border_size = 0,",1)
-            c = c.replace("border: none; /* mocha-ol */",f"border: {bw}px solid {fg};") if on else c.replace(f"border: {bw}px solid {fg};","border: none; /* mocha-ol */")
-            s = s.replace("border: none; /* mocha-ol */",f"border: {bw}px solid {fg};") if on else s.replace(f"border: {bw}px solid {fg};","border: none; /* mocha-ol */")
+            c = c.replace("border: none; /* mocha-ol */",f"border: {bw}px solid {bd};") if on else c.replace(f"border: {bw}px solid {bd};","border: none; /* mocha-ol */")
+            s = s.replace("border: none; /* mocha-ol */",f"border: {bw}px solid {bd};") if on else s.replace(f"border: {bw}px solid {bd};","border: none; /* mocha-ol */")
             r = r.replace("border: 0px; /* mocha-ol */",f"border: {bw}px;").replace("border: 0px; /* mocha-in */","border: 0px 0px 2px 0px;") if on else r.replace(f"border: {bw}px;","border: 0px; /* mocha-ol */").replace("border: 0px 0px 2px 0px;","border: 0px; /* mocha-in */")
         elif "Rounded" in ch:
             on = ch.endswith("Off")
-            l = l.replace("rounding       = 0,","rounding       = 10,",1) if on else l.replace("rounding       = 10,","rounding       = 0,",1)
-            c = c.replace("border-radius: 0;","border-radius: 10px;").replace("border-radius: 0px;","border-radius: 10px;") if on else c.replace("border-radius: 10px;","border-radius: 0;")
-            s = s.replace("border-radius: 0px;","border-radius: 10px;") if on else s.replace("border-radius: 10px;","border-radius: 0px;")
-            r = r.replace("border-radius: 0px;","border-radius: 10px;",1) if on else r.replace("border-radius: 10px;","border-radius: 0px;",1)
+            l = l.replace("rounding       = 0,","rounding       = 6,",1) if on else l.replace("rounding       = 6,","rounding       = 0,",1)
+            c = c.replace("border-radius: 0;","border-radius: 6px;").replace("border-radius: 0px;","border-radius: 6px;") if on else c.replace("border-radius: 6px;","border-radius: 0;")
+            s = s.replace("border-radius: 0px;","border-radius: 6px;") if on else s.replace("border-radius: 6px;","border-radius: 0px;")
+            r = r.replace("border-radius: 0px;","border-radius: 6px;",1) if on else r.replace("border-radius: 6px;","border-radius: 0px;",1)
         elif "Vibrance" in ch:
             on = ch.endswith("Off")
             l = l.replace("screen_shader  = \"\"", f"screen_shader  = \"{vb_path}\"") if on else l.replace(f"screen_shader  = \"{vb_path}\"", "screen_shader  = \"\"")
