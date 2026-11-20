@@ -24,7 +24,7 @@ while True:
             c, r, s, l, cfg, o = ws.read_text(), rc.read_text(), sc.read_text(), hl.read_text(), wc.read_text(), osd.read_text()
             th = "Default" if (home/".local/share/mocha-theme-bak/native").exists() else "Mono"
             dm = "Off" if any(x in c for x in ("rgba(255, 255, 255, 0.72)", "background-color: #ffffff;", "rgba(248, 250, 252, 0.78)", "background-color: #f8fafc;")) else "On"
-            ac = "On" if ("0.72" in c or "0.75" in c) else "Off"
+            ac = "On" if any(x in c for x in ("0.72", "0.75", "0.78")) else "Off"
             ps = next((x.title() for x in ["top","bottom"] if f'"position": "{x}"' in cfg), "Top")
             ol = "On" if ("border_size = 2" in l or "border_size = 1" in l) else "Off"
             rd = "On" if "rounding       = 6" in l else "Off"
