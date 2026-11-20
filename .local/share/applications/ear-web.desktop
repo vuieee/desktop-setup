@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Nothing Ear (Web)
+Comment=Configure Nothing & CMF audio devices
+Exec=chromium --app=https://earweb.bttl.xyz/ --user-data-dir=/home/mocha/.local/share/ear-web-profile --class=ear-web --enable-features=WebBluetoothNewPermissionsBackend
+Icon=/home/mocha/.local/share/icons/ear-web.svg
+Terminal=false
+Type=Application
+Categories=AudioVideo;Settings;
+StartupWMClass=ear-web
