@@ -32,7 +32,7 @@ list,
 }
 .notification-background {
   background: #111318;
-  border: 1px solid #334155;
+  border: 1px solid #64748b;
   margin: 0;
   padding: 0;
 }
@@ -72,7 +72,7 @@ list,
 .notification:hover .notification-action {
   background: #111318;
   color: #f1f5f9;
-  border: 1px solid #334155;
+  border: 1px solid #64748b;
   padding: 6px 12px;
   margin: 0 10px 10px 10px;
 }
@@ -127,10 +127,10 @@ list,
 }
 .body-image {
   margin-top: 8px;
-  border: 1px solid #334155;
+  border: 1px solid #64748b;
 }
 .control-center {
   background: #111318;
-  border: 1px solid #334155;
+  border: 1px solid #64748b;
   color: #f1f5f9;
 }

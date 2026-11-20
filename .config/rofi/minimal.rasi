@@ -8,7 +8,7 @@ configuration {
 * {
     background-color: #111318;
     text-color: #f1f5f9;
-    border-color: #334155;
+    border-color: #64748b;
     font: "MesloLGS Nerd Font 12";
 }
 
