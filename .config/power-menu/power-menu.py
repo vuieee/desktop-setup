@@ -60,6 +60,12 @@ button {
 }
 button:first-child {
   border-left: 1px solid #64748b;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+button:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
 button.pre {
   margin: 150px 0px;
@@ -76,6 +82,8 @@ button label.icon {
 button:hover {
   color: #f1f5f9;
   background-color: #384152;
+  border-left: 1px solid #64748b;
+  border-radius: 6px;
   margin: 0px;
 }
 button:active {

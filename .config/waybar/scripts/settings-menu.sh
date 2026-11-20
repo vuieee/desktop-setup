@@ -73,6 +73,8 @@ while True:
                 c = c.replace("border-radius: 0;","border-radius: 6px;").replace("border-radius: 0px;","border-radius: 6px;") if on else c.replace("border-radius: 6px;","border-radius: 0;")
                 s = s.replace("border-radius: 0px;","border-radius: 6px;") if on else s.replace("border-radius: 6px;","border-radius: 0px;")
                 r = r.replace("border-radius: 0px;","border-radius: 6px;",1) if on else r.replace("border-radius: 6px;","border-radius: 0px;",1)
+            pm_p = home / ".config/power-menu/power-menu.py"
+            if pm_p.exists(): pm_p.write_text(pm_p.read_text().replace("radius: 0px;", "radius: 6px;") if on else pm_p.read_text().replace("radius: 6px;", "radius: 0px;"))
             elif "Vibrance" in ch:
                 on = ch.endswith("Off")
                 l = l.replace("screen_shader  = \"\"", f"screen_shader  = \"{vb_path}\"") if on else l.replace(f"screen_shader  = \"{vb_path}\"", "screen_shader  = \"\"")
