@@ -6,16 +6,16 @@ configuration {
 }
 
 * {
-    background-color: #000000;
-    text-color: #ffffff;
-    border-color: #ffffff;
+    background-color: #111318;
+    text-color: #f1f5f9;
+    border-color: #f1f5f9;
     font: "MesloLGS Nerd Font 12";
 }
 
 window {
     width: 480px;
-    border: 2px;
-    border-radius: 0px;
+    border: 1px;
+    border-radius: 10px;
     padding: 0px;
 }
 
@@ -27,13 +27,13 @@ mainbox {
 inputbar {
     children: [entry];
     padding: 12px 14px;
-    border: 0px 0px 2px 0px;
+    border: 0px 0px 1px 0px;
 }
 
 entry {
     placeholder: "search";
     placeholder-color: #888888;
-    text-color: #ffffff;
+    text-color: #f1f5f9;
 }
 
 listview {
@@ -46,8 +46,8 @@ listview {
 element {
     padding: 8px 14px;
     border-radius: 0px;
-    background-color: #000000;
-    text-color: #ffffff;
+    background-color: #111318;
+    text-color: #f1f5f9;
 }
 
 element-text {
@@ -56,6 +56,6 @@ element-text {
 }
 
 element selected {
-    background-color: #ffffff;
-    text-color: #000000;
+    background-color: #f1f5f9;
+    text-color: #111318;
 }

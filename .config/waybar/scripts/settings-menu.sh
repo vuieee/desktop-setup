@@ -69,7 +69,7 @@ elif "Appearance" in top:
             l = l.replace("rounding       = 0,","rounding       = 10,",1) if on else l.replace("rounding       = 10,","rounding       = 0,",1)
             c = c.replace("border-radius: 0;","border-radius: 10px;").replace("border-radius: 0px;","border-radius: 10px;") if on else c.replace("border-radius: 10px;","border-radius: 0;")
             s = s.replace("border-radius: 0px;","border-radius: 10px;") if on else s.replace("border-radius: 10px;","border-radius: 0px;")
-            r = r.replace("border-radius: 0px;","border-radius: 10px;") if on else r.replace("border-radius: 10px;","border-radius: 0px;")
+            r = r.replace("border-radius: 0px;","border-radius: 10px;",1) if on else r.replace("border-radius: 10px;","border-radius: 0px;",1)
         elif "Vibrance" in ch:
             on = ch.endswith("Off")
             l = l.replace("screen_shader  = \"\"", f"screen_shader  = \"{vb_path}\"") if on else l.replace(f"screen_shader  = \"{vb_path}\"", "screen_shader  = \"\"")
