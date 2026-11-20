@@ -7,8 +7,9 @@ home = pathlib.Path.home()
 wc, ws = home/".config/waybar/config.jsonc", home/".config/waybar/style.css"
 rc, sc = home/".config/rofi/minimal.rasi", home/".config/swaync/style.css"
 hl, osd = home/".config/hypr/hyprland.lua", home/".config/hypr/scripts/osd-popup.py"
-top = subprocess.run(["rofi","-dmenu","-i","-theme",str(rc),"-theme-str","window { width: 245px; } mainbox { children: [listview]; } listview { lines: 5; padding: 0px; spacing: 0px; }"],input=nl.join([chr(0xf085)+"  System",chr(0xf1fc)+"  Appearance",chr(0xf03e)+"  Wallpapers",chr(0xf11c)+"  Keybinds",chr(0xf0db)+"  Yazi Cheatsheet"]),text=True,capture_output=True).stdout.strip()
-if "Wallpapers" in top: subprocess.Popen(["python3",str(home/".config/waybar/scripts/wallpaper-menu.py")],start_new_session=True)
+top = subprocess.run(["rofi","-dmenu","-i","-theme",str(rc),"-theme-str","window { width: 245px; } mainbox { children: [listview]; } listview { lines: 6; padding: 0px; spacing: 0px; }"],input=nl.join([chr(0xf085)+"  System",chr(0xf1fc)+"  Appearance",chr(0xf108)+"  Display",chr(0xf03e)+"  Wallpapers",chr(0xf11c)+"  Keybinds",chr(0xf0db)+"  Yazi Cheatsheet"]),text=True,capture_output=True).stdout.strip()
+if "Display" in top: subprocess.Popen(["python3",str(home/".config/waybar/scripts/display-menu.py")],start_new_session=True)
+elif "Wallpapers" in top: subprocess.Popen(["python3",str(home/".config/waybar/scripts/wallpaper-menu.py")],start_new_session=True)
 elif "Keybinds" in top: subprocess.Popen("rofi -dmenu -i -p keys -theme ~/.config/rofi/minimal.rasi -theme-str 'window { width: 720px; }' < ~/.config/hypr/cheatsheet.txt",shell=True,start_new_session=True)
 elif "Yazi Cheatsheet" in top: subprocess.Popen("rofi -dmenu -i -p yazi -theme ~/.config/rofi/minimal.rasi -theme-str 'window { width: 720px; }' < ~/.config/hypr/yazi-cheatsheet.txt",shell=True,start_new_session=True)
 elif "System" in top:
