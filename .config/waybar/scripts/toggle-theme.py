@@ -10,7 +10,7 @@ def sw(t,m):
  return t
 ws_p=h/".config/waybar/style.css"
 ws_t=ws_p.read_text()
-dark=not any(x in ws_t for x in ("background-color: #ffffff;","rgba(255, 255, 255, 0.72)","background-color: #f2f3f7;","rgba(242, 243, 247, 0.75)"))
+dark=not any(x in ws_t for x in ("background-color: #ffffff;","rgba(255, 255, 255, 0.72)","background-color: #f8fafc;","rgba(248, 250, 252, 0.78)"))
 mark="/* mocha-default-accents */"
 if (bak/"native").exists():
  for f in app_files:
@@ -24,11 +24,11 @@ if (bak/"native").exists():
    if fp.exists(): fp.write_text(sw(fp.read_text(),am))
  if mark in ws_t:
   ws_p.write_text(ws_t.split(mark)[0].rstrip()+chr(10))
- to_mono=[("#1e1f24","#000000"),("#dcdfe6","#ffffff"),("rgba(30, 31, 36, 0.75)","rgba(0, 0, 0, 0.72)"),("#1e1f24bf","#000000b8")] if dark else [("#f2f3f7","#ffffff"),("#23252c","#000000"),("rgba(242, 243, 247, 0.75)","rgba(255, 255, 255, 0.72)"),("#f2f3f7bf","#ffffffb8")]
+ to_mono=[("#111318","#000000"),("#f1f5f9","#ffffff"),("rgba(17, 19, 24, 0.78)","rgba(0, 0, 0, 0.72)"),("#111318bf","#000000b8")] if dark else [("#f8fafc","#ffffff"),("#0f172a","#000000"),("rgba(248, 250, 252, 0.78)","rgba(255, 255, 255, 0.72)"),("#f8fafcbf","#ffffffb8")]
  for f in ui_files:
   fp=h/".config"/f
   if fp.exists(): fp.write_text(sw(fp.read_text(),to_mono))
- (bak/"native").unlink()
+ hl_p = h / ".config/hypr/hyprland.lua"; hl_p.write_text(hl_p.read_text().replace("border_size = 1,", "border_size = 2,", 1)); [p.write_text(p.read_text().replace("1px solid", "2px solid").replace("border: 1px;", "border: 2px;").replace("0px 0px 1px 0px", "0px 0px 2px 0px")) for p in [ws_p, h/".config/swaync/style.css", h/".config/rofi/minimal.rasi", h/".config/hypr/scripts/osd-popup.py"] if p.exists()]; subprocess.run(["hyprctl", "reload"], stdout=-3, stderr=-3); (bak/"native").unlink()
 else:
  bak.mkdir(parents=True,exist_ok=True)
  for f in app_files:
@@ -47,12 +47,12 @@ else:
  if ms.exists(): d=json.loads(ms.read_text()); d["colorscheme"]="default"; ms.write_text(json.dumps(d,indent=2)+chr(10))
  cc=h/".config/cava/config"
  if cc.exists(): cc.write_text(chr(10).join(l for l in cc.read_text().splitlines() if not l.startswith("foreground ="))+chr(10))
- to_nat=[("#000000","#1e1f24"),("#ffffff","#dcdfe6"),("rgba(0, 0, 0, 0.72)","rgba(30, 31, 36, 0.75)"),("#000000b8","#1e1f24bf")] if dark else [("#ffffff","#f2f3f7"),("#000000","#23252c"),("rgba(255, 255, 255, 0.72)","rgba(242, 243, 247, 0.75)"),("#ffffffb8","#f2f3f7bf")]
+ to_nat=[("#000000","#111318"),("#ffffff","#f1f5f9"),("rgba(0, 0, 0, 0.72)","rgba(17, 19, 24, 0.78)"),("#000000b8","#111318bf")] if dark else [("#ffffff","#f8fafc"),("#000000","#0f172a"),("rgba(255, 255, 255, 0.72)","rgba(248, 250, 252, 0.78)"),("#ffffffb8","#f8fafcbf")]
  for f in ui_files:
   fp=h/".config"/f
   if fp.exists(): fp.write_text(sw(fp.read_text(),to_nat))
  acc = chr(10).join(["",mark,"#battery { color: #4ade80; }","#battery.charging, #battery.plugged { color: #facc15; }","#battery.warning, #battery.critical { background: transparent; color: #f87171; }","#custom-power { color: #f87171; }","#wireplumber { color: #38bdf8; }","#bluetooth { color: #60a5fa; }","#network { color: #818cf8; }","#custom-caffeine { color: #fbbf24; }",""]) if dark else chr(10).join(["",mark,"#battery { color: #16a34a; }","#battery.charging, #battery.plugged { color: #ca8a04; }","#battery.warning, #battery.critical { background: transparent; color: #dc2626; }","#custom-power { color: #dc2626; }","#wireplumber { color: #0284c7; }","#bluetooth { color: #2563eb; }","#network { color: #4f46e5; }","#custom-caffeine { color: #d97706; }",""])
  ws_p.write_text(ws_p.read_text().split(mark)[0].rstrip()+chr(10)+acc)
- (bak/"native").touch()
+ hl_p = h / ".config/hypr/hyprland.lua"; hl_p.write_text(hl_p.read_text().replace("border_size = 2,", "border_size = 1,", 1)); [p.write_text(p.read_text().replace("2px solid", "1px solid").replace("border: 2px;", "border: 1px;").replace("0px 0px 2px 0px", "0px 0px 1px 0px")) for p in [ws_p, h/".config/swaync/style.css", h/".config/rofi/minimal.rasi", h/".config/hypr/scripts/osd-popup.py"] if p.exists()]; subprocess.run(["hyprctl", "reload"], stdout=-3, stderr=-3); (bak/"native").touch()
 subprocess.run(["killall","-SIGUSR1","kitty"],stderr=-3)
 subprocess.run(["swaync-client","-rs"],stdout=-3,stderr=-3)

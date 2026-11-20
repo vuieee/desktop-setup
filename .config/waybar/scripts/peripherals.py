@@ -94,7 +94,14 @@ else:
 if not items:
     print(json.dumps({"text": "", "tooltip": "", "class": "empty"}))
 else:
-    text = "  ".join(f"{ICONS[cat]} {pct}%" for cat, _, pct in items)
+    nat = (pathlib.Path.home() / ".local/share/mocha-theme-bak/native").exists()
+    st = (pathlib.Path.home() / ".config/waybar/style.css").read_text()
+    lt = any(x in st for x in ("#ffffff", "#f8fafc", "#f2f3f7"))
+    def col_pct(pct):
+        if not nat: return f"{pct}%"
+        c = ("#dc2626" if lt else "#f87171") if pct <= 20 else (("#ca8a04" if lt else "#facc15") if pct <= 50 else ("#16a34a" if lt else "#4ade80"))
+        return f"<span color=\x27{c}\x27>{pct}%</span>"
+    text = "  ".join(f"{ICONS[cat]} {col_pct(pct)}" for cat, _, pct in items)
     tip = chr(10).join(f"{name}: {pct}%" for _, name, pct in items)
     cls = "low" if any(pct <= 20 for _, _, pct in items) else "connected"
     print(json.dumps({"text": text, "tooltip": tip, "class": cls}))

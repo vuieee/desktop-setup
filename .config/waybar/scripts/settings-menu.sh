@@ -21,16 +21,16 @@ elif "Appearance" in top:
     while True:
         c, r, s, l, cfg, o = ws.read_text(), rc.read_text(), sc.read_text(), hl.read_text(), wc.read_text(), osd.read_text()
         th = "Default" if (home/".local/share/mocha-theme-bak/native").exists() else "Mono"
-        dm = "Off" if any(x in c for x in ("rgba(255, 255, 255, 0.72)", "background-color: #ffffff;", "rgba(242, 243, 247, 0.75)", "background-color: #f2f3f7;")) else "On"
+        dm = "Off" if any(x in c for x in ("rgba(255, 255, 255, 0.72)", "background-color: #ffffff;", "rgba(248, 250, 252, 0.78)", "background-color: #f8fafc;")) else "On"
         ac = "On" if ("0.72" in c or "0.75" in c) else "Off"
         ps = next((x.title() for x in ["top","bottom"] if f'"position": "{x}"' in cfg), "Top")
-        ol = "On" if "border_size = 2" in l else "Off"
+        ol = "On" if ("border_size = 2" in l or "border_size = 1" in l) else "Off"
         rd = "On" if "rounding       = 10" in l else "Off"
         vb_path = "/home/mocha/.config/hypr/shaders/vibrance.glsl"
         vb = "On" if f'screen_shader  = "{vb_path}"' in l else "Off"
         an = "On" if "animations = {\n        enabled = true," in l else "Off"
-        bg, fg = (("#1e1f24","#dcdfe6") if th=="Default" else ("#000000","#ffffff")) if dm=="On" else (("#f2f3f7","#23252c") if th=="Default" else ("#ffffff","#000000"))
-        bgr, rfr = (("rgba(30, 31, 36, 0.75)","#1e1f24bf") if th=="Default" else ("rgba(0, 0, 0, 0.72)","#000000b8")) if dm=="On" else (("rgba(242, 243, 247, 0.75)","#f2f3f7bf") if th=="Default" else ("rgba(255, 255, 255, 0.72)","#ffffffb8"))
+        bg, fg = (("#111318","#f1f5f9") if th=="Default" else ("#000000","#ffffff")) if dm=="On" else (("#f8fafc","#0f172a") if th=="Default" else ("#ffffff","#000000"))
+        bgr, rfr = (("rgba(17, 19, 24, 0.78)","#111318bf") if th=="Default" else ("rgba(0, 0, 0, 0.72)","#000000b8")) if dm=="On" else (("rgba(248, 250, 252, 0.78)","#f8fafcbf") if th=="Default" else ("rgba(255, 255, 255, 0.72)","#ffffffb8"))
         items = [((chr(0xf186) if dm=="On" else chr(0xf185))+"  Dark Mode",dm),(chr(0xf06e)+"  Acrylic",ac),(chr(0xf0c9)+"  Waybar",ps),(chr(0xf065)+"  Outlines",ol),((chr(0xf111) if rd=="On" else chr(0xf096))+"  Rounded",rd),(chr(0xf042)+"  Vibrance",vb),(chr(0xf04b)+"  Animations",an),(chr(0xf1fc)+"  Theme",th)]
         menu = nl.join(f"{k:<15}{v:>5}" for k, v in items)
         ch = subprocess.run(["rofi","-dmenu","-i","-selected-row",str(idx),"-theme",str(rc),"-theme-str","window { width: 280px; } mainbox { children: [listview]; } listview { lines: 8; padding: 0px; spacing: 0px; }"],input=menu,text=True,capture_output=True).stdout.strip()
@@ -60,10 +60,10 @@ elif "Appearance" in top:
             wc.write_text(json.dumps(d, indent=2) + nl)
         elif "Outlines" in ch:
             on = ch.endswith("Off")
-            l = l.replace("border_size = 0,","border_size = 2,",1) if on else l.replace("border_size = 2,","border_size = 0,",1)
-            c = c.replace("border: none; /* mocha-ol */",f"border: 2px solid {fg};") if on else c.replace(f"border: 2px solid {fg};","border: none; /* mocha-ol */")
-            s = s.replace("border: none; /* mocha-ol */",f"border: 2px solid {fg};") if on else s.replace(f"border: 2px solid {fg};","border: none; /* mocha-ol */")
-            r = r.replace("border: 0px; /* mocha-ol */","border: 2px;").replace("border: 0px; /* mocha-in */","border: 0px 0px 2px 0px;") if on else r.replace("border: 2px;","border: 0px; /* mocha-ol */").replace("border: 0px 0px 2px 0px;","border: 0px; /* mocha-in */")
+            bw = "1" if th=="Default" else "2"; l = l.replace("border_size = 0,",f"border_size = {bw},",1) if on else l.replace(f"border_size = {bw},","border_size = 0,",1)
+            c = c.replace("border: none; /* mocha-ol */",f"border: {bw}px solid {fg};") if on else c.replace(f"border: {bw}px solid {fg};","border: none; /* mocha-ol */")
+            s = s.replace("border: none; /* mocha-ol */",f"border: {bw}px solid {fg};") if on else s.replace(f"border: {bw}px solid {fg};","border: none; /* mocha-ol */")
+            r = r.replace("border: 0px; /* mocha-ol */",f"border: {bw}px;").replace("border: 0px; /* mocha-in */","border: 0px 0px 2px 0px;") if on else r.replace(f"border: {bw}px;","border: 0px; /* mocha-ol */").replace("border: 0px 0px 2px 0px;","border: 0px; /* mocha-in */")
         elif "Rounded" in ch:
             on = ch.endswith("Off")
             l = l.replace("rounding       = 0,","rounding       = 10,",1) if on else l.replace("rounding       = 10,","rounding       = 0,",1)

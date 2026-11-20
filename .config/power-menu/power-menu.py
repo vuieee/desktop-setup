@@ -45,13 +45,13 @@ window {
   background-color: rgba(0, 0, 0, 0.35);
 }
 button {
-  color: #ffffff;
-  background-color: #000000;
+  color: #f1f5f9;
+  background-color: #111318;
   background-image: none;
   border: none;
-  border-top: 1px solid #ffffff;
-  border-bottom: 1px solid #ffffff;
-  border-right: 1px solid #ffffff;
+  border-top: 1px solid #f1f5f9;
+  border-bottom: 1px solid #f1f5f9;
+  border-right: 1px solid #f1f5f9;
   border-radius: 0;
   box-shadow: none;
   outline-style: none;
@@ -59,7 +59,7 @@ button {
   transition: all 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 button:first-child {
-  border-left: 1px solid #ffffff;
+  border-left: 1px solid #f1f5f9;
 }
 button.pre {
   margin: 150px 0px;
@@ -74,8 +74,8 @@ button label.icon {
   font-size: 56px;
 }
 button:hover {
-  color: #000000;
-  background-color: #ffffff;
+  color: #111318;
+  background-color: #f1f5f9;
   margin: 0px;
 }
 button:active {
@@ -144,7 +144,12 @@ def main():
         button.set_can_focus(False)
         button.set_size_request(cell_w, cell_h)
         overlay = Gtk.Overlay()
-        icon = Gtk.Label(label=icon_char)
+        nat = os.path.exists(os.path.expanduser("~/.local/share/mocha-theme-bak/native"))
+        lt = "#f8fafc" in CSS.decode() or "#ffffff" in CSS.decode()
+        icols = {"Lock": "#0284c7" if lt else "#38bdf8", "Reboot": "#ca8a04" if lt else "#facc15", "Fast reboot": "#ea580c" if lt else "#fb923c", "Shutdown": "#dc2626" if lt else "#f87171"}
+        icon = Gtk.Label()
+        if nat and text in icols: icon.set_markup(f"<span foreground=\x27{icols[text]}\x27>{icon_char}</span>")
+        else: icon.set_text(icon_char)
         icon.get_style_context().add_class("icon")
         icon.set_halign(Gtk.Align.CENTER)
         icon.set_valign(Gtk.Align.CENTER)
