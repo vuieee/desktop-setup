@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import glob, json, os, re, subprocess, sys
+import glob, json, os, pathlib, re, subprocess, sys
 
 ICONS = {"mouse": chr(0xf037d), "earbuds": chr(0xf02cb), "keyboard": chr(0xf030c)}
 

@@ -76,7 +76,7 @@
     "format-off": "\uf293",
     "format-connected": "\uf294 {device_alias}",
     "tooltip-format-connected": "{device_enumerate}",
-    "on-click": "kitty --class bluetui -e bluetui",
+    "on-click": "kitty --class bluetui -c ~/.config/kitty/kitty.conf -c ~/.config/kitty/bluetui.conf -e bluetui",
     "on-click-right": "sh -c \"bluetoothctl show | grep -q 'Powered: yes' && bluetoothctl power off || bluetoothctl power on\"",
     "tooltip-format": "On",
     "tooltip-format-off": "Off",

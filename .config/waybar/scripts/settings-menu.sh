@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import os, pathlib, subprocess
+import os, pathlib, subprocess, time
 try: os.setsid()
 except Exception: pass
 nl = chr(10)
@@ -22,7 +22,7 @@ elif "Appearance" in top:
         th = "Native" if (home/".local/share/mocha-theme-bak/native").exists() else "Mono"
         dm = "Off" if "rgba(255, 255, 255, 0.72)" in c or "background-color: #ffffff;" in c.split("}")[0] else "On"
         ac = "On" if ("0.72" in c or "0.75" in c) else "Off"
-        ps = next((x.title() for x in ["top","bottom","left","right"] if f'"position": "{x}"' in cfg), "Top")
+        ps = next((x.title() for x in ["top","bottom"] if f'"position": "{x}"' in cfg), "Top")
         ol = "On" if "border_size = 2" in l else "Off"
         rd = "On" if "rounding       = 10" in l else "Off"
         vb_path = "/home/mocha/.config/hypr/shaders/vibrance.glsl"
@@ -49,22 +49,21 @@ elif "Appearance" in top:
             l = next(iter(l.split(nl+mark))) + (lr if on else "")
             o = o.replace(f"background-color: {bg};",f"background-color: {bgr};") if on else o.replace(f"background-color: {bgr};",f"background-color: {bg};")
         elif "Waybar" in ch:
-            import json
-            order = ["top","bottom","left","right"]
+            import json, re
+            order = ["top","bottom"]
             cur = next((x for x in order if f'"position": "{x}"' in cfg), "top")
             nxt = order[(order.index(cur)+1)%4]
-            d = json.loads(cfg)
+            d = json.loads(re.sub(r"//.*", "", cfg))
             vert = nxt in ("left","right")
-            d.update({"position":nxt,"height":0 if vert else 30,"width":30 if vert else 0,"margin-top":8 if nxt!="bottom" else 0,"margin-bottom":8 if nxt!="top" else 0,"margin-left":8 if nxt!="right" else 0,"margin-right":8 if nxt!="left" else 0,"modules-center":[] if vert else ["hyprland/window"]})
+            d.update({"position":nxt,"height":0 if vert else 30,"width":34 if vert else 0,"margin-top":8 if nxt!="bottom" else 1,"margin-bottom":8 if nxt!="top" else 1,"margin-left":8 if nxt!="right" else 1,"margin-right":8 if nxt!="left" else 1,"modules-center":[] if vert else ["hyprland/window"]})
+            for jm in ("clock","custom/peripherals","custom/caffeine","custom/workspaces"):
+                if jm in d: d[jm]["justify"] = "center" if vert else "left"
             d["clock"]["format"] = "{:%I"+nl+"%M}" if vert else "{:%I:%M %p}"
-            d["battery"]["format"] = "{icon}" if vert else "{icon}"
-            d["wireplumber"]["format"] = "{icon}" if vert else "{icon}"
-            d["backlight"]["format"] = "{icon}" if vert else "{icon}"
-            d["battery"]["format"] = "{icon}" if vert else "{icon}"
-            d["wireplumber"]["format"] = "{icon}" if vert else "{icon}"
-            d["backlight"]["format"] = "{icon}" if vert else "{icon}"
+            d["bluetooth"]["format-connected"] = "" if vert else " {device_alias}"
+            for m in ("battery","wireplumber","backlight"):
+                if m in d: d[m]["format"] = "{icon}"
             wc.write_text(json.dumps(d,indent=2)+nl)
-            vb = nl+"/* mocha-vert */"+nl+"#custom-menu, #clock, #custom-workspaces, #tray, #custom-peripherals, #custom-caffeine, #battery, #wireplumber, #backlight, #bluetooth, #network, #custom-power { padding: 8px 0; min-width: 30px; }"+nl+"/* end-mocha-vert */"
+            vb = nl+"/* mocha-vert */"+nl+"window#waybar.left #custom-menu, window#waybar.right #custom-menu, window#waybar.left #clock, window#waybar.right #clock, window#waybar.left #custom-workspaces, window#waybar.right #custom-workspaces, window#waybar.left #tray, window#waybar.right #tray, window#waybar.left #custom-peripherals, window#waybar.right #custom-peripherals, window#waybar.left #custom-caffeine, window#waybar.right #custom-caffeine, window#waybar.left #battery, window#waybar.right #battery, window#waybar.left #wireplumber, window#waybar.right #wireplumber, window#waybar.left #backlight, window#waybar.right #backlight, window#waybar.left #bluetooth, window#waybar.right #bluetooth, window#waybar.left #network, window#waybar.right #network, window#waybar.left #custom-power, window#waybar.right #custom-power { padding: 7px 0; min-width: 32px; } window#waybar.left #clock, window#waybar.right #clock, window#waybar.left #custom-peripherals, window#waybar.right #custom-peripherals, window#waybar.left #custom-caffeine, window#waybar.right #custom-caffeine { font-size: 11px; } window#waybar.left #custom-workspaces, window#waybar.right #custom-workspaces { padding: 6px 0; min-width: 34px; } window#waybar.left label, window#waybar.right label { min-width: 34px; }"+nl+"/* end-mocha-vert */"
             c = c.split(nl+"/* mocha-vert */")[0] + (vb if vert else "")
             l = l.replace('style = "slide"','style = "slidevert"') if vert else l.replace('style = "slidevert"','style = "slide"')
             hl.write_text(l)
@@ -90,9 +89,15 @@ elif "Appearance" in top:
             l = l.replace("animations = {\n        enabled = false,","animations = {\n        enabled = true,",1) if on else l.replace("animations = {\n        enabled = true,","animations = {\n        enabled = false,",1)
         if "Dark Mode" not in ch and "Theme" not in ch:
             ws.write_text(c); rc.write_text(r); sc.write_text(s); hl.write_text(l); osd.write_text(o)
-        subprocess.run(["hyprctl","reload"],stdout=-3,stderr=-3)
+        if "Waybar" in ch:
+            st_w = "slidevert" if "slidevert" in l else "slide"
+            for lf in ("workspaces","workspacesIn","workspacesOut"):
+                subprocess.run(["hyprctl","keyword","animation",f"{lf},1,4,easeOutQuint,{st_w}"],stdout=-3,stderr=-3)
+        else:
+            subprocess.run(["hyprctl","reload"],stdout=-3,stderr=-3)
         subprocess.run(["swaync-client","-rs"],stdout=-3,stderr=-3)
-        subprocess.run(["killall","waybar"],stdout=-3,stderr=-3)
+        subprocess.run(["pkill","-x","waybar"],stdout=-3,stderr=-3)
         subprocess.run(["pkill","-f","osd-popup.py"],stdout=-3,stderr=-3)
+        time.sleep(0.15)
         subprocess.Popen(["python3",str(osd)],stdout=-3,stderr=-3,start_new_session=True)
         subprocess.Popen(["waybar"],stdout=-3,stderr=-3,start_new_session=True)

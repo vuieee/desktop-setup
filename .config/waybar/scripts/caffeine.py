@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json, subprocess, sys, time
+import json, pathlib, subprocess, sys, time
 
 def running():
     return subprocess.run(["pgrep", "-x", "hypridle"], stdout=subprocess.DEVNULL).returncode == 0

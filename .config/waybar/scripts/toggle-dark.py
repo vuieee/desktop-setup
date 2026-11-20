@@ -8,7 +8,7 @@ def sw(t,m):
  for i,(a,_) in enumerate(m): t=t.replace(a,f"_T{i}_")
  for i,(_,b) in enumerate(m): t=t.replace(f"_T{i}_",b)
  return t
-fl=["waybar/style.css","rofi/minimal.rasi","swaync/style.css","hypr/scripts/osd-popup.py","kitty/kitty.conf","power-menu/power-menu.py","power-menu/fake-lock.py","gtk-3.0/settings.ini","gtk-4.0/settings.ini"] if nat else ["waybar/style.css","rofi/minimal.rasi","swaync/style.css","hypr/scripts/osd-popup.py","kitty/kitty.conf","power-menu/power-menu.py","power-menu/fake-lock.py","gtk-3.0/gtk.css","gtk-3.0/settings.ini","gtk-4.0/settings.ini","yazi/theme.toml","cava/config"]
+fl=["waybar/style.css","rofi/minimal.rasi","swaync/style.css","hypr/scripts/osd-popup.py","kitty/kitty.conf","kitty/bluetui.conf","power-menu/power-menu.py","power-menu/fake-lock.py","gtk-3.0/settings.ini","gtk-4.0/settings.ini"] if nat else ["waybar/style.css","rofi/minimal.rasi","swaync/style.css","hypr/scripts/osd-popup.py","kitty/kitty.conf","power-menu/power-menu.py","power-menu/fake-lock.py","gtk-3.0/gtk.css","gtk-3.0/settings.ini","gtk-4.0/settings.ini","yazi/theme.toml","cava/config"]
 for f in fl:
  fp=h/".config"/f
  if fp.exists(): fp.write_text(sw(fp.read_text(),css))
