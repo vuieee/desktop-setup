@@ -17,7 +17,7 @@ window.background {
 
 tooltip {
   background: #1e222d;
-  border: 1px solid #f1f5f9;
+  border: 1px solid #64748b;
   border-radius: 6px;
 }
 
@@ -112,7 +112,7 @@ window#waybar {
 window#waybar > box {
   background-color: rgba(30, 34, 45, 0.78);
   color: #f1f5f9;
-  border: 1px solid #f1f5f9;
+  border: 1px solid #64748b;
   border-radius: 6px;
 }
 

@@ -75,7 +75,7 @@ button label.icon {
 }
 button:hover {
   color: #f1f5f9;
-  background-color: #2b3140;
+  background-color: #384152;
   margin: 0px;
 }
 button:active {
