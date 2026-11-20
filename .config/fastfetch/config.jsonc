@@ -24,7 +24,7 @@
         {
             "type": "custom",
             "key": " ",
-            "format": "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e"
+            "format": "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 \u001b[1msystem\u001b[22m \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e"
         },
         {
             "type": "custom",
@@ -73,15 +73,15 @@
         },
         {
             "type": "disk",
-            "key": "\u2502  Disk (Root)  ",
+            "key": "\u2502  Disk1        ",
             "folders": "/",
-            "format": "{size-used>9} / {size-total<10}  \u2502"
+            "format": "{size-used>10}/{size-total<11}  \u2502"
         },
         {
             "type": "disk",
-            "key": "\u2502  Disk (2TB)   ",
+            "key": "\u2502  Disk2        ",
             "folders": "/mnt/2tb",
-            "format": "{size-used>9} / {size-total<10}  \u2502"
+            "format": "{size-used>10}/{size-total<11}  \u2502"
         },
         {
             "type": "packages",
@@ -96,12 +96,7 @@
         {
             "type": "custom",
             "key": " ",
-            "format": "\u2502     WE ARE LIBRE ! \u2500\u2500 \u6211\u3005\u306f\u81ea\u7531\u3060\uff01    \u2502"
-        },
-        {
-            "type": "custom",
-            "key": " ",
-            "format": "\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f"
+            "format": "\u2570\u2500\u2500\u2500 \u001b[1mWE ARE LIBRE ! \u2500\u2500 \u6211\u3005\u306f\u81ea\u7531\u3060\uff01\u001b[22m \u2500\u2500\u2500\u2500\u256f"
         },
         "break"
     ]
