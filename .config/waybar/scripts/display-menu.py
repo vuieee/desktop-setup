@@ -13,15 +13,16 @@ def rofi(lines, width=340, row=0):
 
 def update_lua(mode_str, scale_str):
     t = hl.read_text()
-    t = re.sub(r'(mode\s*=\s*")[^"]+(")', rf"\g<1>{mode_str}\g<2>", t, count=1)
-    t = re.sub(r'(scale\s*=\s*")[^"]+(")', rf"\g<1>{scale_str}\g<2>", t, count=1)
+    t = re.sub(r'(mode\s*=\s*")[^"]+(")', lambda m: m.group(1) + mode_str + m.group(2), t, count=1)
+    t = re.sub(r'(scale\s*=\s*")[^"]+(")', lambda m: m.group(1) + scale_str + m.group(2), t, count=1)
     hl.write_text(t)
+    subprocess.run(["hyprctl", "reload"], stdout=-3, stderr=-3)
 
 def main():
     idx = 0
     while True:
         mons = json.loads(subprocess.check_output(["hyprctl", "monitors", "all", "-j"], text=True))
-        mon = next((m for m in mons if m.get("focused")), mons)
+        mon = next((m for m in mons if m.get("focused")), mons.pop(0))
         name = mon["name"]
         w, h = mon["width"], mon["height"]
         hz = f"{mon['refreshRate']:.2f}Hz"
@@ -48,25 +49,21 @@ def main():
             idx = 1
             rch = rofi([f"{r}  (active)" if r == cur_res else r for r in res_list], width=280)
             if rch:
-                nm = f"{rch.split()}@{hz}"
-                update_lua(nm, sc)
-                subprocess.run(["hyprctl", "keyword", "monitor", f"{name},{nm},auto,{sc}"], stdout=-3, stderr=-3)
+                new_r = rch.split().pop(0)
+                update_lua(f"{new_r}@{hz}", sc)
         elif "Refresh Rate" in ch:
             idx = 2
             hch = rofi([f"{x}  (active)" if x == hz else x for x in hz_list], width=280)
             if hch:
-                nm = f"{cur_res}@{hch.split()}"
-                update_lua(nm, sc)
-                subprocess.run(["hyprctl", "keyword", "monitor", f"{name},{nm},auto,{sc}"], stdout=-3, stderr=-3)
+                new_h = hch.split().pop(0)
+                update_lua(f"{cur_res}@{new_h}", sc)
         elif "Scale" in ch:
             idx = 3
             scales = ["1", "1.2", "1.25", "1.33", "1.5", "1.6", "1.75", "2"]
             sch = rofi([f"{s}x  (active)" if s == sc else f"{s}x" for s in scales], width=260)
             if sch:
-                nsc = sch.split().rstrip("x")
-                nm = f"{cur_res}@{hz}"
-                update_lua(nm, nsc)
-                subprocess.run(["hyprctl", "keyword", "monitor", f"{name},{nm},auto,{nsc}"], stdout=-3, stderr=-3)
+                new_s = sch.split().pop(0).rstrip("x")
+                update_lua(f"{cur_res}@{hz}", new_s)
         else:
             idx = 0
 
