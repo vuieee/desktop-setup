@@ -98,7 +98,6 @@ hl.config({
         gaps_out = 8,
 
         border_size = 1,
-        border_part_of_window = false,
 
         col = {
             active_border   = { colors = {"rgba(94a3b8ff)", "rgba(94a3b8ff)"}, angle = 45 },
@@ -118,6 +117,7 @@ hl.config({
         screen_shader  = "/home/mocha/.config/hypr/shaders/vibrance.glsl",
         rounding       = 6,
         rounding_power = 2,
+        border_part_of_window = false,
 
         -- Change transparency of focused and unfocused windows
         active_opacity   = 1.0,
