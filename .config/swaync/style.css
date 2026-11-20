@@ -31,7 +31,7 @@ list,
   margin: 6px 10px;
 }
 .notification-background {
-  background: rgba(38, 43, 56, 0.78);
+  background: rgba(30, 34, 45, 0.78);
   border: 1px solid #f1f5f9;
   margin: 0;
   padding: 0;
@@ -59,18 +59,18 @@ list,
 .notification-default-action:hover,
 .notification-action:hover {
   background: #f1f5f9;
-  color: #262b38;
+  color: #1e222d;
 }
 .notification-background:hover *,
 .notification:hover *,
 .notification-default-action:hover *,
 .notification-action:hover * {
-  color: #262b38;
+  color: #1e222d;
 }
 .notification-action,
 .notification-background:hover .notification-action,
 .notification:hover .notification-action {
-  background: rgba(38, 43, 56, 0.78);
+  background: rgba(30, 34, 45, 0.78);
   color: #f1f5f9;
   border: 1px solid #f1f5f9;
   padding: 6px 12px;
@@ -88,8 +88,8 @@ list,
 .notification-background:hover .notification-action:hover,
 .notification:hover .notification-action:hover {
   background: #f1f5f9;
-  color: #262b38;
-  border-color: #262b38;
+  color: #1e222d;
+  border-color: #1e222d;
 }
 .notification-action:hover label,
 .notification-action:hover *,
@@ -97,7 +97,7 @@ list,
 .notification-background:hover .notification-action:hover *,
 .notification:hover .notification-action:hover label,
 .notification:hover .notification-action:hover * {
-  color: #262b38;
+  color: #1e222d;
 }
 .notification-action button,
 .notification-action > box {
@@ -130,7 +130,7 @@ list,
   border: 1px solid #f1f5f9;
 }
 .control-center {
-  background: rgba(38, 43, 56, 0.78);
+  background: rgba(30, 34, 45, 0.78);
   border: 1px solid #f1f5f9;
   color: #f1f5f9;
 }

@@ -46,7 +46,7 @@ window {
 }
 button {
   color: #f1f5f9;
-  background-color: #262b38;
+  background-color: #1e222d;
   background-image: none;
   border: none;
   border-top: 1px solid #64748b;
@@ -74,7 +74,7 @@ button label.icon {
   font-size: 56px;
 }
 button:hover {
-  color: #262b38;
+  color: #1e222d;
   background-color: #f1f5f9;
   margin: 0px;
 }

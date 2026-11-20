@@ -13,7 +13,7 @@ configuration {
 }
 
 window {
-    background-color: #262b38bf;
+    background-color: #1e222dbf;
     width: 480px;
     border: 1px;
     border-radius: 6px;
@@ -58,5 +58,5 @@ element-text {
 
 element selected {
     background-color: #f1f5f9;
-    text-color: #262b38;
+    text-color: #1e222d;
 }
