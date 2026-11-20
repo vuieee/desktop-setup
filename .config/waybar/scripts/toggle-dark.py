@@ -15,7 +15,7 @@ for f in fl:
 hl=h/".config/hypr/hyprland.lua"
 hl.write_text(sw(hl.read_text(),hp))
 ff=h/".config/fastfetch/config.jsonc"
-if ff.exists(): ff.write_text(sw(ff.read_text(),[("white","black"),("black","white"),("cachyos-dark.png","cachyos-light.png"),("cachyos-light.png","cachyos-dark.png")]))
+if ff.exists(): ff.write_text(sw(ff.read_text(),[("cachyos-dark.png","cachyos-light.png"),("cachyos-light.png","cachyos-dark.png")]))
 subprocess.run(["killall","-SIGUSR1","kitty"],stderr=-3)
 w_full=(h/".config/waybar/style.css").read_text()
 dark=not any(x in w_full for x in ("background-color: #ffffff;","rgba(255, 255, 255, 0.72)","background-color: #f2f3f7;","rgba(242, 243, 247, 0.75)"))
@@ -23,5 +23,5 @@ for s in ["gtk-3.0/settings.ini","gtk-4.0/settings.ini","yazi/theme.toml","cava/
  sp=h/".config"/s
  if sp.exists(): sp.write_text(sp.read_text().replace("prefer-dark-theme=0" if dark else "prefer-dark-theme=1","prefer-dark-theme=1" if dark else "prefer-dark-theme=0"))
 subprocess.run(["gsettings","set","org.gnome.desktop.interface","gtk-theme","Adwaita-dark" if dark else "Adwaita"])
-subprocess.run(["gsettings","set","org.gnome.desktop.interface","color-scheme","prefer-dark" if dark else "default"])
+subprocess.run(["gsettings","set","org.gnome.desktop.interface","color-scheme","prefer-dark" if dark else "prefer-light"])
 

@@ -12,7 +12,7 @@
     },
     "display": {
         "separator": "  ",
-        "color": "white"
+        "color": "default"
     },
     "modules": [
         "break",
@@ -70,13 +70,13 @@
             "type": "disk",
             "key": "\u2502  Disk1        ",
             "folders": "/",
-            "format": "{size-used>10} / {size-total>9}  \u2502"
+            "format": "{size-used>9} / {size-total>10}  \u2502"
         },
         {
             "type": "disk",
             "key": "\u2502  Disk2        ",
             "folders": "/mnt/2tb",
-            "format": "{size-used>10} / {size-total>9}  \u2502"
+            "format": "{size-used>9} / {size-total>10}  \u2502"
         },
         {
             "type": "packages",
