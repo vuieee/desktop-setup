@@ -20,3 +20,7 @@ cp -r .local/share/applications/* ~/.local/share/applications/
 mkdir -p ~/Pictures/Wallpapers && cp -r Pictures/Wallpapers/* ~/Pictures/Wallpapers/
 hyprctl reload
 ```
+
+## Audio Presets (EasyEffects)
+- Headless background service (`easyeffects --gapplication-service`, zero tray icon) with centered floating GUI (`960x640`).
+- Presets sourced from [JackHack96/EasyEffects-Presets](https://://github.com) (see also [speaker-tuning-to-easyeffects](https://://github.com) for OEM speaker extraction).
