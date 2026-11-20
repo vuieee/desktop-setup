@@ -22,7 +22,7 @@ while True:
         idx = 0
         while True:
             c, r, s, l, cfg, o = ws.read_text(), rc.read_text(), sc.read_text(), hl.read_text(), wc.read_text(), osd.read_text()
-            th = "Default" if (home/".local/share/mocha-theme-bak/native").exists() else "Mono"
+            th = "Candy" if (home/".local/share/mocha-theme-bak/native").exists() else "Mono"
             dm = "Off" if any(x in c for x in ("rgba(255, 255, 255, 0.72)", "background-color: #ffffff;", "rgba(248, 250, 252, 0.78)", "background-color: #f8fafc;")) else "On"
             ac = "On" if any(x in c for x in ("0.72", "0.75", "0.78")) else "Off"
             ps = next((x.title() for x in ["top","bottom"] if f'"position": "{x}"' in cfg), "Top")
@@ -31,9 +31,9 @@ while True:
             vb_path = "/home/mocha/.config/hypr/shaders/vibrance.glsl"
             vb = "On" if f'screen_shader  = "{vb_path}"' in l else "Off"
             an = "On" if "animations = {\n        enabled = true," in l else "Off"
-            bg, fg = (("#1e222d","#f1f5f9") if th=="Default" else ("#000000","#ffffff")) if dm=="On" else (("#f8fafc","#0f172a") if th=="Default" else ("#ffffff","#000000"))
-            bd = ("#94a3b8" if dm=="On" else "#64748b") if th=="Default" else fg
-            bgr, rfr = (("rgba(30, 34, 45, 0.78)","#1e222dbf") if th=="Default" else ("rgba(0, 0, 0, 0.72)","#000000b8")) if dm=="On" else (("rgba(248, 250, 252, 0.78)","#f8fafcbf") if th=="Default" else ("rgba(255, 255, 255, 0.72)","#ffffffb8"))
+            bg, fg = (("#1e222d","#f1f5f9") if th=="Candy" else ("#000000","#ffffff")) if dm=="On" else (("#f8fafc","#0f172a") if th=="Candy" else ("#ffffff","#000000"))
+            bd = ("#94a3b8" if dm=="On" else "#64748b") if th=="Candy" else fg
+            bgr, rfr = (("rgba(30, 34, 45, 0.78)","#1e222dbf") if th=="Candy" else ("rgba(0, 0, 0, 0.72)","#000000b8")) if dm=="On" else (("rgba(248, 250, 252, 0.78)","#f8fafcbf") if th=="Candy" else ("rgba(255, 255, 255, 0.72)","#ffffffb8"))
             items = [((chr(0xf186) if dm=="On" else chr(0xf185))+"  Dark Mode",dm),(chr(0xf06e)+"  Acrylic",ac),(chr(0xf0c9)+"  Waybar",ps),(chr(0xf065)+"  Outlines",ol),((chr(0xf111) if rd=="On" else chr(0xf096))+"  Rounded",rd),(chr(0xf042)+"  Vibrance",vb),(chr(0xf04b)+"  Animations",an),(chr(0xf1fc)+"  Theme",th)]
             menu = nl.join(f"{k:<15}{v:>5}" for k, v in items)
             ch = subprocess.run(["rofi","-dmenu","-i","-selected-row",str(idx),"-theme",str(rc),"-theme-str","window { width: 280px; } mainbox { children: [listview]; } listview { lines: 8; padding: 0px; spacing: 0px; }"],input=menu,text=True,capture_output=True).stdout.strip()
@@ -63,7 +63,7 @@ while True:
                 wc.write_text(json.dumps(d, indent=2) + nl)
             elif "Outlines" in ch:
                 on = ch.endswith("Off")
-                bw = "1" if th=="Default" else "2"; l = l.replace("border_size = 0,",f"border_size = {bw},",1) if on else l.replace(f"border_size = {bw},","border_size = 0,",1)
+                bw = "1" if th=="Candy" else "2"; l = l.replace("border_size = 0,",f"border_size = {bw},",1) if on else l.replace(f"border_size = {bw},","border_size = 0,",1)
                 c = c.replace("border: none; /* mocha-ol */",f"border: {bw}px solid {bd};") if on else c.replace(f"border: {bw}px solid {bd};","border: none; /* mocha-ol */")
                 s = s.replace("border: none; /* mocha-ol */",f"border: {bw}px solid {bd};") if on else s.replace(f"border: {bw}px solid {bd};","border: none; /* mocha-ol */")
                 r = r.replace("border: 0px; /* mocha-ol */",f"border: {bw}px;").replace("border: 0px; /* mocha-in */","border: 0px 0px 2px 0px;") if on else r.replace(f"border: {bw}px;","border: 0px; /* mocha-ol */").replace("border: 0px 0px 2px 0px;","border: 0px; /* mocha-in */")

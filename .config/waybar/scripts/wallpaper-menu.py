@@ -12,7 +12,7 @@ if subprocess.run(["pgrep", "-f", "wallpaper-menu.py"], capture_output=True).std
     sys.exit(0)
 
 home = pathlib.Path.home()
-sub = "Default" if (home / ".local/share/mocha-theme-bak/native").exists() else "Mono"
+sub = "Candy" if (home / ".local/share/mocha-theme-bak/native").exists() else "Mono"
 wdir = home / "Pictures/Wallpapers" / sub
 cdir = home / ".cache/mocha-wallpapers-diag"
 hc = home / ".config/hypr/hyprpaper.conf"
