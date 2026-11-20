@@ -49,9 +49,9 @@ button {
   background-color: #1e222d;
   background-image: none;
   border: none;
-  border-top: 1px solid #64748b;
-  border-bottom: 1px solid #64748b;
-  border-right: 1px solid #64748b;
+  border-top: 1px solid #94a3b8;
+  border-bottom: 1px solid #94a3b8;
+  border-right: 1px solid #94a3b8;
   border-radius: 0;
   box-shadow: none;
   outline-style: none;
@@ -59,7 +59,7 @@ button {
   transition: all 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 button:first-child {
-  border-left: 1px solid #64748b;
+  border-left: 1px solid #94a3b8;
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
 }
@@ -82,7 +82,7 @@ button label.icon {
 button:hover {
   color: #f1f5f9;
   background-color: #384152;
-  border-left: 1px solid #64748b;
+  border-left: 1px solid #94a3b8;
   border-radius: 6px;
   margin: 0px;
 }

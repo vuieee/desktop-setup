@@ -32,7 +32,7 @@ while True:
             vb = "On" if f'screen_shader  = "{vb_path}"' in l else "Off"
             an = "On" if "animations = {\n        enabled = true," in l else "Off"
             bg, fg = (("#1e222d","#f1f5f9") if th=="Default" else ("#000000","#ffffff")) if dm=="On" else (("#f8fafc","#0f172a") if th=="Default" else ("#ffffff","#000000"))
-            bd = ("#64748b" if dm=="On" else "#94a3b8") if th=="Default" else fg
+            bd = ("#94a3b8" if dm=="On" else "#64748b") if th=="Default" else fg
             bgr, rfr = (("rgba(30, 34, 45, 0.78)","#1e222dbf") if th=="Default" else ("rgba(0, 0, 0, 0.72)","#000000b8")) if dm=="On" else (("rgba(248, 250, 252, 0.78)","#f8fafcbf") if th=="Default" else ("rgba(255, 255, 255, 0.72)","#ffffffb8"))
             items = [((chr(0xf186) if dm=="On" else chr(0xf185))+"  Dark Mode",dm),(chr(0xf06e)+"  Acrylic",ac),(chr(0xf0c9)+"  Waybar",ps),(chr(0xf065)+"  Outlines",ol),((chr(0xf111) if rd=="On" else chr(0xf096))+"  Rounded",rd),(chr(0xf042)+"  Vibrance",vb),(chr(0xf04b)+"  Animations",an),(chr(0xf1fc)+"  Theme",th)]
             menu = nl.join(f"{k:<15}{v:>5}" for k, v in items)
