@@ -32,7 +32,8 @@
   },
   "clock": {
     "format": "{:%I:%M %p}",
-    "tooltip-format": "<tt>{calendar}</tt>"
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "justify": "left"
   },
   "hyprland/window": {
     "format": "{class}",
@@ -101,9 +102,9 @@
     "exec": "python3 /home/mocha/.config/waybar/workspaces.py",
     "return-type": "json",
     "format": "{}",
-    "tooltip": false
+    "tooltip": false,
+    "justify": "left"
   },
-  "width": 0,
   "tray": {
     "icon-size": 16,
     "spacing": 10
@@ -113,12 +114,14 @@
     "return-type": "json",
     "interval": 5,
     "signal": 8,
-    "on-click": "python3 /home/mocha/.config/waybar/scripts/caffeine.py toggle"
+    "on-click": "python3 /home/mocha/.config/waybar/scripts/caffeine.py toggle",
+    "justify": "left"
   },
   "custom/peripherals": {
     "exec": "python3 /home/mocha/.config/waybar/scripts/peripherals.py",
     "return-type": "json",
     "interval": 15,
-    "format": "{}"
+    "format": "{}",
+    "justify": "left"
   }
 }
