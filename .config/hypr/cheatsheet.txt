@@ -4,6 +4,7 @@ settings menu                    ALT + SPACE
 close window                     SUPER + C
 exit Hyprland                    SUPER + M
 file manager                     SUPER + E
+browser                          SUPER + B
 toggle floating                  SUPER + SHIFT + V
 default menu                     SUPER + R
 pseudotile                       SUPER + P
