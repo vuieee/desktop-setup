@@ -2,7 +2,7 @@
 import os, pathlib, subprocess, time
 try: os.setsid()
 except Exception: pass
-nl = chr(6)
+nl = chr(10)
 home = pathlib.Path.home()
 wc, ws = home/".config/waybar/config.jsonc", home/".config/waybar/style.css"
 rc, sc = home/".config/rofi/minimal.rasi", home/".config/swaync/style.css"
