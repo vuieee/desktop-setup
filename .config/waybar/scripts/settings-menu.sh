@@ -21,7 +21,7 @@ elif "Appearance" in top:
     while True:
         c, r, s, l, cfg, o = ws.read_text(), rc.read_text(), sc.read_text(), hl.read_text(), wc.read_text(), osd.read_text()
         th = "Native" if (home/".local/share/mocha-theme-bak/native").exists() else "Mono"
-        dm = "Off" if "rgba(255, 255, 255, 0.72)" in c or "background-color: #ffffff;" in c.split("}")[0] else "On"
+        dm = "Off" if any(x in c for x in ("rgba(255, 255, 255, 0.72)", "background-color: #ffffff;", "rgba(242, 243, 247, 0.75)", "background-color: #f2f3f7;")) else "On"
         ac = "On" if ("0.72" in c or "0.75" in c) else "Off"
         ps = next((x.title() for x in ["top","bottom"] if f'"position": "{x}"' in cfg), "Top")
         ol = "On" if "border_size = 2" in l else "Off"
@@ -38,7 +38,6 @@ elif "Appearance" in top:
         idx = ["Dark Mode","Acrylic","Waybar","Outlines","Rounded","Vibrance","Animations","Theme"].index(next(x for x in ["Dark Mode","Acrylic","Waybar","Outlines","Rounded","Vibrance","Animations","Theme"] if x in ch))
         if "Dark Mode" in ch:
             subprocess.run(["python3",str(home/".config/waybar/scripts/toggle-dark.py")])
-            subprocess.run(["gsettings","set","org.gnome.desktop.interface","color-scheme","prefer-dark" if dm=="Off" else "default"],stderr=-3)
         elif "Acrylic" in ch:
             on = ch.endswith("Off")
             c = c.replace(f"background-color: {bg};",f"background-color: {bgr};") if on else c.replace(f"background-color: {bgr};",f"background-color: {bg};")
