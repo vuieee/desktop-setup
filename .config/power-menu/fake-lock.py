@@ -4,7 +4,7 @@ gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 gi.require_version("GtkLayerShell", "0.1")
 from gi.repository import Gdk, GLib, Gtk, GtkLayerShell
-CSS = b"window { background-color: rgba(0, 0, 0, 0.35); } #clock { color: #ffffff; font-family: 'JetBrains Mono'; font-size: 72px; font-weight: bold; } #date { color: #dddddd; font-family: 'JetBrains Mono'; font-size: 18px; margin-top: 8px; }"
+CSS = b"window { background-color: rgba(0, 0, 0, 0.35); } #clock { color: #f1f5f9; font-family: 'JetBrains Mono'; font-size: 72px; font-weight: bold; } #date { color: #dddddd; font-family: 'JetBrains Mono'; font-size: 18px; margin-top: 8px; }"
 GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGTERM, Gtk.main_quit)
 screen = Gdk.Screen.get_default()
 prov = Gtk.CssProvider()

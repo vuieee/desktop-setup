@@ -16,8 +16,8 @@ window.background {
 }
 
 tooltip {
-  background: #111318;
-  border: 1px solid #64748b;
+  background: #262b38;
+  border: 1px solid #f1f5f9;
   border-radius: 6px;
 }
 
@@ -58,12 +58,12 @@ tooltip label {
 
 #workspaces button.active {
   background: #f1f5f9;
-  color: #111318;
+  color: #262b38;
 }
 
 #workspaces button.urgent {
   background: #808080;
-  color: #111318;
+  color: #262b38;
 }
 
 #workspaces.name button,
@@ -88,7 +88,7 @@ tooltip label {
 
 #battery.critical {
   background: #f1f5f9;
-  color: #111318;
+  color: #262b38;
 }
 
 #wireplumber.muted,
@@ -110,9 +110,9 @@ window#waybar {
 }
 
 window#waybar > box {
-  background-color: #111318;
+  background-color: rgba(38, 43, 56, 0.78);
   color: #f1f5f9;
-  border: 1px solid #64748b;
+  border: 1px solid #f1f5f9;
   border-radius: 6px;
 }
 

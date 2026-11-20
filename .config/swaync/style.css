@@ -31,13 +31,13 @@ list,
   margin: 6px 10px;
 }
 .notification-background {
-  background: #111318;
-  border: 1px solid #64748b;
+  background: rgba(38, 43, 56, 0.78);
+  border: 1px solid #f1f5f9;
   margin: 0;
   padding: 0;
 }
 .notification {
-  background: #111318;
+  background: transparent;
   color: #f1f5f9;
   border: none;
   margin: 0;
@@ -59,20 +59,20 @@ list,
 .notification-default-action:hover,
 .notification-action:hover {
   background: #f1f5f9;
-  color: #111318;
+  color: #262b38;
 }
 .notification-background:hover *,
 .notification:hover *,
 .notification-default-action:hover *,
 .notification-action:hover * {
-  color: #111318;
+  color: #262b38;
 }
 .notification-action,
 .notification-background:hover .notification-action,
 .notification:hover .notification-action {
-  background: #111318;
+  background: rgba(38, 43, 56, 0.78);
   color: #f1f5f9;
-  border: 1px solid #64748b;
+  border: 1px solid #f1f5f9;
   padding: 6px 12px;
   margin: 0 10px 10px 10px;
 }
@@ -88,8 +88,8 @@ list,
 .notification-background:hover .notification-action:hover,
 .notification:hover .notification-action:hover {
   background: #f1f5f9;
-  color: #111318;
-  border-color: #111318;
+  color: #262b38;
+  border-color: #262b38;
 }
 .notification-action:hover label,
 .notification-action:hover *,
@@ -97,7 +97,7 @@ list,
 .notification-background:hover .notification-action:hover *,
 .notification:hover .notification-action:hover label,
 .notification:hover .notification-action:hover * {
-  color: #111318;
+  color: #262b38;
 }
 .notification-action button,
 .notification-action > box {
@@ -127,10 +127,10 @@ list,
 }
 .body-image {
   margin-top: 8px;
-  border: 1px solid #64748b;
+  border: 1px solid #f1f5f9;
 }
 .control-center {
-  background: #111318;
-  border: 1px solid #64748b;
+  background: rgba(38, 43, 56, 0.78);
+  border: 1px solid #f1f5f9;
   color: #f1f5f9;
 }

@@ -46,7 +46,7 @@ window {
 }
 button {
   color: #f1f5f9;
-  background-color: #111318;
+  background-color: #262b38;
   background-image: none;
   border: none;
   border-top: 1px solid #64748b;
@@ -74,7 +74,7 @@ button label.icon {
   font-size: 56px;
 }
 button:hover {
-  color: #111318;
+  color: #262b38;
   background-color: #f1f5f9;
   margin: 0px;
 }
@@ -145,7 +145,7 @@ def main():
         button.set_size_request(cell_w, cell_h)
         overlay = Gtk.Overlay()
         nat = os.path.exists(os.path.expanduser("~/.local/share/mocha-theme-bak/native"))
-        lt = "#f8fafc" in CSS.decode() or "#ffffff" in CSS.decode()
+        lt = "#f8fafc" in CSS.decode() or "#f1f5f9" in CSS.decode()
         icols = {"Lock": "#0284c7" if lt else "#38bdf8", "Reboot": "#ca8a04" if lt else "#facc15", "Fast reboot": "#ea580c" if lt else "#fb923c", "Shutdown": "#dc2626" if lt else "#f87171"}
         icon = Gtk.Label()
         if nat and text in icols: icon.set_markup(f"<span foreground=\x27{icols[text]}\x27>{icon_char}</span>")

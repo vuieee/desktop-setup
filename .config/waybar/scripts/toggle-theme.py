@@ -24,7 +24,7 @@ if (bak/"native").exists():
    if fp.exists(): fp.write_text(sw(fp.read_text(),am))
  if mark in ws_t:
   ws_p.write_text(ws_t.split(mark)[0].rstrip()+chr(10))
- to_mono=[("#111318","#000000"),("#f1f5f9","#ffffff"),("rgba(17, 19, 24, 0.78)","rgba(0, 0, 0, 0.72)"),("#111318bf","#000000b8")] if dark else [("#f8fafc","#ffffff"),("#0f172a","#000000"),("rgba(248, 250, 252, 0.78)","rgba(255, 255, 255, 0.72)"),("#f8fafcbf","#ffffffb8")]
+ to_mono=[("#262b38","#000000"),("#f1f5f9","#ffffff"),("rgba(38, 43, 56, 0.78)","rgba(0, 0, 0, 0.72)"),("#262b38bf","#000000b8")] if dark else [("#f8fafc","#ffffff"),("#0f172a","#000000"),("rgba(248, 250, 252, 0.78)","rgba(255, 255, 255, 0.72)"),("#f8fafcbf","#ffffffb8")]
  for f in ui_files:
   fp=h/".config"/f
   if fp.exists(): fp.write_text(sw(fp.read_text(),to_mono))
@@ -47,7 +47,7 @@ else:
  if ms.exists(): d=json.loads(ms.read_text()); d["colorscheme"]="default"; ms.write_text(json.dumps(d,indent=2)+chr(10))
  cc=h/".config/cava/config"
  if cc.exists(): cc.write_text(chr(10).join(l for l in cc.read_text().splitlines() if not l.startswith("foreground ="))+chr(10))
- to_nat=[("#000000","#111318"),("#ffffff","#f1f5f9"),("rgba(0, 0, 0, 0.72)","rgba(17, 19, 24, 0.78)"),("#000000b8","#111318bf")] if dark else [("#ffffff","#f8fafc"),("#000000","#0f172a"),("rgba(255, 255, 255, 0.72)","rgba(248, 250, 252, 0.78)"),("#ffffffb8","#f8fafcbf")]
+ to_nat=[("#000000","#262b38"),("#ffffff","#f1f5f9"),("rgba(0, 0, 0, 0.72)","rgba(38, 43, 56, 0.78)"),("#000000b8","#262b38bf")] if dark else [("#ffffff","#f8fafc"),("#000000","#0f172a"),("rgba(255, 255, 255, 0.72)","rgba(248, 250, 252, 0.78)"),("#ffffffb8","#f8fafcbf")]
  for f in ui_files:
   fp=h/".config"/f
   if fp.exists(): fp.write_text(sw(fp.read_text(),to_nat))
