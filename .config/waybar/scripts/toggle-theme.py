@@ -2,7 +2,7 @@
 import json,pathlib,shutil,subprocess
 h=pathlib.Path.home()
 bak=h/".local/share/mocha-theme-bak"
-app_files=["gtk-3.0/gtk.css","gtk-4.0/gtk.css","yazi/theme.toml","micro/settings.json","cava/config"]
+app_files=["gtk-3.0/gtk.css","gtk-4.0/gtk.css","yazi/theme.toml","micro/settings.json","cava/config","zathura/zathurarc","kitty/bluetui.conf"]
 ui_files=["waybar/style.css","rofi/minimal.rasi","swaync/style.css","hypr/scripts/osd-popup.py","kitty/kitty.conf","power-menu/power-menu.py","power-menu/fake-lock.py"]
 def sw(t,m):
  for i,(a,_) in enumerate(m): t=t.replace(a,f"_T{i}_")
@@ -47,6 +47,10 @@ else:
  if ms.exists(): d=json.loads(ms.read_text()); d["colorscheme"]="default"; ms.write_text(json.dumps(d,indent=2)+chr(10))
  cc=h/".config/cava/config"
  if cc.exists(): cc.write_text(chr(10).join(l for l in cc.read_text().splitlines() if not l.startswith("foreground ="))+chr(10))
+ zr=h/".config/zathura/zathurarc"
+ if zr.exists(): zr.write_text('set guioptions ""\nset selection-clipboard clipboard\n')
+ bt=h/".config/kitty/bluetui.conf"
+ if bt.exists(): bt.write_text("")
  to_nat=[("#000000","#1e222d"),("#ffffff","#f1f5f9"),("rgba(0, 0, 0, 0.72)","rgba(30, 34, 45, 0.78)"),("#000000b8","#1e222dbf")] if dark else [("#ffffff","#f8fafc"),("#000000","#0f172a"),("rgba(255, 255, 255, 0.72)","rgba(248, 250, 252, 0.78)"),("#ffffffb8","#f8fafcbf")]
  for f in ui_files:
   fp=h/".config"/f
