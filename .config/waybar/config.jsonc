@@ -73,8 +73,8 @@
   },
   "bluetooth": {
     "format": "\uf294",
-    "format-disabled": "\uf293",
-    "format-off": "\uf293",
+    "format-disabled": "\uf294",
+    "format-off": "\uf294",
     "format-connected": "\uf294 {device_alias}",
     "tooltip-format-connected": "{device_enumerate}",
     "on-click": "kitty --class bluetui -c ~/.config/kitty/kitty.conf -c ~/.config/kitty/bluetui.conf -e bluetui",
