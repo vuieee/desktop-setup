@@ -210,13 +210,23 @@ class WallpaperCarousel(Gtk.Window):
             cr.line_to(x + cw, y + ch)
             cr.line_to(x, y + ch)
             cr.close_path()
+            nat = (home / ".local/share/mocha-theme-bak/native").exists()
             focus = max(0.0, 1.0 - abs(pos))
-            shade = lerp(0.08, 1.0, focus)
-            cr.set_source_rgba(shade, shade, shade, ease)
-            cr.set_line_width(lerp(1.5, 2.5, focus))
+            if nat:
+                cr.set_source_rgba(lerp(0.28, 0.58, focus), lerp(0.33, 0.64, focus), lerp(0.41, 0.72, focus), ease)
+                cr.set_line_width(lerp(1.0, 1.5, focus))
+            else:
+                shade = lerp(0.08, 1.0, focus)
+                cr.set_source_rgba(shade, shade, shade, ease)
+                cr.set_line_width(lerp(1.5, 2.5, focus))
             cr.stroke()
             cr.restore()
 
+        nat = (home / ".local/share/mocha-theme-bak/native").exists()
+        st_txt = (home / ".config/waybar/style.css").read_text()
+        lt = any(x in st_txt for x in ("#ffffff", "#f8fafc"))
+        rd_on = "rounding       = 6," in (home / ".config/hypr/hyprland.lua").read_text()
+        rad = 6.0 if (nat and rd_on) else 0.0
         label = f"{walls[self.idx].stem}   ({self.idx + 1}/{len(walls)})"
         cr.select_font_face("JetBrains Mono", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
         cr.set_font_size(14)
@@ -225,13 +235,28 @@ class WallpaperCarousel(Gtk.Window):
         by = cy + 470 / 2.0 + 22
         bw = ext.width + 32
         bh = 32
-        cr.set_source_rgba(0.0, 0.0, 0.0, 1.0)
-        cr.rectangle(bx, by, bw, bh)
+        def rrect(x0, y0, w0, h0, r0):
+            if r0 <= 0:
+                cr.rectangle(x0, y0, w0, h0)
+                return
+            import math
+            cr.new_sub_path()
+            cr.arc(x0 + w0 - r0, y0 + r0, r0, -math.pi/2, 0)
+            cr.arc(x0 + w0 - r0, y0 + h0 - r0, r0, 0, math.pi/2)
+            cr.arc(x0 + r0, y0 + h0 - r0, r0, math.pi/2, math.pi)
+            cr.arc(x0 + r0, y0 + r0, r0, math.pi, 3*math.pi/2)
+            cr.close_path()
+        bg_c = ((0.973, 0.980, 0.988) if lt else (0.118, 0.133, 0.176)) if nat else ((1.0, 1.0, 1.0) if lt else (0.0, 0.0, 0.0))
+        bd_c = ((0.392, 0.455, 0.545) if lt else (0.580, 0.639, 0.722)) if nat else ((0.0, 0.0, 0.0) if lt else (1.0, 1.0, 1.0))
+        fg_c = ((0.059, 0.090, 0.165) if lt else (0.945, 0.961, 0.976)) if nat else ((0.0, 0.0, 0.0) if lt else (1.0, 1.0, 1.0))
+        cr.set_source_rgba(*bg_c, 1.0)
+        rrect(bx, by, bw, bh, rad)
         cr.fill()
-        cr.set_source_rgba(1.0, 1.0, 1.0, 1.0)
-        cr.set_line_width(2.0)
-        cr.rectangle(bx, by, bw, bh)
+        cr.set_source_rgba(*bd_c, 1.0)
+        cr.set_line_width(1.0 if nat else 2.0)
+        rrect(bx, by, bw, bh, rad)
         cr.stroke()
+        cr.set_source_rgba(*fg_c, 1.0)
         cr.move_to(cx - ext.width / 2.0, by + 21)
         cr.show_text(label)
 
