@@ -145,6 +145,11 @@ hl.config({
 })
 
 -- Default curves and animations, see https://wiki.hypr.land/configuring/core/animations/
+hl.curve("overshot",       { type = "bezier", points = { {0.05, 0.9},  {0.1, 1.1}   } })
+hl.curve("fluid",          { type = "bezier", points = { {0.25, 1},    {0, 1}       } })
+hl.curve("snap",           { type = "bezier", points = { {0.5, 0.9},   {0.1, 1.05}  } })
+hl.curve("menu_decel",     { type = "bezier", points = { {0.1, 1},     {0, 1}       } })
+hl.curve("liner",          { type = "bezier", points = { {1, 1},       {1, 1}       } })
 hl.curve("easeOutQuint",   { type = "bezier", points = { {0.23, 1},    {0.32, 1}    } })
 hl.curve("easeOutExpo",    { type = "bezier", points = { {0.16, 1},    {0.3, 1}     } })
 hl.curve("easeInOutCubic", { type = "bezier", points = { {0.65, 0.05}, {0.36, 1}    } })
@@ -152,22 +157,18 @@ hl.curve("linear",         { type = "bezier", points = { {0, 0},       {1, 1}   
 hl.curve("almostLinear",   { type = "bezier", points = { {0.5, 0.5},   {0.75, 1}    } })
 hl.curve("quick",          { type = "bezier", points = { {0.15, 0},    {0.1, 1}     } })
 
--- Default springs
-hl.curve("easy",           { type = "spring", mass = 1, stiffness = 210, damping = 26 })
-
-hl.animation({ leaf = "global",        enabled = true,  speed = 10,   bezier = "default" })
-hl.animation({ leaf = "border",        enabled = true,  speed = 5.0,  bezier = "easeOutExpo" })
-hl.animation({ leaf = "windows",       enabled = true,  speed = 4.6,  spring = "easy" })
-hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 4.2,  spring = "easy",         style = "popin 90%" })
-hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 2.8,  bezier = "easeOutExpo",  style = "popin 90%" })
-hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 2.8,  bezier = "easeOutExpo" })
-hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 2.4,  bezier = "easeOutExpo" })
-hl.animation({ leaf = "fade",          enabled = true,  speed = 3.2,  bezier = "easeOutQuint" })
-hl.animation({ leaf = "layers",        enabled = true,  speed = 3.8,  bezier = "easeOutExpo" })
-hl.animation({ leaf = "layersIn",      enabled = true,  speed = 3.2,  bezier = "easeOutExpo",  style = "popin 92%" })
-hl.animation({ leaf = "layersOut",     enabled = true,  speed = 2.4,  bezier = "easeOutExpo",  style = "popin 92%" })
-hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 2.8,  bezier = "easeOutExpo" })
-hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 2.4,  bezier = "easeOutExpo" })
+hl.animation({ leaf = "global",           enabled = true,  speed = 10, bezier = "default" })
+hl.animation({ leaf = "windowsIn",        enabled = true,  speed = 4.5, bezier = "fluid",      style = "popin 86%" })
+hl.animation({ leaf = "windowsOut",       enabled = true,  speed = 3.5, bezier = "menu_decel", style = "popin 86%" })
+hl.animation({ leaf = "windowsMove",      enabled = true,  speed = 4.5, bezier = "fluid",      style = "slide" })
+hl.animation({ leaf = "border",           enabled = true,  speed = 2,   bezier = "liner" })
+hl.animation({ leaf = "borderangle",      enabled = true,  speed = 40,  bezier = "liner",      style = "once" })
+hl.animation({ leaf = "fade",             enabled = true,  speed = 4,   bezier = "fluid" })
+hl.animation({ leaf = "layersIn",         enabled = true,  speed = 4.0, bezier = "fluid",      style = "popin 88%" })
+hl.animation({ leaf = "fadeLayersIn",     enabled = true,  speed = 3.8, bezier = "menu_decel" })
+hl.animation({ leaf = "fadeLayersOut",    enabled = true,  speed = 3.0, bezier = "menu_decel" })
+hl.animation({ leaf = "layersOut",        enabled = false })
+hl.animation({ leaf = "specialWorkspace", enabled = true,  speed = 4.5, bezier = "fluid",      style = "slide" })
 hl.animation({ leaf = "workspaces",    enabled = true,  speed = 1.94, bezier = "almostLinear", style = "fade" })
 hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 1.21, bezier = "almostLinear", style = "fade" })
 hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 1.94, bezier = "almostLinear", style = "fade" })
@@ -385,18 +386,16 @@ end)
 hl.bind("SUPER + SPACE", hl.dsp.exec_cmd("rofi -show drun -theme ~/.config/rofi/minimal.rasi"))
 hl.bind("ALT + SPACE", hl.dsp.exec_cmd("/home/mocha/.config/waybar/scripts/settings-menu.sh"))
 
-hl.animation({ leaf = "workspaces", enabled = true, speed = 4.5, bezier = "easeOutExpo", style = "slide" })
-hl.animation({ leaf = "workspacesIn", enabled = true, speed = 4.5, bezier = "easeOutExpo", style = "slide" })
-hl.animation({ leaf = "workspacesOut", enabled = true, speed = 4.5, bezier = "easeOutExpo", style = "slide" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 4.5, bezier = "fluid", style = "slide" })
+hl.animation({ leaf = "workspacesIn", enabled = true, speed = 4.5, bezier = "fluid", style = "slide" })
+hl.animation({ leaf = "workspacesOut", enabled = true, speed = 4.5, bezier = "fluid", style = "slide" })
 
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 
 hl.layer_rule({ name = "mocha-fakelock-blur", match = { namespace = "mocha-fakelock" }, blur = true, ignore_alpha = 0.1 })
-hl.on("hyprland.start", function() hl.exec_cmd("hyprpaper") end)
 
-hl.on("hyprland.start", function() hl.exec_cmd("hyprpaper") end)
 
 hl.window_rule({
   name = "power-menu",

@@ -177,29 +177,14 @@ def main():
         menu.pack_start(button, True, True, 0)
 
     win.add(menu)
-    win.set_opacity(0.0)
     win.show_all()
 
-    # Pop-up: cells rise from thin slivers to full height, one after another,
-    # while the whole overlay fades in.
     def reveal(btn):
         btn.get_style_context().remove_class("pre")
         return False
 
     for i, btn in enumerate(buttons):
-        GLib.timeout_add(30 + i * 45, reveal, btn)
-
-    t0 = [None]
-    def on_tick(widget, clock):
-        now = clock.get_frame_time()
-        if t0[0] is None:
-            t0[0] = now
-        p_t = min((now - t0[0]) / 220000.0, 1.0)
-        eased = 1.0 - (1.0 - p_t) ** 3
-        widget.set_opacity(eased)
-        return p_t < 1.0
-
-    win.add_tick_callback(on_tick)
+        GLib.timeout_add(35 + i * 45, reveal, btn)
     Gtk.main()
 
 
