@@ -21,6 +21,7 @@
     "custom/caffeine",
     "battery",
     "wireplumber",
+    "custom/airplane",
     "network",
     "bluetooth",
     "custom/power"
@@ -122,6 +123,14 @@
     "return-type": "json",
     "interval": 15,
     "format": "{}",
+    "justify": "left"
+  },
+  "custom/airplane": {
+    "exec": "python3 -c 'import json,subprocess; out=subprocess.check_output([\"rfkill\",\"list\",\"wifi\"],text=True); on=\"Soft blocked: yes\" in out; print(json.dumps({\"text\":\"\uf072\" if on else \"\",\"tooltip\":\"Airplane Mode: On (Click to disable)\" if on else \"\"}))'",
+    "return-type": "json",
+    "interval": 5,
+    "signal": 9,
+    "on-click": "/home/mocha/.config/hypr/scripts/osd.sh airplane",
     "justify": "left"
   }
 }

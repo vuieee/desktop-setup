@@ -116,7 +116,7 @@ hl.config({
 
     decoration = {
         screen_shader  = "/home/mocha/.config/hypr/shaders/vibrance.glsl",
-        rounding       = 6,
+        rounding       = 0,
         rounding_power = 2,
         border_part_of_window = false,
 
@@ -422,6 +422,11 @@ hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("/home/mocha/.config/hypr/script
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/osd.sh vol-mute"), { locked = true })
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/osd.sh bri-up"), { ["repeat"] = true, locked = true })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/osd.sh bri-down"), { ["repeat"] = true, locked = true })
+hl.bind("F9", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/osd.sh airplane"), { locked = true })
+hl.bind("XF86RFKill", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/osd.sh airplane"), { locked = true })
+hl.bind("F10", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/osd.sh touchpad"), { locked = true })
+hl.bind("XF86TouchpadToggle", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/osd.sh touchpad"), { locked = true })
+hl.bind("F12", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/screenshot.sh region"))
 hl.bind("Caps_Lock", hl.dsp.exec_cmd("/home/mocha/.config/hypr/scripts/osd.sh caps"), { locked = true })
 
 hl.window_rule({
@@ -478,6 +483,7 @@ hl.window_rule({
 })
 
 hl.window_rule({ name = "yazi-picker", match = { class = "yazi-picker" }, float = true, size = { 1200, 720 }, center = true })
+hl.window_rule({ name = "mocha-calc", match = { class = "mocha-calc" }, float = true, size = { 320, 460 }, center = true })
 
 
 
@@ -493,3 +499,5 @@ hl.window_rule({ name = "yazi-picker", match = { class = "yazi-picker" }, float 
 
 
 
+
+hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })

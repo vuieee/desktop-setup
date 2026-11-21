@@ -26,3 +26,6 @@ screenshot (fullscreen)          Print
 screenshot (region)              SUPER + SHIFT + X
 screenshot (OCR text)            SUPER + SHIFT + T
 clipboard history                SUPER + V
+airplane mode on / off           F9
+touchpad on / off                F10
+screenshot (region)              F12

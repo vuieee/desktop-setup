@@ -6,6 +6,25 @@ case "$1" in
   mic-mute) wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle ;;
   bri-up)   brightnessctl set 5%+ >/dev/null ;;
   bri-down) brightnessctl set 5%- >/dev/null ;;
+  touchpad)
+    sf="$HOME/.local/share/mocha-touchpad-state"
+    cur=$(cat "$sf" 2>/dev/null || echo "true")
+    if [ "$cur" = "true" ]; then
+      echo "false" > "$sf"
+      hyprctl keyword "device[elan0524:00-04f3:3215-touchpad]:enabled" false >/dev/null
+    else
+      echo "true" > "$sf"
+      hyprctl keyword "device[elan0524:00-04f3:3215-touchpad]:enabled" true >/dev/null
+    fi
+    ;;
+  airplane)
+    if rfkill list wifi | grep -q "Soft blocked: yes"; then
+      rfkill unblock all
+    else
+      rfkill block all
+    fi
+    pkill -RTMIN+9 waybar 2>/dev/null || true
+    ;;
 esac
 if [ "$1" = "vol-mute" ]; then
   info=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
@@ -20,6 +39,19 @@ elif [ "$1" = "mic-mute" ]; then
     icon=""; val="Mic Off"
   else
     icon=""; val="Mic On"
+  fi
+elif [ "$1" = "touchpad" ]; then
+  cur=$(cat "$HOME/.local/share/mocha-touchpad-state" 2>/dev/null || echo "true")
+  if [ "$cur" = "true" ]; then
+    icon=""; val="Touchpad On"
+  else
+    icon=""; val="Touchpad Off"
+  fi
+elif [ "$1" = "airplane" ]; then
+  if rfkill list wifi | grep -q "Soft blocked: yes"; then
+    icon=""; val="Airplane On"
+  else
+    icon=""; val="Airplane Off"
   fi
 elif [ "$1" = "caps" ]; then
   sleep 0.05

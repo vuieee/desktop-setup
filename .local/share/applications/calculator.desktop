@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Calculator
+Comment=Quick math evaluator
+Exec=/home/mocha/.config/hypr/scripts/calc-menu.py
+Icon=accessories-calculator
+Terminal=false
+Categories=Utility;Calculator;
+Keywords=calc;math;calculator;
