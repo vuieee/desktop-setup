@@ -1,5 +1,3 @@
-# desktop-setup
-
 ![Desktop Preview](preview/desktop.png?raw=true)
 
 ## Components
