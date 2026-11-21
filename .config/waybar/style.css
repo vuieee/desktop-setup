@@ -16,13 +16,13 @@ window.background {
 }
 
 tooltip {
-  background: #1e222d;
-  border: 1px solid #94a3b8;
+  background: #000000;
+  border: 2px solid #ffffff;
   border-radius: 6px;
 }
 
 tooltip label {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 #custom-menu,
@@ -42,7 +42,7 @@ tooltip label {
 
 #custom-workspaces {
   padding: 0 8px;
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 #workspaces button {
@@ -53,24 +53,24 @@ tooltip label {
 
 #workspaces button:hover {
   background: #333333;
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 #workspaces button.active {
-  background: #f1f5f9;
-  color: #1e222d;
+  background: #ffffff;
+  color: #000000;
 }
 
 #workspaces button.urgent {
   background: #808080;
-  color: #1e222d;
+  color: #000000;
 }
 
 #workspaces.name button,
 #workspaces.name button.active,
 #workspaces.name button:hover {
   background: transparent;
-  color: #f1f5f9;
+  color: #ffffff;
   padding: 0 12px;
 }
 
@@ -79,7 +79,7 @@ tooltip label {
 }
 
 #tray > .needs-attention {
-  background: #f1f5f9;
+  background: #ffffff;
 }
 
 #battery.warning {
@@ -87,8 +87,8 @@ tooltip label {
 }
 
 #battery.critical {
-  background: #f1f5f9;
-  color: #1e222d;
+  background: #ffffff;
+  color: #000000;
 }
 
 #wireplumber.muted,
@@ -110,18 +110,9 @@ window#waybar {
 }
 
 window#waybar > box {
-  background-color: #1e222d;
-  color: #f1f5f9;
-  border: 1px solid #94a3b8;
+  background-color: #000000;
+  color: #ffffff;
+  border: 2px solid #ffffff;
   border-radius: 6px;
+  margin-bottom: 1px;
 }
-
-/* mocha-default-accents */
-#battery { color: #4ade80; }
-#battery.charging, #battery.plugged { color: #facc15; }
-#battery.warning, #battery.critical { background: transparent; color: #f87171; }
-#custom-power { color: #f87171; }
-#wireplumber { color: #38bdf8; }
-#bluetooth { color: #60a5fa; }
-#network { color: #818cf8; }
-#custom-caffeine { color: #fbbf24; }

@@ -29,13 +29,13 @@ sock = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
 sock.bind(SOCK)
 sock.setblocking(False)
 
-CSS = b'''window { background-color: #1e222d; border: 1px solid #f1f5f9; border-radius: 0; }
-label { color: #f1f5f9; font-family: "JetBrains Mono", "MesloLGS Nerd Font", "MesloLGS Nerd Font Propo", "Font Awesome 6 Free", "FontAwesome", monospace; font-size: 16px; font-weight: 600; }
+CSS = b'''window { background-color: #000000; border: 2px solid #ffffff; border-radius: 0; }
+label { color: #ffffff; font-family: "JetBrains Mono", "MesloLGS Nerd Font", "MesloLGS Nerd Font Propo", "Font Awesome 6 Free", "FontAwesome", monospace; font-size: 16px; font-weight: 600; }
 label.osd-val { font-size: 18px; font-weight: 700; }
 label.big-icon { font-family: "MesloLGS Nerd Font Mono", "FontAwesome", monospace; font-size: 36px; font-weight: 400; }
 label.sub-text { font-size: 15px; font-weight: 400; }
-progressbar, progressbar trough { min-height: 12px; min-width: 240px; background-color: #1e222d; background-image: none; border: 1px solid #f1f5f9; border-radius: 0; padding: 0; margin: 0; }
-progressbar progress { min-height: 12px; background-color: #f1f5f9; background-image: none; border: none; border-radius: 0; padding: 0; margin: 0; }'''
+progressbar, progressbar trough { min-height: 12px; min-width: 240px; background-color: #000000; background-image: none; border: 2px solid #ffffff; border-radius: 0; padding: 0; margin: 0; }
+progressbar progress { min-height: 12px; background-color: #ffffff; background-image: none; border: none; border-radius: 0; padding: 0; margin: 0; }'''
 
 prov = Gtk.CssProvider()
 prov.load_from_data(CSS)
@@ -132,18 +132,23 @@ def on_sock(_fd, _cond):
         pass
     return True
 
-def tick():
-    if win.get_visible():
+last_us = [None]
+def on_tick(widget, clock):
+    now = clock.get_frame_time()
+    dt = 0.016 if last_us is None else min((now - last_us) / 1000000.0, 0.05)
+    last_us = now
+    if widget.get_visible():
         if state["bar_mode"]:
             d = state["target"] - state["cur"]
-            state["cur"] = state["target"] if abs(d) < 0.005 else state["cur"] + d * 0.35
+            alpha = 1.0 - (2.718281828 ** (-24.0 * dt))
+            state["cur"] = state["target"] if abs(d) < 0.003 else state["cur"] + d * alpha
             bar.set_fraction(state["cur"])
         if time.monotonic() > state["hide_at"]:
-            win.hide()
+            widget.hide()
     return True
 
 GLib.io_add_watch(sock.fileno(), GLib.IO_IN, on_sock)
-GLib.timeout_add(16, tick)
+win.add_tick_callback(on_tick)
 if len(sys.argv) >= 3:
     apply_data(sys.argv[1], sys.argv[2])
 

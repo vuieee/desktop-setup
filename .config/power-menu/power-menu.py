@@ -45,21 +45,21 @@ window {
   background-color: rgba(0, 0, 0, 0.35);
 }
 button {
-  color: #f1f5f9;
-  background-color: #1e222d;
+  color: #ffffff;
+  background-color: #000000;
   background-image: none;
   border: none;
-  border-top: 1px solid #94a3b8;
-  border-bottom: 1px solid #94a3b8;
-  border-right: 1px solid #94a3b8;
+  border-top: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  border-right: 2px solid #ffffff;
   border-radius: 0;
   box-shadow: none;
   outline-style: none;
   margin: 44px 0px;
-  transition: all 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: margin 420ms cubic-bezier(0.16, 1, 0.3, 1), opacity 360ms cubic-bezier(0.16, 1, 0.3, 1), background-color 220ms ease, color 220ms ease;
 }
 button:first-child {
-  border-left: 1px solid #94a3b8;
+  border-left: 2px solid #ffffff;
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
 }
@@ -80,11 +80,15 @@ button label.icon {
   font-size: 56px;
 }
 button:hover {
-  color: #f1f5f9;
-  background-color: #384152;
-  border-left: 1px solid #94a3b8;
+  color: #000000;
+  background-color: #ffffff;
+  border-left: 2px solid #ffffff;
   border-radius: 6px;
   margin: 0px;
+}
+button:hover label {
+  color: #000000;
+  background-color: transparent;
 }
 button:active {
   background-color: #b0b0b0;
@@ -153,7 +157,7 @@ def main():
         button.set_size_request(cell_w, cell_h)
         overlay = Gtk.Overlay()
         nat = os.path.exists(os.path.expanduser("~/.local/share/mocha-theme-bak/native"))
-        lt = "#f8fafc" in CSS.decode() or "#f1f5f9" in CSS.decode()
+        lt = "#f8fafc" in CSS.decode() or "#ffffff" in CSS.decode()
         icols = {"Lock": "#0284c7" if lt else "#38bdf8", "Reboot": "#ca8a04" if lt else "#facc15", "Fast reboot": "#ea580c" if lt else "#fb923c", "Shutdown": "#dc2626" if lt else "#f87171"}
         icon = Gtk.Label()
         if nat and text in icols: icon.set_markup(f"<span foreground=\x27{icols[text]}\x27>{icon_char}</span>")
@@ -183,14 +187,19 @@ def main():
         return False
 
     for i, btn in enumerate(buttons):
-        GLib.timeout_add(60 + i * 60, reveal, btn)
+        GLib.timeout_add(30 + i * 45, reveal, btn)
 
-    def fade():
-        o = min(win.get_opacity() + 0.1, 1.0)
-        win.set_opacity(o)
-        return o < 1.0
+    t0 = [None]
+    def on_tick(widget, clock):
+        now = clock.get_frame_time()
+        if t0[0] is None:
+            t0[0] = now
+        p_t = min((now - t0[0]) / 220000.0, 1.0)
+        eased = 1.0 - (1.0 - p_t) ** 3
+        widget.set_opacity(eased)
+        return p_t < 1.0
 
-    GLib.timeout_add(16, fade)
+    win.add_tick_callback(on_tick)
     Gtk.main()
 
 

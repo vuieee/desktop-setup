@@ -24,7 +24,7 @@
 -- See https://wiki.hypr.land/configuring/core/monitors/
 hl.monitor({
     output   = "",
-    mode     = "1920x1080@165.00Hz",
+    mode     = "1920x1080@60.00Hz",
     position = "auto",
     scale    = "1.2",
 })
@@ -66,6 +66,7 @@ hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("XCURSOR_THEME", "Win11-Light-Big")
 hl.env("HYPRCURSOR_THEME", "Win11-Light-Big")
+-- hl.env("AQ_DRM_DEVICES", "/home/mocha/.config/hypr/igpu:/home/mocha/.config/hypr/dgpu")
 
 
 -----------------------
@@ -115,7 +116,7 @@ hl.config({
 
     decoration = {
         screen_shader  = "/home/mocha/.config/hypr/shaders/vibrance.glsl",
-        rounding       = 0,
+        rounding       = 6,
         rounding_power = 2,
         border_part_of_window = false,
 
@@ -145,27 +146,28 @@ hl.config({
 
 -- Default curves and animations, see https://wiki.hypr.land/configuring/core/animations/
 hl.curve("easeOutQuint",   { type = "bezier", points = { {0.23, 1},    {0.32, 1}    } })
+hl.curve("easeOutExpo",    { type = "bezier", points = { {0.16, 1},    {0.3, 1}     } })
 hl.curve("easeInOutCubic", { type = "bezier", points = { {0.65, 0.05}, {0.36, 1}    } })
 hl.curve("linear",         { type = "bezier", points = { {0, 0},       {1, 1}       } })
 hl.curve("almostLinear",   { type = "bezier", points = { {0.5, 0.5},   {0.75, 1}    } })
 hl.curve("quick",          { type = "bezier", points = { {0.15, 0},    {0.1, 1}     } })
 
 -- Default springs
-hl.curve("easy",           { type = "spring", mass = 1, stiffness = 238.1191, damping = 24.21279333 })
+hl.curve("easy",           { type = "spring", mass = 1, stiffness = 210, damping = 26 })
 
 hl.animation({ leaf = "global",        enabled = true,  speed = 10,   bezier = "default" })
-hl.animation({ leaf = "border",        enabled = true,  speed = 5.39, bezier = "easeOutQuint" })
-hl.animation({ leaf = "windows",       enabled = true,  speed = 4.79, spring = "easy" })
-hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 4.1,  spring = "easy",         style = "popin 87%" })
-hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 1.49, bezier = "linear",       style = "popin 87%" })
-hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 1.73, bezier = "almostLinear" })
-hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 1.46, bezier = "almostLinear" })
-hl.animation({ leaf = "fade",          enabled = true,  speed = 3.03, bezier = "quick" })
-hl.animation({ leaf = "layers",        enabled = true,  speed = 3.81, bezier = "easeOutQuint" })
-hl.animation({ leaf = "layersIn",      enabled = true,  speed = 2.5,  bezier = "easeOutQuint", style = "popin 85%" })
-hl.animation({ leaf = "layersOut",     enabled = true,  speed = 1.2,  bezier = "quick",        style = "popin 85%" })
-hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 1.79, bezier = "almostLinear" })
-hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 1.39, bezier = "almostLinear" })
+hl.animation({ leaf = "border",        enabled = true,  speed = 5.0,  bezier = "easeOutExpo" })
+hl.animation({ leaf = "windows",       enabled = true,  speed = 4.6,  spring = "easy" })
+hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 4.2,  spring = "easy",         style = "popin 90%" })
+hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 2.8,  bezier = "easeOutExpo",  style = "popin 90%" })
+hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 2.8,  bezier = "easeOutExpo" })
+hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 2.4,  bezier = "easeOutExpo" })
+hl.animation({ leaf = "fade",          enabled = true,  speed = 3.2,  bezier = "easeOutQuint" })
+hl.animation({ leaf = "layers",        enabled = true,  speed = 3.8,  bezier = "easeOutExpo" })
+hl.animation({ leaf = "layersIn",      enabled = true,  speed = 3.2,  bezier = "easeOutExpo",  style = "popin 92%" })
+hl.animation({ leaf = "layersOut",     enabled = true,  speed = 2.4,  bezier = "easeOutExpo",  style = "popin 92%" })
+hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 2.8,  bezier = "easeOutExpo" })
+hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 2.4,  bezier = "easeOutExpo" })
 hl.animation({ leaf = "workspaces",    enabled = true,  speed = 1.94, bezier = "almostLinear", style = "fade" })
 hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 1.21, bezier = "almostLinear", style = "fade" })
 hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 1.94, bezier = "almostLinear", style = "fade" })
@@ -383,9 +385,9 @@ end)
 hl.bind("SUPER + SPACE", hl.dsp.exec_cmd("rofi -show drun -theme ~/.config/rofi/minimal.rasi"))
 hl.bind("ALT + SPACE", hl.dsp.exec_cmd("/home/mocha/.config/waybar/scripts/settings-menu.sh"))
 
-hl.animation({ leaf = "workspaces", enabled = true, speed = 4, bezier = "easeOutQuint", style = "slide" })
-hl.animation({ leaf = "workspacesIn", enabled = true, speed = 4, bezier = "easeOutQuint", style = "slide" })
-hl.animation({ leaf = "workspacesOut", enabled = true, speed = 4, bezier = "easeOutQuint", style = "slide" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 4.5, bezier = "easeOutExpo", style = "slide" })
+hl.animation({ leaf = "workspacesIn", enabled = true, speed = 4.5, bezier = "easeOutExpo", style = "slide" })
+hl.animation({ leaf = "workspacesOut", enabled = true, speed = 4.5, bezier = "easeOutExpo", style = "slide" })
 
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 
@@ -478,32 +480,17 @@ hl.window_rule({
 
 hl.window_rule({ name = "yazi-picker", match = { class = "yazi-picker" }, float = true, size = { 1200, 720 }, center = true })
 
-hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
 
-hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
 
-hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
 
-hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
 
-hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
 
-hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
 
-hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
 
-hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
 
-hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
 
-hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
 
-hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
 
-hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
 
-hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
 
-hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
 
-hl.layer_rule({ name = 'mocha-waybar-noblur', match = { namespace = 'waybar' }, blur = false })
