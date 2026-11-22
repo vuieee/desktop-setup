@@ -51,20 +51,6 @@ My personal desktop configuration for **CachyOS** (Arch-based) running **Hyprlan
 
 [![Desktop Preview](preview/desktop.png?raw=true)](preview/desktop.png?raw=true)
 
-## Preferred apps
-
-Where I don't build my own Rofi menu, these are the apps I use:
-
-| Purpose | App |
-|---|---|
-| File manager | [Yazi](https://github.com/sxyazi/yazi) |
-| Fan profiles | [CoolerControl](https://gitlab.com/coolercontrol/coolercontrol) |
-| Bluetooth manager | [bluetui](https://github.com/pythops/bluetui) |
-| Audio | [wiremix](https://github.com/tsowell/wiremix) |
-| PDF viewer | [Zathura](https://pwmt.org/projects/zathura/) |
-
-Everything here is my own taste. Use something else if you prefer.
-
 ## Quick Install
 
 > [!WARNING]
@@ -89,8 +75,6 @@ The configs expect the apps listed under [Included](#included) to be installed. 
 - Some scripts and menus are broken or half-finished.
 - Adding or changing a feature can break an existing script. If something that worked yesterday stops working after an update, that is probably why.
 - I only test this on my own machine, so a fresh install on different hardware has not been validated.
-
-The project is on halt, so don't expect fixes for now. Fork it, change what you want, and make it yours.
 
 ## Layout
 
