@@ -1,5 +1,3 @@
-# desktop-setup
-
 > [!IMPORTANT]
 > ## Disclaimer
 >
