@@ -1,5 +1,3 @@
-# desktop-setup
-
 > [!CAUTION]
 > ## Project on halt
 >
