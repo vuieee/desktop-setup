@@ -1,11 +1,16 @@
 # desktop-setup
 
+> [!CAUTION]
+> ## Project on halt
+>
+> This project is currently **on halt**. There will be no updates for now, and I can't guarantee when (or if) that changes. You're free to use my configs and add your own taste to them. I don't mind.
+
 > [!IMPORTANT]
 > ## Disclaimer
 >
 > Please read this before you copy anything into your home directory.
 >
-> **1. Stability.** Most of the user interface and usability of these configs is stable and responsive. Some portions are still broken, and development is slow because I am the only one maintaining this.
+> **1. Stability.** Most of the user interface and usability of these configs is stable and responsive. Some portions are still broken, and since I am the only one maintaining this, development was slow even before the halt.
 >
 > **2. Scripts break.** Whenever a new feature is added, or a current one is changed, some of the scripts occasionally break. I fix them when I notice, but expect rough edges after any big change.
 >
@@ -87,7 +92,7 @@ The configs expect the apps listed under [Included](#included) to be installed. 
 - Adding or changing a feature can break an existing script. If something that worked yesterday stops working after an update, that is probably why.
 - I only test this on my own machine, so a fresh install on different hardware has not been validated.
 
-Development is slow since it is just me. Issues are welcome, but I can't promise a quick fix.
+The project is on halt, so don't expect fixes for now. Fork it, change what you want, and make it yours.
 
 ## Layout
 
