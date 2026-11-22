@@ -1,7 +1,5 @@
 # desktop-setup
 
-[![Desktop Preview](preview/desktop.png?raw=true)](preview/desktop.png?raw=true)
-
 > [!IMPORTANT]
 > ## Disclaimer
 >
@@ -14,6 +12,8 @@
 > **3. This is not HyDE or dusky.** This is not a full dotfiles distribution like [HyDE](https://github.com/HyDE-Project/HyDE) or [dusky](https://github.com/dusklinux/dusky). There is no guided installer, no theme ecosystem and no support team. If you want a polished, community-maintained experience, use one of those instead.
 >
 > **4. It's my preference.** This is just my own set of preferences, made to also be somewhat usable for anyone who wants to try my setup. You may not agree with my distro of choice (CachyOS) or my default apps, such as Yazi as the file manager, and that is your right. Swap them out for whatever you like.
+>
+> **5. Rofi over dedicated apps.** I mostly try to build my own Rofi menus instead of relying on dedicated apps (the Wi-Fi menu is one example). If that isn't your thing, that's fine too, and you're free to replace any of them with a regular app.
 
 My personal desktop configuration for **CachyOS** (Arch-based) running **Hyprland**. It is built around a minimal, hand-made setup: Hyprland, Waybar and Rofi, plus a handful of custom scripts and small GTK overlays instead of a prebuilt rice.
 
@@ -23,24 +23,44 @@ My personal desktop configuration for **CachyOS** (Arch-based) running **Hyprlan
 
 - **WM:** Hyprland (`hyprland.lua`) with custom GTK3 layer-shell OSD and Power/Lock overlays.
 - **Bar:** Waybar with live Dark/Light mode, Mono/Candy theme, Acrylic blur, Outlines, and Rounded and Position toggles.
-- **Launcher & Menus:** Rofi (`Alt + Space` settings menu, `Super + Space` app launcher, `Super + V` pinned clipboard manager).
+- **Launcher & Menus:** [Rofi](https://github.com/davatorium/rofi) (`Alt + Space` settings menu, `Super + Space` app launcher, `Super + V` pinned clipboard manager).
+- **Wi-Fi Menu:** built with Rofi rather than a dedicated app.
+- **Settings Menu (`Alt + Space`):** controls the appearance of the desktop, and also holds the cheatsheets for Yazi and Hyprland keybinds.
 - **Notifications:** SwayNC.
 
 ### Apps & Tools
 
-- **File Manager & Terminal:** Kitty + Yazi (`Super + E` and xdg-desktop-portal modal picker) + Fastfetch.
+- **File Manager & Terminal:** Kitty + [Yazi](https://github.com/sxyazi/yazi) (`Super + E` and xdg-desktop-portal modal picker) + Fastfetch.
 - **C Development (`C Studio`):** Kitty + Micro with `clangd` LSP autocomplete, C snippets, `F5` floating `c-runner` compile and run, and `cnew`/`crun` Fish helpers.
 - **Visualizers:** Cava, Unimatrix (`matrix`) and `pipes.sh` (`pipes`).
 
 ### Audio & Bluetooth
 
-- **Audio & Bluetooth:** PipeWire + `wiremix` TUI and `bluetui` TUI (with live Bluetooth battery tooltips).
+- **Audio & Bluetooth:** PipeWire + [wiremix](https://github.com/tsowell/wiremix) TUI and [bluetui](https://github.com/pythops/bluetui) TUI (with live Bluetooth battery tooltips).
 - **Audio Presets:** EasyEffects, see [Audio Presets](#audio-presets-easyeffects) below.
 
 ### Power & Thermal
 
 - **Auto-Switch:** AC/battery auto-switching (`165Hz` Balanced on AC, `60Hz` Power Saver on battery).
 - **Game Boost:** per-game `performance` profile boost via `game-watcher.py`.
+
+## Preview
+
+[![Desktop Preview](preview/desktop.png?raw=true)](preview/desktop.png?raw=true)
+
+## Preferred apps
+
+Where I don't build my own Rofi menu, these are the apps I use:
+
+| Purpose | App |
+|---|---|
+| File manager | [Yazi](https://github.com/sxyazi/yazi) |
+| Fan profiles | [CoolerControl](https://gitlab.com/coolercontrol/coolercontrol) |
+| Bluetooth manager | [bluetui](https://github.com/pythops/bluetui) |
+| Audio | [wiremix](https://github.com/tsowell/wiremix) |
+| PDF viewer | [Zathura](https://pwmt.org/projects/zathura/) |
+
+Everything here is my own taste. Use something else if you prefer.
 
 ## Quick Install
 
